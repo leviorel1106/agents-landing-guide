@@ -423,6 +423,11 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .lh-wire .r{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
 .lh-wire .r i{height:22px;border-radius:5px;background:var(--surface2);box-shadow:0 0 0 1px var(--line) inset}
 .lh-wire .wa{display:flex;align-items:center;justify-content:center;width:100%;height:20px;border-radius:999px;background:var(--ok);color:var(--bg);font:700 10.5px/1 var(--body)}
+.lh-cards > .lh-span{grid-column:1/-1}
+.lh-imgs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.lh-imgs i{display:block;aspect-ratio:4/3;border-radius:8px;box-shadow:0 0 0 1px var(--line2) inset;background:radial-gradient(70% 60% at 30% 25%,color-mix(in srgb,var(--c) 45%,transparent),transparent 70%),linear-gradient(160deg,var(--surface3),var(--bg2))}
+.lh-imgs i:nth-child(2){background:radial-gradient(60% 50% at 70% 70%,color-mix(in srgb,var(--c) 35%,transparent),transparent 70%),linear-gradient(200deg,var(--surface2),var(--bg))}
+.lh-imgs i:nth-child(3){background:radial-gradient(80% 50% at 50% 100%,color-mix(in srgb,var(--cy) 30%,transparent),transparent 70%),linear-gradient(180deg,var(--surface3),var(--bg2))}
 .lh-link{position:absolute;z-index:2;top:50%;inset-inline-end:calc(var(--g) / -2 - 22px);width:44px;height:44px;margin-top:-22px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:var(--on-grad);font:800 18px/1 var(--display);box-shadow:var(--glow-v),0 0 0 6px var(--bg)}
 
 /* stats */
@@ -464,8 +469,8 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 
       <h1 class="lh-h1" data-block data-agent="פתיחה" data-log="הקליד את הכותרת הראשית" data-code='<h1 class="lh-h1"><span class="grad-text">' data-type data-sk="title"><span class="fill">4 סוכנים בונים לכם <span class="grad-text">דף נחיתה</span></span></h1>
 
-      <div data-block data-agent="פתיחה" data-log="שורת משנה · 6 שאלות וקובץ אחד" data-code='<p class="lead lh-sub">' data-sk="line">
-        <p class="fill lead lh-sub">אתם עונים על 6 שאלות על העסק. <b>קופירייטר ומעצב עובדים באותו זמן</b>, Claude מרכיב את הדף, ובודק עובר על כל כפתור. יוצא קובץ אחד שעולה לאוויר בגרירה.</p>
+      <div data-block data-agent="פתיחה" data-log="שורת משנה · 4 סוכנים וקובץ אחד" data-code='<p class="lead lh-sub">' data-sk="line">
+        <p class="fill lead lh-sub">אתם עונים על כמה שאלות על העסק. <b>קופירייטר ומעצב עובדים באותו זמן</b>, צלם מייצר בקולבו תמונות וסרטון לראש הדף, Claude מרכיב את הדף, ובודק מצלם אותו ועובר על כל כפתור. יוצא קובץ אחד, ו-Claude גם מעלה אותו לאוויר.</p>
       </div>
 
       <div data-block data-agent="פתיחה" data-log="2 כפתורים · למדריך ולחבילה" data-code='<a class="btn btn-primary" href="#steps">' data-sk="btn">
@@ -483,14 +488,14 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
       </div>
     </div>
 
-    <div data-block data-agent="פתיחה" data-log="חלון בקרה · 4 מסלולי סוכנים" data-code='<div class="mc lh-mc" dir="rtl">' data-sk="media">
+    <div data-block data-agent="פתיחה" data-log="חלון בקרה · 5 מסלולים, כולל הצלם" data-code='<div class="mc lh-mc" dir="rtl">' data-sk="media">
       <div class="fill lh-stage">
         <span class="lh-plate p2" aria-hidden="true"></span>
         <span class="lh-plate p1" aria-hidden="true"></span>
         <span class="chip lh-float f1" style="--c:var(--ag1)" aria-hidden="true">copy.md</span>
         <span class="chip lh-float f2" style="--c:var(--ag2)" aria-hidden="true">design.md</span>
 
-        <div class="win lh-win" role="img" aria-label="חלון Claude Code: הקופירייטר והמעצב כותבים במקביל, Claude מחכה לבנות את הדף והבודק בתור">
+        <div class="win lh-win" role="img" aria-label="חלון Claude Code: הקופירייטר והמעצב כותבים במקביל, הצלם מחכה לרשימת הצילומים, Claude מחכה לבנות את הדף והבודק בתור">
           <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents — Claude Code</span></div>
           <div class="win-body lh-wb">
             <div class="lh-wbar">
@@ -517,6 +522,12 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
                   <span class="track"><b style="--w:48%"></b></span>
                 </div>
               </div>
+              <div class="lane" data-lane="5" style="--c:var(--ag5)">
+                <span class="av">צ</span>
+                <div class="lh-ln"><span class="who">צלם <em>imagery</em></span><span class="what">shot list → Kolbo → photos + hero.mp4</span></div>
+                <span class="st">מחכה לאישור</span>
+                <span class="track"><b style="--w:0%"></b></span>
+              </div>
               <div class="lane" data-lane="3" style="--c:var(--ag3)">
                 <span class="av">C</span>
                 <div class="lh-ln"><span class="who">Claude · מנהל</span><span class="what">copy.md + design.md → site/index.html</span></div>
@@ -536,6 +547,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="lh-f" data-file="brief.md"><span><span class="ok">+</span> brief.md</span><span class="ok">done</span></span>
               <span class="lh-f" data-file="copy.md"><span><span class="c">~</span> copy.md</span><span class="c">writing</span></span>
               <span class="lh-f" data-file="design.md"><span><span class="c">~</span> design.md</span><span class="c">writing</span></span>
+              <span class="lh-f" data-file="images/gen/"><span><span class="dim">·</span> images/gen/</span><span class="dim">waiting</span></span>
               <span class="lh-f" data-file="site/index.html"><span><span class="dim">·</span> site/index.html</span><span class="dim">waiting</span></span>
             </div>
 
@@ -553,13 +565,15 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 <!-- ================= WHAT YOU GET ================= -->
 <section class="sec lh-team" id="team" data-section>
   <div class="wrap">
-    <div data-block data-agent="פתיחה" data-log="כותרת הסקשן ותרשים הסדר" data-code='<section class="sec" id="team">' data-sk="title">
+    <div data-block data-agent="פתיחה" data-log="כותרת הסקשן · 5 תפקידים וסדר" data-code='<section class="sec" id="team">' data-sk="title">
       <div class="fill sec-head">
         <span class="eyebrow">The team · landing-agents</span>
-        <h2>ארבעה תפקידים, <span class="grad-text">שניים בו זמנית</span></h2>
-        <p class="lead">בחבילה יש שלושה סוכנים, ו-Claude מנהל אותם. כל אחד עושה דבר אחד וכותב קובץ משלו. הקופירייטר והמעצב יוצאים לדרך באותו רגע, אז אף אחד לא מחכה לשני.</p>
+        <h2>חמישה תפקידים, <span class="grad-text">שניים בו זמנית</span></h2>
+        <p class="lead">בחבילה יש ארבעה סוכנים, ו-Claude מנהל אותם. כל אחד עושה דבר אחד וכותב קובץ משלו. הקופירייטר והמעצב יוצאים לדרך באותו רגע, אז אף אחד לא מחכה לשני.</p>
         <div class="lh-flow" aria-label="סדר העבודה">
           <span class="lh-grp"><span class="lh-grp-l">באותו רגע</span><span class="chip" style="--c:var(--ag1)">קופירייטר</span><span class="chip" style="--c:var(--ag2)">מעצב</span></span>
+          <span class="lh-arr" aria-hidden="true">←</span>
+          <span class="chip" style="--c:var(--ag5)">צלם</span>
           <span class="lh-arr" aria-hidden="true">←</span>
           <span class="chip" style="--c:var(--ag3)">Claude בונה</span>
           <span class="lh-arr" aria-hidden="true">←</span>
@@ -589,19 +603,38 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
         </article>
       </div>
 
-      <div data-block data-agent="פתיחה" data-log="כרטיס המעצב · צבעים וגופן" data-code='.lh-sw i{width:34px;height:34px;border-radius:10px}'>
+      <div data-block data-agent="פתיחה" data-log="כרטיס המעצב · 4 כיווני עיצוב" data-code='.lh-sw i{width:34px;height:34px;border-radius:10px}'>
         <article class="fill card lh-card" style="--c:var(--ag2)">
           <div class="lh-card-top">
             <span class="lh-av">מ</span>
             <div><h3>מעצב</h3><code class="lh-file">designer.md</code></div>
             <span class="chip" style="--c:var(--ag2)">במקביל</span>
           </div>
-          <p>בוחר צבעים, גופן עברי, גדלים ומרווחים לפי העסק שלכם. מאפייה לא תיראה כמו משרד עורכי דין. <b>הוא גם בודק שהטקסט קריא על הרקע ועל הכפתורים.</b></p>
+          <p>בוחר אחד מ-4 כיווני עיצוב: <b>לילה, בהיר, צבע מלא או יוקרה</b>, ומתאים אותו לצבעים שלכם. מאפייה לא תיראה כמו משרד עורכי דין. הוא בודק שהטקסט קריא, <b>וכותב לצלם רשימת צילומים.</b></p>
           <div class="lh-out">
             <div class="lh-out-h"><span>writes</span><b>design.md</b></div>
             <div class="lh-out-b">
               <div class="lh-sw"><span><i style="background:var(--bg2)"></i>--bg</span><span><i style="background:var(--surface3)"></i>--surface</span><span><i style="background:var(--ag2)"></i>--accent</span><span><i style="background:var(--ink)"></i>--text</span></div>
-              <div><span class="k">## fonts</span> <span class="d">Hebrew Google Font</span></div><div><span class="k">## colors</span> <span class="ok">WCAG AA ✓</span></div>
+              <div><span class="k">## direction</span> <span class="d">night · bright · bold-color · luxe</span></div><div><span class="k">## shot list</span> <span class="d">3-6 photos → imagery</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div data-block data-agent="פתיחה" data-log="כרטיס הצלם · תמונות ווידאו בקולבו" data-code='.lh-imgs{grid-template-columns:repeat(3,minmax(0,1fr))}'>
+        <article class="fill card lh-card" style="--c:var(--ag5)">
+          <div class="lh-card-top">
+            <span class="lh-av">צ</span>
+            <div><h3>צלם</h3><code class="lh-file">imagery.md</code></div>
+            <span class="chip" style="--c:var(--ag5)">אחרי המעצב</span>
+          </div>
+          <p>עובד בקולבו, סטודיו של תמונות ווידאו. מייצר 3-6 תמונות שנראות כמו צילום אחד של העסק, ואם תרצו גם <b>סרטון קצר שזז מאחורי הכותרת</b>, שנוצר מהתמונה הראשית. זה מה שהופך דף רגיל לדף פרימיום. אין לו תמונה שלכם? הוא לא ממציא אתכם. סרטון עולה יותר קרדיטים, ו<b>לפני כל יצירה Claude מראה כמה זה יעלה ומחכה לאישור.</b></p>
+          <div class="lh-out">
+            <div class="lh-out-h"><span>generates</span><b>images/gen/</b></div>
+            <div class="lh-out-b">
+              <div class="lh-imgs" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div><span class="ok">✓</span> one look <span class="d">· no text · no fake faces</span></div>
+              <div><span class="k">▶</span> hero.mp4 <span class="d">· 5s loop · optional</span></div>
             </div>
           </div>
         </article>
@@ -614,7 +647,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
             <div><h3>Claude · המנהל</h3><code class="lh-file">skills/landing-page</code></div>
             <span class="chip" style="--c:var(--ag3)">אחריהם</span>
           </div>
-          <p>הופך את התשובות שלכם לבריף, שולח את הקופירייטר והמעצב לעבודה באותה הודעה, ואז בונה מהטקסט והעיצוב <b>קובץ אחד</b>. כל כפתור מוביל לוואטסאפ, לטלפון או לטופס.</p>
+          <p>הופך את התשובות שלכם לבריף, שולח את הקופירייטר והמעצב לעבודה באותה הודעה, מפעיל את הצלם אחרי שאישרתם, ובונה מהטקסט, העיצוב והתמונות <b>קובץ אחד</b>. כל כפתור מוביל לוואטסאפ, לטלפון או לטופס.</p>
           <div class="lh-out">
             <div class="lh-out-h"><span>builds</span><b>site/index.html</b></div>
             <div class="lh-out-b">
@@ -628,25 +661,25 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
         </article>
       </div>
 
-      <div data-block data-agent="פתיחה" data-log="כרטיס הבודק · דוח חסמים" data-code='<span class="ok">✓</span> BLOCKERS: none'>
+      <div class="lh-span" data-block data-agent="פתיחה" data-log="כרטיס הבודק · צילומי מסך וחסמים" data-code='<span class="ok">✓</span> BLOCKERS: none'>
         <article class="fill card lh-card" style="--c:var(--ag4)">
           <div class="lh-card-top">
             <span class="lh-av">ב</span>
             <div><h3>בודק</h3><code class="lh-file">checker.md</code></div>
             <span class="chip" style="--c:var(--ag4)">בסוף</span>
           </div>
-          <p>עובר על הדף המוכן: קישורי וואטסאפ, תצוגה בנייד, גודל הכפתורים, ימין לשמאל, וכל מספר או הבטחה שלא מופיעים בבריף. <b>Claude מתקן ומריץ אותו שוב עד שאין חסמים.</b></p>
+          <p>מצלם את הדף בגודל טלפון ומחשב ומסתכל על הצילומים. עובר על קישורי וואטסאפ, גודל הכפתורים, ימין לשמאל, התמונות, וכל מספר או הבטחה שלא מופיעים בבריף. <b>Claude מתקן ומריץ אותו שוב עד שאין חסמים.</b></p>
           <div class="lh-out">
             <div class="lh-out-h"><span>checks</span><b>site/index.html</b></div>
-            <div class="lh-out-b"><div><span class="ok">✓</span> lang="he" dir="rtl"</div><div><span class="ok">✓</span> wa.me/972… <span class="d">no 0, no dashes</span></div><div><span class="ok">✓</span> 375px <span class="d">· buttons ≥ 48px</span></div><div><span class="ok">✓</span> facts <span class="d">only from brief.md</span></div><div class="ok"><b>BLOCKERS: none</b></div></div>
+            <div class="lh-out-b"><div><span class="ok">✓</span> lang="he" dir="rtl"</div><div><span class="ok">✓</span> wa.me/972… <span class="d">no 0, no dashes</span></div><div><span class="ok">✓</span> 375px <span class="d">· buttons ≥ 48px</span></div><div><span class="ok">✓</span> facts <span class="d">only from brief.md</span></div><div><span class="ok">✓</span> checks/phone.png <span class="d">· desktop.png</span></div><div class="ok"><b>BLOCKERS: none</b></div></div>
           </div>
         </article>
       </div>
     </div>
 
     <div class="stats lh-stats">
-      <div data-block data-agent="פתיחה" data-log="מספר: 3 סוכנים בחבילה" data-code='<b class="grad-text">3</b>' data-sk="stat">
-        <div class="fill stat"><b class="grad-text">3</b><span>סוכנים בחבילה, ו-Claude שמנהל</span></div>
+      <div data-block data-agent="פתיחה" data-log="מספר: 4 סוכנים בחבילה" data-code='<b class="grad-text">4</b>' data-sk="stat">
+        <div class="fill stat"><b class="grad-text">4</b><span>סוכנים בחבילה, ו-Claude שמנהל</span></div>
       </div>
       <div data-block data-agent="פתיחה" data-log="מספר: 2 עובדים במקביל" data-code='<b class="grad-text">2</b>' data-sk="stat">
         <div class="fill stat"><b class="grad-text">2</b><span>עובדים במקביל</span></div>
@@ -803,8 +836,22 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .ls-ctx i{width:4px;height:4px;border-radius:50%;background:var(--line2)}
 .ls-in5 .txt{font-size:13px;line-height:1.7;min-height:0}
 .ls-in5 .txt>span{display:block}
-.ls-fl{color:var(--cy)}
-.ls-phm{color:var(--amber);background:rgba(251,191,36,.10);border-radius:5px;padding:0 3px}
+/* 6 · interview chat */
+.win-body.ls-chat{align-content:start;grid-template-columns:minmax(0,1fr)}
+.ls-chat .input,.ls-chat .input>*{min-width:0}
+.ls-chat .ls-rowl{min-width:0}
+.ls-chat .ls-rowl:first-child{flex:1 1 0;overflow:hidden}
+.ls-me{justify-self:end;max-width:86%;padding:8px 13px;border-radius:14px 14px 4px 14px;background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset;color:#fff;font:600 13px/1.45 var(--body)}
+.ls-cl{display:grid;gap:9px;min-width:0;font-size:13px;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
+.ls-clh{display:flex;align-items:center;gap:7px;font:700 13px/1 var(--display);color:#fff}
+.ls-clh .ls-star{width:17px;height:17px}
+.ls-cl p{margin:0}
+.ls-qs{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.ls-qs li{display:grid;gap:4px;min-width:0}
+.ls-qs b{color:#fff;font-weight:700}
+.ls-qs small{display:block;font-size:12.5px;line-height:1.5;color:var(--muted);padding-inline-start:9px;border-inline-start:2px solid var(--line2)}
+.ls-cl .ls-dk{font-size:12.5px;color:var(--muted)}
+.ls-ph{color:var(--muted)}
 .ls-caret{display:inline-block;width:2px;height:1.1em;vertical-align:-3px;margin-right:2px;background:var(--cy);animation:lsBlink 1s steps(1) infinite}
 .ls-in5 .send{position:relative}
 
@@ -832,24 +879,54 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .ls-f.soon{color:var(--muted);box-shadow:0 0 0 1px var(--line2) inset;background:repeating-linear-gradient(-45deg,transparent 0 6px,rgba(255,255,255,.025) 6px 12px)}
 .ls-f.soon .s{color:var(--muted)}
 
-/* 7 · netlify drop */
-.win-body.ls-b7{display:grid;gap:12px;padding:16px}
-.ls-drop{position:relative;display:grid;justify-items:center;gap:8px;padding:26px 14px 30px;border-radius:14px;border:2px dashed var(--cy);background:radial-gradient(70% 90% at 50% 50%,rgba(34,211,238,.14),rgba(34,211,238,.03));text-align:center}
-.ls-drop .ls-up{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--cy);background:rgba(34,211,238,.12);box-shadow:0 0 0 1px rgba(34,211,238,.4) inset}
-.ls-drop .ls-up svg{width:20px;height:20px}
-.ls-drop b{font:700 14px/1.3 var(--display);color:#fff}
-.ls-drop span{font-size:12px;color:var(--muted)}
-.ls-dragf{position:absolute;left:12%;bottom:-6px;display:grid;justify-items:center;gap:4px;transform:rotate(-7deg);animation:lsDrag 3.2s ease-in-out infinite;z-index:3}
-.ls-dragf svg.ls-bigf{width:46px;height:38px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.6))}
-.ls-dragf em{font:700 11.5px/1 var(--mono);font-style:normal;color:#fff;background:var(--v1);padding:3px 7px;border-radius:6px}
-.ls-dragf .ls-cur{left:34px;top:20px}
+/* 8 · GitHub Pages (terminal + device authorize + live link) */
+.ls-gfig .ls-livebar{margin-top:14px}
+.ls-gfig .ls-bt .term{font-size:12px}
+@media (min-width:561px){.win-body.ls-bt.ls-gbt{padding-bottom:48px}}
+.ls-gfig .ls-livebar .ls-lk span{direction:ltr}
+.ls-ghmark{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:var(--bg);box-shadow:0 0 0 4px rgba(255,255,255,.06)}
+.ls-ghmark svg{width:26px;height:26px}
+.ls-gcode{display:flex;align-items:center;gap:5px;direction:ltr;margin:2px 0}
+.ls-gcode span{display:grid;place-items:center;width:22px;height:28px;border-radius:6px;background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset;font:700 13px/1 var(--mono);color:#fff}
+.ls-gcode i{font-style:normal;color:var(--muted);font:700 13px/1 var(--mono)}
+.ls-abtns .ls-gyes{background:var(--ok);color:#04130b;box-shadow:0 10px 26px -10px rgba(47,209,138,.55)}
 .ls-livebar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:12px;background:var(--surface);box-shadow:0 0 0 1px rgba(47,209,138,.35) inset,0 0 30px -12px var(--ok)}
 .ls-livebar .ls-lk{display:flex;align-items:center;gap:8px;min-width:0;font:600 12px/1 var(--mono);color:var(--ink)}
 .ls-livebar .ls-lk::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
 .ls-livebar .ls-lk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.ls-claim{display:inline-flex;align-items:center;height:30px;padding:0 14px;border-radius:999px;background:var(--amber);color:var(--bg);font:800 12.5px/1 var(--body);position:relative}
-.ls-warnline{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(251,191,36,.08);box-shadow:0 0 0 1px rgba(251,191,36,.28) inset;font:600 12.5px/1.35 var(--body);color:var(--ink2)}
-.ls-warnline b{color:var(--amber)}
+.ls-okpill{position:relative;display:inline-flex;align-items:center;height:30px;padding:0 12px;border-radius:999px;background:rgba(47,209,138,.14);color:var(--ok);box-shadow:0 0 0 1px rgba(47,209,138,.45) inset;font:700 12px/1 var(--mono);white-space:nowrap;direction:ltr;unicode-bidi:isolate}
+
+/* 5 · Kolbo (connect photos) */
+.ls-sec .ls-kgo{display:grid;gap:12px;justify-items:start}
+.ls-sec .ls-kgo .btn-dl{gap:14px}
+.ls-sec .ls-kgo .btn-dl .ic{width:22px;height:22px}
+.ls-sec .ls-kgo .btn-dl span{display:grid;gap:6px;text-align:right}
+.ls-sec .ls-codes{display:grid;gap:8px;width:100%}
+.ls-sec .ls-codes>small{font-size:14px;color:var(--muted)}
+.ls-code{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;min-height:60px;padding:6px 6px 6px 14px;padding-inline:14px 6px;border-radius:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--v2) 12%,transparent),color-mix(in srgb,var(--cy) 6%,transparent));box-shadow:0 0 0 1px color-mix(in srgb,var(--v2) 40%,transparent) inset}
+.ls-code b{font:700 16px/1 var(--mono);letter-spacing:.06em;color:#fff;direction:ltr}
+.ls-code span{flex:1;min-width:0;font-size:14.5px;color:var(--ink2);line-height:1.35}
+.ls-code .copy{height:48px;padding:0 18px;margin-inline-start:auto}
+.ls-sec .ls-cmd pre{direction:ltr;text-align:left;font:600 15.5px/1.6 var(--mono);color:var(--ink);padding:16px 18px 18px}
+.ls-sec .ls-cmd pre .ls-dol{color:var(--v2);user-select:none}
+.ls-sec .ls-steps .ls-cmd pre{font-size:15px}
+.ls-sec .ls-mini li small{display:block;color:var(--muted);font-size:14.5px;margin-top:2px}
+.ls-kfig{gap:0}
+.ls-kfig .ls-ktermwin{width:92%}
+.ls-kfig .ls-kauth{width:80%;margin:-34px 0 0 auto;position:relative;z-index:2}
+.win-body.ls-bt{padding:14px 16px 18px;background:#0a0a14}
+.ls-bt .term{font-size:12.5px}
+.ls-bt .ls-sp{color:var(--amber)}
+.win-body.ls-ba{display:grid;justify-items:center;gap:10px;padding:20px 16px 18px;text-align:center;background:radial-gradient(80% 70% at 50% 0%,rgba(43,215,214,.12),transparent 70%)}
+.ls-klogo{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:var(--grad);color:var(--on-grad);font:900 20px/1 var(--display);box-shadow:var(--glow-v)}
+.ls-link2{display:flex;align-items:center;gap:8px;font:600 11.5px/1 var(--mono);color:var(--muted)}
+.ls-link2 i{display:block;width:26px;height:26px;border-radius:8px;background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset;display:grid;place-items:center;font-style:normal;color:var(--ink)}
+.ls-ba b{font:800 15px/1.25 var(--display);color:#fff}
+.ls-ba small{font-size:12px;color:var(--muted);line-height:1.4;max-width:30ch}
+.ls-abtns{display:flex;gap:8px;margin-top:4px}
+.ls-abtns>span{position:relative;display:inline-flex;align-items:center;height:34px;padding:0 16px;border-radius:10px;font:700 12.5px/1 var(--body)}
+.ls-abtns .ls-no{color:var(--ink2);box-shadow:0 0 0 1px var(--line2) inset}
+.ls-abtns .ls-yes{background:var(--paper);color:var(--on-paper);box-shadow:0 10px 26px -10px rgba(242,238,230,.5)}
 
 .ls-fig svg.ls-cur{width:22px;height:24px}
 @keyframes lsPing{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.7);opacity:0}}
@@ -872,24 +949,105 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
   .ls-sec .ls-acts .btn-ghost{width:auto}
   .ls-row{gap:6px;padding:7px 6px;font-size:11.5px}
   .ls-row svg{width:15px;height:15px}
+  .ls-kfig .ls-ktermwin,.ls-kfig .ls-kauth{width:100%}
+  .ls-kfig .ls-kauth{margin:12px 0 0}
+  .ls-sec .ls-kgo{justify-items:stretch}
+  .ls-code{padding-inline:12px 6px}
+  .ls-code .copy{padding:0 14px}
+  .ls-gfig .ls-livebar .ls-lk{font-size:11px}
+  .ls-gfig .ls-livebar{grid-template-columns:minmax(0,1fr)}
+  .ls-gfig .ls-okpill{justify-self:start;padding:0 9px;font-size:11px}
 }
 @media (prefers-reduced-motion:reduce){
-  .ls-ping,.ls-prog i,.ls-drag,.ls-dragf,.ls-caret,.ls-run .ls-live::before,.ls-b6 .lane .track b::after{animation:none}
+  .ls-ping,.ls-prog i,.ls-drag,.ls-caret,.ls-run .ls-live::before,.ls-b6 .lane .track b::after{animation:none}
+}
+
+/* 5 · Kolbo = photo + video studio, two ways (connect / Kobi) */
+.ls-kimg{background:#2a2620 url(data:image/jpeg;base64,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) center/cover no-repeat}
+.ls-sec .ls-kpaths,.ls-sec .ls-knotes{grid-column:1/-1;min-width:0}
+.ls-kp2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.ls-kpc{display:grid;gap:14px;align-content:start}
+.ls-kpe{box-shadow:0 0 0 1px var(--line) inset,var(--shadow),0 0 60px -28px var(--cy)}
+.ls-kph{display:grid;gap:6px}
+.ls-kph h4{margin:0;font:800 clamp(20px,2vw,24px)/1.2 var(--display);color:#fff;text-wrap:balance}
+.ls-kph small{font-size:15px;color:var(--muted);line-height:1.4}
+.ls-kpt{justify-self:start;display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;font:700 13px/1 var(--body);color:var(--ink);background:rgba(255,255,255,.06);box-shadow:0 0 0 1px var(--line2) inset}
+.ls-kpe .ls-kpt{background:color-mix(in srgb,var(--cy) 16%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--cy) 50%,transparent) inset;color:#fff}
+.ls-kpc .ls-kfig .ls-ktermwin{width:94%}
+.ls-kpc .ls-kfig .ls-kauth{width:84%}
+.ls-knotes-in{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+/* hero-video mock */
+.ls-kv{position:relative;aspect-ratio:16/10;overflow:hidden;background:#1a1712;isolation:isolate}
+.ls-kv-bg{position:absolute;inset:-2%;z-index:-2;transform-origin:30% 60%;animation:lsKb 9s ease-in-out infinite alternate}
+.ls-kv::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(270deg,rgba(10,8,6,.78) 0%,rgba(10,8,6,.45) 45%,rgba(10,8,6,.05) 80%),linear-gradient(0deg,rgba(10,8,6,.55),transparent 45%)}
+.ls-kv::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 30%,rgba(255,236,200,.16) 45%,transparent 60%);animation:lsSun 7s ease-in-out infinite alternate;pointer-events:none}
+.ls-kv-nav{position:absolute;top:0;inset-inline:0;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:12px 14px}
+.ls-kv-brand{display:inline-flex;align-items:center;gap:7px;font:700 12.5px/1 var(--body);color:#fff}
+.ls-kv-brand i{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:800 11px/1 var(--display);font-style:normal;background:var(--paper);color:var(--on-paper)}
+.ls-kv-pill{height:24px;padding:0 11px;border-radius:999px;display:inline-flex;align-items:center;font:600 11px/1 var(--body);color:#fff;background:rgba(10,10,14,.5);box-shadow:0 0 0 1px rgba(255,255,255,.4) inset}
+.ls-kv-txt{position:absolute;inset-inline-start:0;top:50%;transform:translateY(-50%);display:grid;gap:8px;justify-items:start;padding:0 16px;max-width:62%}
+.ls-kv-txt small{font:600 11.5px/1.2 var(--body);color:rgba(255,255,255,.78)}
+.ls-kv-txt b{font:800 clamp(19px,2.3vw,27px)/1.08 var(--display);color:#fff;letter-spacing:-.01em;text-shadow:0 2px 18px rgba(0,0,0,.4)}
+.ls-kv-cta{margin-top:4px;height:30px;padding:0 14px;border-radius:999px;display:inline-flex;align-items:center;font:700 12px/1 var(--body);background:var(--paper);color:var(--on-paper)}
+.ls-kv-rec{position:absolute;left:10px;bottom:10px;display:inline-flex;align-items:center;gap:7px;height:26px;padding:0 10px;border-radius:999px;background:rgba(10,10,14,.62);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);box-shadow:0 0 0 1px rgba(255,255,255,.16) inset;font:600 10.5px/1 var(--mono);color:#fff;white-space:nowrap}
+.ls-kv-dot{width:7px;height:7px;border-radius:50%;background:var(--cy);box-shadow:0 0 8px var(--cy)}
+.ls-kv-bar{width:44px;height:3px;border-radius:3px;background:rgba(255,255,255,.2);overflow:hidden}
+.ls-kv-bar i{display:block;height:100%;width:100%;background:var(--cy);transform-origin:left;animation:lsLoop 5s linear infinite}
+/* Kobi chat mock */
+.win-body.ls-kb{display:grid;gap:12px;padding:14px;background:linear-gradient(180deg,#101019,#0c0c14)}
+.ls-kb-h{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.ls-kb-h .ls-klogo{width:32px;height:32px;border-radius:10px;font-size:15px}
+.ls-kb-h b{display:block;font:700 14px/1.1 var(--body);color:#fff}
+.ls-kb-h small{display:block;font-size:11.5px;color:var(--muted);margin-top:3px}
+.ls-kb-on{margin-inline-start:auto;display:inline-flex;align-items:center;gap:6px;font:600 11px/1 var(--body);color:var(--ok)}
+.ls-kb-on::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+.ls-kb-me{justify-self:end;max-width:86%;padding:9px 12px;border-radius:14px 14px 4px 14px;background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset;font-size:12.5px;line-height:1.5;color:var(--ink)}
+.ls-kb-ai{display:grid;grid-template-columns:26px minmax(0,1fr);gap:8px;align-items:start}
+.ls-kb-av{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--grad);color:#fff;font:800 12px/1 var(--display)}
+.ls-kb-msg{display:grid;gap:8px;min-width:0}
+.ls-kb-msg p{margin:0;font-size:12.5px;line-height:1.5;color:var(--ink2)}
+.ls-kb-media{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.ls-kb-t{position:relative;aspect-ratio:16/10;border-radius:10px;overflow:hidden;box-shadow:0 0 0 1px var(--line2) inset}
+.ls-kb-t>i{position:absolute;inset:0}
+.ls-kb-vid>i{animation:lsKb 9s ease-in-out infinite alternate;transform-origin:30% 60%}
+.ls-kb-tag{position:absolute;right:6px;bottom:6px;height:18px;padding:0 6px;border-radius:6px;display:inline-flex;align-items:center;background:rgba(10,10,14,.7);font:600 9.5px/1 var(--mono);color:#fff;direction:ltr}
+.ls-kb-dl{position:absolute;left:6px;top:6px;width:22px;height:22px;border-radius:7px;display:grid;place-items:center;background:var(--paper);color:var(--on-paper);font:800 12px/1 var(--body)}
+.ls-kb-play{position:absolute;left:50%;top:50%;width:30px;height:30px;margin:-15px 0 0 -15px;border-radius:50%;display:grid;place-items:center;background:rgba(10,10,14,.55);box-shadow:0 0 0 1.5px rgba(255,255,255,.75) inset;color:#fff;font-size:11px;padding-left:2px}
+.ls-kb-dur{position:absolute;right:6px;top:6px;height:18px;padding:0 6px;border-radius:6px;display:inline-flex;align-items:center;background:rgba(10,10,14,.7);font:600 9.5px/1 var(--mono);color:#fff;direction:ltr}
+.ls-kb-fold{flex-wrap:wrap;direction:ltr}
+.ls-kb-fold .ls-kb-f{padding:4px 8px;border-radius:7px;background:rgba(255,255,255,.05);box-shadow:0 0 0 1px var(--line2) inset;font-size:12px;color:var(--ink)}
+.ls-kb-fold .ls-kb-f:last-child{box-shadow:0 0 0 1px color-mix(in srgb,var(--cy) 55%,transparent) inset;color:#fff}
+@keyframes lsKb{from{transform:scale(1.03) translateX(0)}to{transform:scale(1.13) translateX(-2.5%)}}
+@keyframes lsSun{from{transform:translateX(-12%)}to{transform:translateX(12%)}}
+@keyframes lsLoop{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@media (max-width:900px){
+  .ls-kp2,.ls-knotes-in{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:560px){
+  .ls-kpc .ls-kfig .ls-ktermwin,.ls-kpc .ls-kfig .ls-kauth{width:100%}
+  .ls-kv{aspect-ratio:4/3.4}
+  .ls-kv-txt{max-width:78%}
+  .ls-kp2 .card{padding:18px 14px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ls-kv-bg,.ls-kv::after,.ls-kv-bar i,.ls-kb-vid>i{animation:none}
 }
 </style>
 
 <section class="sec ls-sec" id="steps" data-section>
   <div class="wrap">
 
-    <div class="sec-head" data-block data-agent="שלבים" data-log="כותרת הסקשן · 7 שלבים ומה צריך" data-code='&lt;section class="sec ls-sec" id="steps"&gt;' data-sk="title">
+    <div class="sec-head" data-block data-agent="שלבים" data-log="כותרת הסקשן · 8 שלבים ומה צריך" data-code='&lt;section class="sec ls-sec" id="steps"&gt;' data-sk="title">
       <div class="fill" style="display:grid;gap:14px">
-        <span class="eyebrow">STEP BY STEP · 7</span>
-        <h2>שבעה צעדים, <span class="grad-text">ודף באוויר.</span></h2>
+        <span class="eyebrow">STEP BY STEP · 8</span>
+        <h2>שמונה צעדים, <span class="grad-text">ודף באוויר.</span></h2>
         <p class="lead">מההתקנה ועד קישור שאפשר לשלוח ללקוחות. ליד כל צעד מצויר בדיוק מה תראו על המסך באותו רגע.</p>
         <div class="ls-needs">
           <span class="pill"><span class="dot"></span>מחשב Mac או Windows</span>
           <span class="pill"><span class="dot"></span>מנוי Claude בתשלום: Pro או Max</span>
+          <span class="pill"><span class="dot" style="background:var(--muted);box-shadow:none"></span>חשבון Kolbo לתמונות ווידאו, לא חובה</span>
           <span class="pill"><span class="dot" style="background:var(--muted);box-shadow:none"></span>לוגו ותמונות, אם יש</span>
+          <span class="pill"><span class="dot" style="background:var(--muted);box-shadow:none"></span>חשבון GitHub חינמי, להעלאה בסוף</span>
         </div>
       </div>
     </div>
@@ -957,14 +1115,14 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
             <div class="step-txt">
               <span class="ls-k">02 <b>DOWNLOAD</b></span>
               <h3>מורידים את החבילה</h3>
-              <p>בחבילה כבר יושבים הסקיל ושלושת הסוכנים. לוחצים לחיצה כפולה על הקובץ, ונפתחת תיקייה בשם <code>landing-agents</code>.</p>
+              <p>בחבילה כבר יושבים הסקיל וארבעת הסוכנים. לוחצים לחיצה כפולה על הקובץ, ונפתחת תיקייה בשם <code>landing-agents</code>.</p>
               <div class="ls-dl-wrap">
                 <a class="btn btn-primary btn-dl" href="landing-agents.zip" download>
                   <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
                   <span>הורדת החבילה<span class="meta">landing-agents.zip</span></span>
                 </a>
               </div>
-              <div class="note"><span aria-hidden="true">●</span><span>יש לוגו או תמונות של העסק? <b>שימו אותם בתיקייה <code>images</code></b> שבתוך החבילה. הדף ישתמש רק בתמונות שלכם.</span></div>
+              <div class="note"><span aria-hidden="true">●</span><span>יש לוגו, תמונות או סרטון של העסק (גם כאלה שעשיתם עם קובי בקולבו)? <b>שימו אותם בתיקייה <code>images</code></b> שבתוך החבילה. יש תמונה שלכם? הצלם ייצור ממנה את התמונות שלכם בדף.</span></div>
             </div>
 
             <div class="ls-mock" data-block data-agent="שלבים" data-log="חלון Finder עם landing-agents ו-images" data-code='.ls-row.drop{box-shadow:0 0 0 1.5px var(--cy) inset,…}' data-sk="media">
@@ -1014,7 +1172,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="ls-k">03 <b>OPEN</b></span>
               <h3>פותחים את התיקייה בלשונית Code</h3>
               <p>באפליקציה עוברים ללשונית <b>Code</b> שבראש החלון, לוחצים על בחירת תיקייה ובוחרים את <code>landing-agents</code>.</p>
-              <div class="note"><span aria-hidden="true">●</span><span>בוחרים את <b>landing-agents עצמה</b>, לא תיקייה שמעליה. מהרגע שהיא פתוחה, Claude מכיר לבד את הסקיל ואת שלושת הסוכנים. אין מה להתקין.</span></div>
+              <div class="note"><span aria-hidden="true">●</span><span>בוחרים את <b>landing-agents עצמה</b>, לא תיקייה שמעליה. מהרגע שהיא פתוחה, Claude מכיר לבד את הסקיל ואת ארבעת הסוכנים. אין מה להתקין.</span></div>
             </div>
 
             <div class="ls-mock" data-block data-agent="שלבים" data-log="אפליקציית Claude · Code ותיקייה" data-code='.ls-apptop .tabs span.on{background:var(--grad)}' data-sk="media">
@@ -1093,65 +1251,221 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
         </div>
       </li>
 
-      <!-- ============ 5 · START prompt ============ -->
-      <li data-block data-agent="שלבים" data-log="שלב 5 · הודעת START עם העתקה" data-code='&lt;button class="copy" type="button" data-copy="ls-start"&gt;' data-sk="line">
+      <!-- ============ 5 · Kolbo: photos + video (two ways) ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 5 · קולבו: תמונות ווידאו לדף" data-code='&lt;a class="btn btn-primary btn-dl" href="https://app.kolbo.ai?via=orellevi"&gt;' data-sk="line">
         <div class="fill step">
           <span class="step-n" aria-hidden="true">5</span>
           <div class="step-body">
             <div class="step-txt">
-              <span class="ls-k">05 <b>PROMPT</b></span>
-              <h3>מדביקים, ממלאים, שולחים</h3>
-              <p>מעתיקים את ההודעה, ממלאים את מה שבסוגריים הצהובים, ושולחים.</p>
+              <span class="ls-k">05 <b>KOLBO · PHOTO + VIDEO</b></span>
+              <h3>קולבו: תמונות <span class="grad-text">ווידאו</span> לדף</h3>
+              <p>מה שהופך דף רגיל לדף פרימיום: <b>סרטון קצר שזז מאחורי הכותרת</b> בראש הדף, שנוצר מהתמונה הראשית. ועוד קליפים קצרים של המוצר או המקום.</p>
+              <p>קולבו (Kolbo) הוא סטודיו של תמונות ווידאו: <b>עשרות מודלים במקום אחד, בחשבון אחד.</b> שם נוצרות התמונות והסרטון של הדף.</p>
+              <ol class="ls-mini">
+                <li><span>נרשמים דרך הקישור:</span></li>
+              </ol>
+              <div class="ls-kgo">
+                <a class="btn btn-primary btn-dl" href="https://app.kolbo.ai?via=orellevi" target="_blank" rel="noopener">
+                  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg>
+                  <span>נרשמים לקולבו<span class="meta">app.kolbo.ai</span></span>
+                </a>
+                <div class="ls-codes">
+                  <small>קוד הנחה לרכישה ראשונה, רק במנוי חודשי:</small>
+                  <div class="ls-code"><b id="ls-c50">ORELLEVI50</b><span>50% הנחה על החודש הראשון</span><button class="copy" type="button" data-copy="ls-c50">העתקה</button></div>
+                  <div class="ls-code"><b id="ls-c30">ORELLEVI30</b><span>30% הנחה ל-3 חודשים</span><button class="copy" type="button" data-copy="ls-c30">העתקה</button></div>
+                </div>
+                <div class="note"><span aria-hidden="true">●</span><span>כשנפתח האתר של קולבו – <b>אשרו עוגיות</b>, וכשמשלמים <b>הזינו את הקוד</b>.</span></div>
+              </div>
+              <ol class="ls-mini" style="counter-reset:lsm 1">
+                <li><span>בוחרים דרך: <b>מחברים את קולבו ל-Claude</b>, או <b>הדרך הקלה עם קובי</b>, בלי חיבורים. שתיהן כאן למטה.</span></li>
+              </ol>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="דף עם סרטון שזז מאחורי הכותרת" data-code='@keyframes lsKb{to{transform:scale(1.14)}}' data-sk="media">
+              <figure class="fill ls-fig ls-cy">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i>
+                    <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>pilates-tlv.github.io</span>
+                  </div>
+                  <div class="ls-kv">
+                    <div class="ls-kv-bg ls-kimg"></div>
+                    <div class="ls-kv-nav he"><span class="ls-kv-brand"><i>ס</i>סטודיו גוף</span><span class="ls-kv-pill">וואטסאפ</span></div>
+                    <div class="ls-kv-txt he">
+                      <small>פילאטיס מכשירים · תל אביב</small>
+                      <b>הגב שלכם<br>ירגיש את ההבדל</b>
+                      <span class="ls-kv-cta">לשיעור ניסיון</span>
+                    </div>
+                    <div class="ls-kv-rec"><span class="ls-kv-dot"></span>hero.mp4 · 0:05 · loop<span class="ls-kv-bar"><i></i></span></div>
+                  </div>
+                </div>
+                <figcaption>הסרטון זז לאט מאחורי הכותרת. זה ההבדל בין דף רגיל לדף פרימיום.</figcaption>
+              </figure>
+            </div>
+
+            <div class="ls-kpaths" data-block data-agent="שלבים" data-log="שתי דרכים: חיבור לקלוד או קובי" data-code='&lt;article class="card card-glow ls-kpc ls-kpe"&gt;' data-sk="media">
+              <div class="fill ls-kp2">
+
+                <article class="card ls-kpc">
+                  <div class="ls-kph"><span class="ls-kpt">דרך א</span><h4>מחברים את קולבו ל-Claude</h4><small>הצלם מייצר הכול לבד, ו-Claude שואל לפני כל יצירה</small></div>
+                  <ol class="ls-mini">
+                    <li><span>פותחים Terminal (ב-Mac) או PowerShell (ב-Windows) ומריצים פעם אחת:</span></li>
+                  </ol>
+                  <div class="prompt ls-cmd">
+                    <div class="prompt-h"><b>TERMINAL</b><button class="copy" type="button" data-copy="ls-kcmd">העתקה</button></div>
+                    <pre><span class="ls-dol" aria-hidden="true">$ </span><span id="ls-kcmd">npx -y @kolbo/mcp install</span></pre>
+                  </div>
+                  <ol class="ls-mini" style="counter-reset:lsm 1">
+                    <li><span>סוגרים ופותחים מחדש את Claude.</span></li>
+                    <li><span>ביצירה הראשונה נפתח בדפדפן חלון התחברות לקולבו. לוחצים <b>Allow</b>.<small>מפתח API מ-<code>app.kolbo.ai/developer</code> זו אפשרות, לא חובה.</small></span></li>
+                  </ol>
+                  <figure class="ls-fig ls-kfig ls-cy">
+                    <div class="win ls-ktermwin" aria-hidden="true">
+                      <div class="win-top"><i></i><i></i><i></i><span class="win-title">Terminal — zsh</span></div>
+                      <div class="win-body ls-bt">
+                        <div class="term"><span class="p">~ %</span> npx -y @kolbo/mcp install
+<span class="ls-sp">⠋</span> <span class="dim">installing @kolbo/mcp…</span>
+<span class="ok">✓</span> Kolbo added to Claude Code
+<span class="c">→</span> restart Claude Code
+<span class="p">~ %</span> <span class="dim">▍</span></div>
+                      </div>
+                    </div>
+                    <div class="win ls-kauth" aria-hidden="true">
+                      <div class="win-top"><i></i><i></i><i></i>
+                        <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>app.kolbo.ai</span>
+                      </div>
+                      <div class="win-body ls-ba">
+                        <div class="ls-link2"><span class="ls-klogo">K</span><span>⇄</span><i>✳</i></div>
+                        <b>Claude Code wants to use your Kolbo account</b>
+                        <small>Generate images and videos with your credits</small>
+                        <div class="ls-abtns"><span class="ls-no">Cancel</span><span class="ls-yes">Allow<span class="ls-ping ls-pc" style="left:50%;top:50%"></span><svg class="ls-cur" style="left:80%;top:62%" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span></div>
+                      </div>
+                    </div>
+                    <figcaption style="margin-top:12px">מריצים את הפקודה, וביצירה הראשונה לוחצים Allow.</figcaption>
+                  </figure>
+                </article>
+
+                <article class="card card-glow ls-kpc ls-kpe">
+                  <div class="ls-kph"><span class="ls-kpt">דרך ב · הכי קל</span><h4>הדרך הקלה: קובי, הסוכן של קולבו</h4><small>בלי חיבורים ובלי פרומפטים</small></div>
+                  <ol class="ls-mini">
+                    <li><span>פותחים את קולבו בדפדפן ומבקשים מקובי <b>במילים פשוטות</b> מה הדף צריך, למשל:</span></li>
+                  </ol>
+                  <div class="prompt">
+                    <div class="prompt-h"><b>KOBI</b><button class="copy" type="button" data-copy="ls-kobi">העתקה</button></div>
+                    <pre id="ls-kobi">תמונה לראש הדף של סטודיו פילאטיס בתל אביב, אור בוקר רך, ווידאו קצר שלה שזזה לאט</pre>
+                  </div>
+                  <ol class="ls-mini" style="counter-reset:lsm 1">
+                    <li><span>מורידים את הקבצים ושמים אותם בתיקייה <code>images</code> שבתוך החבילה.</span></li>
+                    <li><span>הסוכנים משתמשים בהם לבד. <b>סרטון בתיקייה הופך לסרטון של ראש הדף.</b></span></li>
+                  </ol>
+                  <figure class="ls-fig ls-kbfig">
+                    <div class="win" aria-hidden="true">
+                      <div class="win-top"><i></i><i></i><i></i>
+                        <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>app.kolbo.ai</span>
+                      </div>
+                      <div class="win-body ls-kb he">
+                        <div class="ls-kb-h"><span class="ls-klogo">K</span><span><b>קובי</b><small>הסוכן של קולבו</small></span><span class="ls-kb-on">מחובר</span></div>
+                        <div class="ls-kb-me">תמונה לראש הדף של סטודיו פילאטיס בתל אביב, אור בוקר רך, ווידאו קצר שלה שזזה לאט</div>
+                        <div class="ls-kb-ai">
+                          <span class="ls-kb-av">K</span>
+                          <div class="ls-kb-msg">
+                            <p>הנה התמונה, והסרטון הקצר שיצרתי ממנה:</p>
+                            <div class="ls-kb-media">
+                              <div class="ls-kb-t"><i class="ls-kimg"></i><span class="ls-kb-tag">image · 16:9</span><span class="ls-kb-dl">↓</span></div>
+                              <div class="ls-kb-t ls-kb-vid"><i class="ls-kimg"></i><span class="ls-kb-play">▶</span><span class="ls-kb-dur">0:05</span><span class="ls-kb-tag">video · 5s</span><span class="ls-kb-dl">↓</span></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="folder ls-kb-fold"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span>images/</span><span class="ls-kb-f">studio.jpg</span><span class="ls-kb-f">studio.mp4</span></div>
+                    <figcaption>מורידים את שני הקבצים לתיקייה images, והסוכנים יודעים מה לעשות איתם.</figcaption>
+                  </figure>
+                </article>
+              </div>
+            </div>
+
+            <div class="ls-knotes" data-block data-agent="שלבים" data-log="קרדיטים: וידאו עולה יותר, לא חובה" data-code='&lt;div class="note warn"&gt;' data-sk="line">
+              <div class="fill ls-knotes-in">
+                <div class="note warn"><span aria-hidden="true">●</span><span>יצירה עולה קרדיטים של קולבו, <b>וסרטון עולה יותר מתמונה.</b> כש-Claude מחובר הוא מראה הערכה ושואל לפני כל יצירה, ועל הסרטון הוא שואל בנפרד. דף בדיקה עם 7 תמונות עלה בערך 77 קרדיטים.</span></div>
+                <div class="note"><span aria-hidden="true">●</span><span><b>לא חובה.</b> הסרטון הוא תוספת, ובלי קולבו בכלל הדף נבנה עם גרפיקה מעוצבת במקום תמונות.</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 6 · one line, then Claude interviews ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 6 · משפט אחד, Claude מראיין" data-code='&lt;pre id="ls-start"&gt;תבנה לי דף נחיתה עם הסוכנים.' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">6</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">06 <b>INTERVIEW</b></span>
+              <h3>שולחים משפט אחד, Claude מראיין אתכם</h3>
+              <p>אין טופס למלא. מעתיקים את המשפט, שולחים, ו-Claude חוזר אליכם עם שאלות. ליד כל שאלה יש דוגמה לתשובה, ככה יודעים כמה לכתוב.</p>
               <div class="prompt">
                 <div class="prompt-h"><b>START.txt</b><button class="copy" type="button" data-copy="ls-start">העתקה</button></div>
-<pre id="ls-start">תבנה לי דף נחיתה עם הסוכנים.
-
-העסק שלי: <span class="ph">[מה העסק ומה מוכרים]</span>
-למי זה מיועד: <span class="ph">[מי הלקוחות]</span>
-מה הגולש צריך לעשות: <span class="ph">[וואטסאפ / טלפון / טופס]</span>
-מספר וואטסאפ: <span class="ph">[05X-XXXXXXX]</span>
-צבעים או לוגו: <span class="ph">[אם יש, אחרת "תבחרו אתם"]</span>
-חייב להופיע: <span class="ph">[מחיר / כתובת / שעות / המלצות אמיתיות]</span></pre>
+<pre id="ls-start">תבנה לי דף נחיתה עם הסוכנים.</pre>
               </div>
+              <ol class="ls-mini">
+                <li><span><b>5 שאלות:</b> מה העסק, מי הלקוח, הפעולה והמספר, המחיר, איפה ומתי.</span></li>
+                <li><span><b>עוד 4, אחרי שקרא:</b> למה דווקא אתכם, ממה הלקוחות חוששים, באיזה טון לדבר, המלצות ותמונות.</span></li>
+                <li><span><b>סיכום של 3 שורות.</b> כותבים "כן", והסוכנים יוצאים לדרך.</span></li>
+              </ol>
+              <div class="note"><span aria-hidden="true">●</span><span>יש תמונות, לוגו או אתר שאתם אוהבים? <b>שימו בתיקייה images או הדביקו קישור.</b> לא יודעים תשובה? כותבים "לא יודע", ו-Claude משלים הנחה ומסמן אותה.</span></div>
               <div class="note"><span aria-hidden="true">●</span><span>Claude מבקש אישור ליצור קבצים? <b>מאשרים.</b> ככה הוא כותב את הדף אצלכם במחשב.</span></div>
             </div>
 
-            <div class="ls-mock" data-block data-agent="שלבים" data-log="תיבת הכתיבה עם ההודעה ממולאת" data-code='.ls-caret{…animation:lsBlink 1s steps(1) infinite}' data-sk="media">
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="ציירתי את סבב השאלות הראשון" data-code='.ls-qs small{border-inline-start:2px solid var(--line2)}' data-sk="media">
               <figure class="fill ls-fig">
                 <div class="win" aria-hidden="true">
                   <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents · Code</span></div>
-                  <div class="win-body ls-b5">
+                  <div class="win-body ls-b5 ls-chat">
                     <div class="ls-ctx"><span>landing-agents</span><i></i><span>Claude Fable 5.2</span></div>
+                    <div class="ls-me he">תבנה לי דף נחיתה עם הסוכנים.</div>
+                    <div class="ls-cl he">
+                      <span class="ls-clh"><svg class="ls-star" viewBox="0 0 48 48" fill="currentColor"><g><rect x="22" y="2" width="4" height="20" rx="2"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(30 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(60 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(90 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(120 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(150 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(180 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(210 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(240 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(270 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(300 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(330 24 24)"/></g></svg>Claude</span>
+                      <p>כדי שהדף ימכור באמת, אני צריך להכיר את העסק. 5 שאלות עכשיו, ועוד 4 אחרי שאקרא את התשובות.</p>
+                      <ol class="ls-qs">
+                        <li><b>1. מה העסק ומה אתם מוכרים?</b><small>לדוגמה: סטודיו גוף, פילאטיס מכשירים בתל אביב. קבוצות קטנות, עד 8 מתאמנות, עם מדריכה שמתקנת כל תנועה.</small></li>
+                        <li><b>2. מי הלקוח האידיאלי, ובאיזה רגע הוא מחפש אתכם?</b><small>לדוגמה: נשים בנות <span dir="ltr">30–55</span> שיושבות כל היום מול מחשב, עם כאבי גב או צוואר, שניסו חדר כושר ולא החזיקו מעמד.</small></li>
+                        <li><b>3. מה הפעולה האחת, ובאיזה מספר?</b><small>לדוגמה: שישלחו וואטסאפ ויקבעו שיעור ניסיון. וואטסאפ <span dir="ltr">054-1234567</span>, אפשר גם להתקשר.</small></li>
+                        <li><b>4. מה המחיר או ההצעה?</b><small>לדוגמה: שיעור ניסיון ב-49&nbsp;₪. מי שממשיכה לוקחת כרטיסייה של 10 שיעורים ב-650&nbsp;₪.</small></li>
+                        <li><b>5. איפה ומתי?</b><small>לדוגמה: הצפון הישן בתל אביב, 3 דקות מכיכר רבין. א׳–ה׳ <span dir="ltr">7:00–21:00</span>, שישי <span dir="ltr">8:00–13:00</span>.</small></li>
+                      </ol>
+                      <p class="ls-dk">לא יודעים משהו? כתבו "לא יודע" ואשלים בהנחה סבירה.</p>
+                    </div>
                     <div class="input ls-in5">
-                      <div class="txt"><span>תבנה לי דף נחיתה עם הסוכנים.</span><span>העסק שלי: <b class="ls-fl">מאפייה ביתית, חלות ועוגות לשישי</b></span><span>למי זה מיועד: <b class="ls-fl">משפחות בשכונה</b></span><span>מה הגולש צריך לעשות: <b class="ls-fl">וואטסאפ</b><i class="ls-caret"></i></span><span>מספר וואטסאפ: <span class="ls-phm">[05X-XXXXXXX]</span></span><span>צבעים או לוגו: <span class="ls-phm">[אם יש…]</span></span><span>חייב להופיע: <span class="ls-phm">[מחיר / כתובת…]</span></span></div>
+                      <div class="txt"><span><i class="ls-caret"></i><span class="ls-ph">עונים כאן, לפי המספרים…</span></span></div>
                       <div class="row">
                         <span class="ls-rowl"><span class="ls-chipf"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>landing-agents</span></span>
-                        <span class="ls-rowl"><span class="model">Fable 5.2 ▾</span><span class="send"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m0 0L4 7m4-4 4 4"/></svg><span class="ls-ping ls-pc" style="left:50%;top:50%"></span><svg class="ls-cur" style="left:16px;top:16px" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span></span>
+                        <span class="ls-rowl"><span class="model">Fable 5.2 ▾</span><span class="send"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m0 0L4 7m4-4 4 4"/></svg></span></span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <figcaption>דוגמה למילוי. התכלת הוא מה שכתבתם, הצהוב עוד מחכה.</figcaption>
+                <figcaption>שלחתם משפט אחד. Claude שואל, והדוגמה האפורה מראה תשובה טובה.</figcaption>
               </figure>
             </div>
           </div>
         </div>
       </li>
 
-      <!-- ============ 6 · agents in parallel ============ -->
-      <li data-block data-agent="שלבים" data-log="שלב 6 · הסוכנים עובדים במקביל" data-code='&lt;div class="lane" style="--c:var(--ag1)"&gt;' data-sk="line">
+      <!-- ============ 7 · agents in parallel ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 7 · הסוכנים עובדים במקביל" data-code='&lt;div class="lane" style="--c:var(--ag1)"&gt;' data-sk="line">
         <div class="fill step">
-          <span class="step-n" aria-hidden="true">6</span>
+          <span class="step-n" aria-hidden="true">7</span>
           <div class="step-body">
             <div class="step-txt">
-              <span class="ls-k">06 <b>AGENTS</b></span>
+              <span class="ls-k">07 <b>AGENTS</b></span>
               <h3>רואים את הסוכנים עובדים</h3>
-              <p>הקופירייטר והמעצב יוצאים לדרך <b>באותו רגע</b>: אחד כותב את הטקסטים, השני בוחר צבעים וגופנים. כשהם מסיימים, Claude מרכיב את הדף, הבודק עובר על כל כפתור, ו-Claude מתקן את מה שהבודק מצא.</p>
+              <p>הקופירייטר והמעצב יוצאים לדרך <b>באותו רגע</b>: אחד כותב את הטקסטים, השני בוחר כיוון עיצוב וכותב רשימת צילומים. Claude מראה לכם כמה קרדיטים יעלו התמונות, ואחרי שאישרתם <b>הצלם</b> מייצר אותן בקולבו, ואם תרצו גם את הסרטון של ראש הדף. הבאתם קבצים מקובי? הם נכנסים לדף כמו שהם.</p>
+              <p>אחר כך Claude מרכיב את הדף, הבודק מצלם אותו בגודל טלפון ומחשב ועובר על כל כפתור, ו-Claude מתקן את מה שהבודק מצא.</p>
               <span class="ls-time"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.6"/></svg>כל זה לוקח כמה דקות</span>
               <p>בסוף מחכה לכם הקובץ <code>site/index.html</code>. לחיצה כפולה, והוא נפתח בדפדפן.</p>
             </div>
 
-            <div class="ls-mock" data-block data-agent="שלבים" data-log="4 מסלולי סוכנים וקבצים שנוצרים" data-code='.ls-f.soon{color:var(--muted)}' data-sk="media">
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="5 מסלולים: סוכנים, צלם וקבצים" data-code='.ls-f.soon{color:var(--muted)}' data-sk="media">
               <figure class="fill ls-fig ls-cy">
                 <div class="win" aria-hidden="true">
                   <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents · Claude Code</span></div>
@@ -1160,70 +1474,85 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
                     <div class="mc">
                       <div class="lane" style="--c:var(--ag1)"><span class="av">ק</span><span class="who">קופירייטר<small>במקביל · כותב טקסטים</small></span><span class="st">writing…</span><span class="track"><b style="--w:64%"></b></span></div>
                       <div class="lane" style="--c:var(--ag2)"><span class="av">מ</span><span class="who">מעצב<small>במקביל · צבעים וגופנים</small></span><span class="st">writing…</span><span class="track"><b style="--w:78%"></b></span></div>
+                      <div class="lane ls-wait" style="--c:var(--ag5)"><span class="av">צ</span><span class="who">צלם<small>אחרי האישור שלכם · תמונות וסרטון בקולבו</small></span><span class="st">waiting</span><span class="track"><b style="--w:0%"></b></span></div>
                       <div class="lane ls-wait" style="--c:var(--ag4)"><span class="av">C</span><span class="who">Claude<small>אחריהם · מרכיב את הדף</small></span><span class="st">waiting</span><span class="track"><b style="--w:0%"></b></span></div>
-                      <div class="lane ls-wait" style="--c:var(--ag3)"><span class="av">ב</span><span class="who">בודק<small>בסוף · קישורים, נייד, עובדות</small></span><span class="st">queued</span><span class="track"><b style="--w:0%"></b></span></div>
+                      <div class="lane ls-wait" style="--c:var(--ag3)"><span class="av">ב</span><span class="who">בודק<small>בסוף · צילומי מסך, קישורים, עובדות</small></span><span class="st">queued</span><span class="track"><b style="--w:0%"></b></span></div>
                     </div>
                     <div class="ls-files">
                       <small>Files</small>
                       <span class="ls-f ok"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>brief.md<span class="s">✓ saved</span></span>
                       <span class="ls-f wr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>copy.md<span class="s">● writing</span></span>
                       <span class="ls-f wr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>design.md<span class="s">● writing</span></span>
+                      <span class="ls-f soon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"><path d="M2 4.5h4l1.5 1.5H14v7.5H2Z"/></svg>images/gen/<span class="s">next</span></span>
                       <span class="ls-f soon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>site/index.html<span class="s">next</span></span>
                     </div>
                   </div>
                 </div>
-                <figcaption>שניים במקביל, אחר כך הרכבה, ובסוף בדיקה.</figcaption>
+                <figcaption>שניים במקביל, אחר כך תמונות, הרכבה, ובסוף בדיקה.</figcaption>
               </figure>
             </div>
           </div>
         </div>
       </li>
 
-      <!-- ============ 7 · go live ============ -->
-      <li class="ls-final" data-block data-agent="שלבים" data-log="שלב 7 · העלאה ל-Netlify Drop" data-code='.ls-final .step-n{background:linear-gradient(135deg,…)}' data-sk="line">
+      <!-- ============ 8 · go live (GitHub Pages, done by Claude) ============ -->
+      <li class="ls-final" data-block data-agent="שלבים" data-log="שלב 8 · Claude מעלה ל-GitHub Pages" data-code='&lt;pre id="ls-golive"&gt;תעלה את הדף לאוויר' data-sk="line">
         <div class="fill step">
-          <span class="step-n" aria-hidden="true">7</span>
+          <span class="step-n" aria-hidden="true">8</span>
           <div class="step-body">
             <div class="step-txt">
-              <span class="ls-k">07 <b>GO LIVE</b></span>
-              <h3>מעלים לאוויר</h3>
+              <span class="ls-k">08 <b>GO LIVE</b></span>
+              <h3>מעלים לאוויר, במשפט אחד</h3>
+              <p>כותבים ל-Claude, והוא מעלה את הדף בעצמו ל-GitHub Pages. חינם, עם קישור קבוע שאפשר לשלוח ללקוחות.</p>
+              <div class="prompt">
+                <div class="prompt-h"><b>TO CLAUDE</b><button class="copy" type="button" data-copy="ls-golive">העתקה</button></div>
+<pre id="ls-golive">תעלה את הדף לאוויר</pre>
+              </div>
               <ol class="ls-mini">
-                <li><span>נכנסים ל-<a class="ls-link" href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a></span></li>
-                <li><span>גוררים לשם את <b>כל התיקייה</b> <code>site</code></span></li>
-                <li><span>תוך שניות מקבלים קישור לדף</span></li>
+                <li><span><b>רק בפעם הראשונה:</b> אין לכם חשבון ב-GitHub? פותחים אחד בחינם ב-<a class="ls-link" href="https://github.com/signup" target="_blank" rel="noopener">github.com</a>.<small>Claude מתקין לבד את הכלי של GitHub. ב-Mac הוא עלול לבקש את הסיסמה של המחשב.</small></span></li>
+                <li><span>נפתח דפדפן. מזינים את הקוד החד-פעמי ש-Claude נותן ולוחצים <b>Authorize</b>.</span></li>
+                <li><span>אחרי דקה-שתיים מגיע קישור קבוע, כמו <code dir="ltr">name.github.io/business</code>.</span></li>
               </ol>
-              <div class="note warn"><span aria-hidden="true">●</span><span><b>חשוב:</b> נרשמים ל-Netlify בחינם ולוחצים <b>Claim</b>. דף שלא שויך לחשבון נמחק תוך שעה.</span></div>
+              <div class="note"><span aria-hidden="true">●</span><span><b>רוצים לשנות משהו אחר כך?</b> כותבים "תעדכן את הדף באוויר", והגרסה החדשה עולה לאותו קישור.</span></div>
+              <div class="note warn"><span aria-hidden="true">●</span><span>מה שבתיקייה <code>site</code> ציבורי, כמו הדף עצמו. Claude מעלה רק אותה, אז לא שמים בה שום דבר פרטי.</span></div>
               <div class="ls-acts">
-                <a class="btn btn-ghost" href="https://app.netlify.com/drop" target="_blank" rel="noopener">ל-Netlify Drop
+                <a class="btn btn-ghost" href="https://github.com/signup" target="_blank" rel="noopener">לפתיחת חשבון GitHub
                   <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
               </div>
             </div>
 
-            <div class="ls-mock" data-block data-agent="שלבים" data-log="אזור הגרירה של Netlify וקישור חי" data-code='.ls-drop{…border:2px dashed var(--cy);…}' data-sk="media">
-              <figure class="fill ls-fig ls-cy">
-                <div class="win" aria-hidden="true">
-                  <div class="win-top"><i></i><i></i><i></i>
-                    <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>app.netlify.com/drop</span>
-                  </div>
-                  <div class="win-body ls-b7">
-                    <div class="ls-drop">
-                      <span class="ls-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 18v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/></svg></span>
-                      <b>Drag and drop your site output folder here</b>
-                      <span>or browse to upload</span>
-                      <span class="ls-dragf">
-                        <svg class="ls-bigf" viewBox="0 0 46 38" fill="none"><path d="M2 6a4 4 0 0 1 4-4h11l4 4h19a4 4 0 0 1 4 4v22a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" fill="var(--amber)"/><path d="M2 12h42v20a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" fill="color-mix(in srgb,var(--amber) 80%,var(--ink))"/></svg>
-                        <em>site</em>
-                        <svg class="ls-cur" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg>
-                      </span>
-                    </div>
-                    <div class="ls-livebar">
-                      <span class="ls-lk"><span>your-site.netlify.app</span></span>
-                      <span class="ls-claim">Claim<span class="ls-ping" style="left:50%;top:50%;box-shadow:0 0 0 2px var(--amber)"></span></span>
-                    </div>
-                    <div class="ls-warnline he"><b>!</b>בלי Claim, הדף נמחק תוך שעה</div>
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="טרמינל gh, אישור בדפדפן וקישור חי" data-code='.ls-okpill{…color:var(--ok);…}' data-sk="media">
+              <figure class="fill ls-fig ls-kfig ls-gfig ls-cy">
+                <div class="win ls-ktermwin" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i><span class="win-title">Terminal — site</span></div>
+                  <div class="win-body ls-bt ls-gbt">
+                    <div class="term"><span class="p">site %</span> gh auth login --web
+<span class="c">!</span> First copy your one-time code: <span class="c">8F2A-91CD</span>
+<span class="ok">✓</span> Logged in as your-name
+<span class="p">site %</span> gh repo create pilates-tlv --public --source=. --push
+<span class="ok">✓</span> Created repository your-name/pilates-tlv
+<span class="ok">✓</span> Pushed commits to main
+<span class="p">site %</span> gh api -X POST repos/your-name/pilates-tlv/pages
+<span class="ok">✓</span> <span class="dim">GitHub Pages: built</span></div>
                   </div>
                 </div>
-                <figcaption>גוררים את site, ותוך שניות יש קישור חי.</figcaption>
+                <div class="win ls-kauth" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i>
+                    <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>github.com/login/device</span>
+                  </div>
+                  <div class="win-body ls-ba">
+                    <span class="ls-ghmark"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8Z"/></svg></span>
+                    <b>Authorize GitHub CLI</b>
+                    <div class="ls-gcode"><span>8</span><span>F</span><span>2</span><span>A</span><i>-</i><span>9</span><span>1</span><span>C</span><span>D</span></div>
+                    <small>GitHub CLI wants to access your account</small>
+                    <div class="ls-abtns"><span class="ls-no">Cancel</span><span class="ls-gyes">Authorize github<span class="ls-ping ls-pc" style="left:50%;top:50%"></span><svg class="ls-cur" style="left:58%;top:58%" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span></div>
+                  </div>
+                </div>
+                <div class="ls-livebar" aria-hidden="true">
+                  <span class="ls-lk"><span>your-name.github.io/pilates-tlv</span></span>
+                  <span class="ls-okpill">200 · LIVE</span>
+                </div>
+                <figcaption style="margin-top:12px">Claude מריץ, אתם מאשרים פעם אחת בדפדפן, והקישור באוויר.</figcaption>
               </figure>
             </div>
           </div>
@@ -1299,6 +1628,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .lp-faq details>div p:last-child{margin:0}
 .lp-say{display:block;padding:10px 14px;border-radius:12px;background:var(--bg2);box-shadow:0 0 0 1px var(--line2) inset;color:var(--ink);font-weight:600}
 .lp-say::before{content:"כותבים ל-Claude";display:block;font:600 11.5px/1 var(--mono);color:var(--muted);margin-bottom:6px}
+.lp-say.lp-kobi::before{content:"כותבים לקובי בקולבו"}
 .lp-num{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;direction:ltr}
 .lp-num s{color:var(--muted);font-family:var(--mono);font-size:14px}
 .lp-num code{color:var(--ok)}
@@ -1309,6 +1639,25 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .lp-team{display:flex;flex-wrap:wrap;gap:8px}
 .lp-end .btn-dl{height:auto;padding-block:10px}
 .lp-dl{display:grid;gap:5px;text-align:start}
+.tree.lp-tree .d5{padding-left:118px}
+.tree.lp-tree .n .nm{min-width:0}
+.lp-kolbo{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:14px 22px;margin-top:16px;padding:16px 18px;border-radius:var(--r-lg);background:linear-gradient(90deg,color-mix(in srgb,var(--cy) 8%,var(--surface)),var(--surface));box-shadow:0 0 0 1px var(--line2) inset}
+.lp-kt{display:grid;gap:4px;min-width:0}
+.lp-kt b{font:700 18px/1.3 var(--display);color:var(--ink)}
+.lp-kt span{font-size:14.5px;color:var(--muted);line-height:1.45}
+.lp-kt .lp-kn{color:var(--ink2);font-weight:600}
+.lp-kc{display:flex;flex-wrap:wrap;gap:8px}
+.lp-code{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding-inline:14px 4px;border-radius:999px;background:var(--bg2);box-shadow:0 0 0 1px color-mix(in srgb,var(--v2) 40%,transparent) inset}
+.lp-code b{font:700 14.5px/1 var(--mono);letter-spacing:.05em;color:#fff;direction:ltr}
+.lp-code small{font-size:12.5px;color:var(--muted);white-space:nowrap}
+.lp-code .copy{height:44px;min-height:44px;padding:0 14px}
+.lp-kolbo .btn-ghost{--h:52px;font-size:15.5px;padding:0 20px}
+.lp-kolbo .btn-ghost .ic{width:16px;height:16px}
+@media (max-width:900px){
+  .lp-kolbo{grid-template-columns:minmax(0,1fr)}
+  .lp-kc{display:grid}
+  .lp-code{justify-content:space-between}
+}
 @media (max-width:900px){
   .lp-inside,.lp-change{grid-template-columns:minmax(0,1fr)}
   .lp-stick{position:static}
@@ -1318,7 +1667,8 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
   .lp-side,.lp-kbd-l{display:none}
   .tree.lp-tree{font-size:13px}
   .tree.lp-tree .n{gap:8px;padding:9px 6px}
-  .tree.lp-tree .d1{padding-left:20px}.tree.lp-tree .d2{padding-left:34px}.tree.lp-tree .d3{padding-left:48px}.tree.lp-tree .d4{padding-left:62px}
+  .tree.lp-tree .d1{padding-left:20px}.tree.lp-tree .d2{padding-left:34px}.tree.lp-tree .d3{padding-left:48px}.tree.lp-tree .d4{padding-left:62px}.tree.lp-tree .d5{padding-left:76px}
+  .tree.lp-tree .n .tag{font-size:11px;padding:4px 7px}
   .lp-r{grid-template-columns:38px minmax(0,1fr);gap:12px}
   .lp-av{width:38px;height:38px;border-radius:11px}
   .lp-redeploy{grid-template-columns:minmax(0,1fr)}
@@ -1334,12 +1684,12 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
       <div class="fill">
         <span class="eyebrow">Inside · landing-agents</span>
         <h2>מה יש <span class="grad-text">בחבילה</span></h2>
-        <p class="lead">תיקייה אחת. בתוכה מנהל, שלושה סוכנים ומקום לחומרים שלכם. ככה היא נראית כשפותחים אותה במחשב.</p>
+        <p class="lead">תיקייה אחת. בתוכה מנהל, ארבעה סוכנים, הידע שלהם ומקום לחומרים שלכם. ככה היא נראית כשפותחים אותה במחשב.</p>
       </div>
     </div>
 
     <div class="lp-inside">
-      <div class="lp-stick" data-block data-agent="חבילה" data-log="חלון Finder עם עץ קבצים ותגיות צבע" data-code='<div class="tree lp-tree">' data-sk="media">
+      <div class="lp-stick" data-block data-agent="חבילה" data-log="עץ קבצים · 4 סוכנים ו-references" data-code='<div class="tree lp-tree">' data-sk="media">
         <div class="fill lp-explorer">
           <div class="win">
             <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents</span></div>
@@ -1362,9 +1712,13 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
                   <div class="n d2" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">skills</span></div>
                   <div class="n d3" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">landing-page</span></div>
                   <div class="n d4 lp-sel" role="listitem" style="--c:var(--ag1)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">SKILL.md</span><span class="tag">המנהל</span></div>
+                  <div class="n d4" role="listitem" style="--c:var(--cy)"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">references</span><span class="tag">הידע</span></div>
+                  <div class="n d5" role="listitem" style="--c:var(--cy)"><span class="lp-car">▸</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">styles</span><span class="tag">4 כיווני עיצוב</span></div>
+                  <div class="n d5" role="listitem" style="--c:var(--ag5)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">imagery.md</span><span class="tag">שיטת הצילום</span></div>
                   <div class="n d2" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">agents</span></div>
                   <div class="n d3" role="listitem" style="--c:var(--ag2)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">copywriter.md</span><span class="tag">קופירייטר</span></div>
                   <div class="n d3" role="listitem" style="--c:var(--ag3)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">designer.md</span><span class="tag">מעצב</span></div>
+                  <div class="n d3" role="listitem" style="--c:var(--ag5)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">imagery.md</span><span class="tag">צלם</span></div>
                   <div class="n d3" role="listitem" style="--c:var(--ag4)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">checker.md</span><span class="tag">בודק</span></div>
                   <div class="n d1" role="listitem" style="--c:var(--ag5)"><span class="lp-car">▸</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">images</span><span class="tag">התמונות שלכם</span></div>
                   <div class="n d1" role="listitem" style="--c:var(--ink)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 15.5h4"/></svg><span class="nm">START.txt</span><span class="tag">ההודעה</span></div>
@@ -1378,29 +1732,29 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
       </div>
 
       <div class="lp-roster">
-        <div data-block data-agent="חבילה" data-log="כרטיס המנהל · 5 שלבי SKILL.md" data-code='.lp-flow li::before{content:counter(f)' data-sk="line">
+        <div data-block data-agent="חבילה" data-log="כרטיס המנהל · 6 שלבי SKILL.md" data-code='.lp-flow li::before{content:counter(f)' data-sk="line">
           <div class="fill card card-glow lp-card">
             <div class="lp-ch"><b>THE LEAD</b><span class="chip" style="--c:var(--ag1)">Claude</span></div>
             <div class="lp-r" style="--c:var(--ag1)">
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg></span>
               <div>
                 <h3>המנהל <code>SKILL.md</code></h3>
-                <p>סדר העבודה של Claude. הוא לא כותב את הדף לבד: אם חסר מידע שואל אתכם עד 6 שאלות, מחלק את העבודה לסוכנים, מרכיב קובץ אחד ומעביר לבדיקה.</p>
-                <ol class="lp-flow"><li>בריף</li><li class="lp-par">שניים במקביל</li><li>בנייה</li><li>בדיקה</li><li>מסירה</li></ol>
+                <p>סדר העבודה של Claude. הוא לא כותב את הדף לבד: אם חסר מידע שואל אתכם בהודעה אחת, מחלק את העבודה לסוכנים, שואל אתכם לפני שמייצרים תמונות, מרכיב קובץ אחד ומעביר לבדיקה.</p>
+                <ol class="lp-flow"><li>בריף</li><li class="lp-par">שניים במקביל</li><li>תמונות</li><li>בנייה</li><li>בדיקה</li><li>מסירה</li></ol>
                 <div class="lp-meta"><span class="lp-out">כותב <code>brief.md</code></span><span class="lp-out">בונה <code>site/index.html</code></span></div>
               </div>
             </div>
           </div>
         </div>
 
-        <div data-block data-agent="חבילה" data-log="כרטיס הצוות · 3 סוכנים ומה כל אחד כותב" data-code='.lp-av{width:44px;height:44px;border-radius:13px;' data-sk="line">
+        <div data-block data-agent="חבילה" data-log="כרטיס הצוות · 4 סוכנים ומה כל אחד עושה" data-code='.lp-av{width:44px;height:44px;border-radius:13px;' data-sk="line">
           <div class="fill card lp-card">
             <div class="lp-ch"><b>THE TEAM</b><span class="pill"><span class="dot"></span>קופירייטר ומעצב באותו רגע</span></div>
             <div class="lp-r" style="--c:var(--ag2)">
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M13.5 7.5l3 3"/></svg></span>
               <div>
                 <h3>קופירייטר <code>copywriter.md</code></h3>
-                <p>כותב את כל המילים: כותרת עד 8 מילים, 3 יתרונות, 3–5 שאלות נפוצות וכפתור. לא ממציא מחירים, מספרים או המלצות.</p>
+                <p>כותב את כל המילים: כותרת עד 8 מילים, 3 יתרונות, 3–5 שאלות נפוצות וכפתור. לא ממציא מחירים, מספרים או המלצות, ובשאלות הנפוצות לא מבטיח יותר ממה שכתוב בבריף.</p>
                 <div class="lp-meta"><span class="lp-out">כותב <code>copy.md</code></span></div>
               </div>
             </div>
@@ -1409,8 +1763,17 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-1 2-2s-1-1.6-1-2.6 1-1.4 2-1.4h2a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15.5" cy="7.5" r="1.2" fill="currentColor"/></svg></span>
               <div>
                 <h3>מעצב <code>designer.md</code></h3>
-                <p>בוחר צבעים מהעולם של העסק, גופן עברי, גדלים וקצב בין הסקשנים. בודק ניגודיות קריאה, ומשתמש רק בתמונות שלכם.</p>
-                <div class="lp-meta"><span class="lp-out">כותב <code>design.md</code></span></div>
+                <p>בוחר אחד מ-4 כיווני עיצוב: לילה, בהיר, צבע מלא או יוקרה. מתאים אותו לצבעים של העסק, בוחר את הפתיחה וקצב הסקשנים, בודק ניגודיות, וכותב לצלם רשימת צילומים.</p>
+                <div class="lp-meta"><span class="lp-out">כותב <code>design.md</code></span><span class="lp-out">רשימת צילומים</span></div>
+              </div>
+            </div>
+            <div class="lp-sep"></div>
+            <div class="lp-r" style="--c:var(--ag5)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 8h3l1.5-2.5h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></span>
+              <div>
+                <h3>צלם <code>imagery.md</code></h3>
+                <p>עובד בקולבו, סטודיו של תמונות ווידאו. מייצר 3-6 תמונות שנראות כמו צילום אחד של העסק, ואם תאשרו גם סרטון קצר שזז מאחורי הכותרת, מהתמונה הראשית. בלי אותיות בתמונה ובלי פנים מומצאות. מכשירים כמו מיטת פילאטיס או כיסא מספרה מופיעים רק מקרוב וחלקית, כדי שייראו אמיתיים. הבאתם קבצים מקובי? הוא משתמש בהם ולא מייצר אותם שוב.</p>
+                <div class="lp-meta"><span class="lp-out">אחרי האישור שלכם</span><span class="lp-out">שומר ב-<code>images/gen</code></span><span class="lp-out">סרטון לא חובה</span></div>
               </div>
             </div>
             <div class="lp-sep"></div>
@@ -1418,8 +1781,8 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
               <div>
                 <h3>בודק <code>checker.md</code></h3>
-                <p>עובר על הדף מול הבריף: קישור וואטסאפ, תצוגה בנייד, כפתורים גדולים מספיק ועובדות שלא הופיעו בבריף. לא נוגע בקבצים, רק מדווח. Claude מתקן ומריץ אותו שוב.</p>
-                <div class="lp-meta"><span class="lp-out">אחרי הבנייה</span><span class="lp-out">מחזיר <code>BLOCKERS</code></span></div>
+                <p>מצלם את הדף בגודל טלפון ומחשב ומסתכל על הצילומים. עובר מול הבריף: קישור וואטסאפ, כפתורים גדולים מספיק, התמונות, ועובדות או הבטחות שלא הופיעו בבריף. לא נוגע בקבצים, רק מדווח. Claude מתקן ומריץ אותו שוב.</p>
+                <div class="lp-meta"><span class="lp-out">אחרי הבנייה</span><span class="lp-out">צילומים ב-<code>checks</code></span><span class="lp-out">מחזיר <code>BLOCKERS</code></span></div>
               </div>
             </div>
           </div>
@@ -1432,7 +1795,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg></span>
               <div>
                 <h3>התמונות שלכם <code>images/</code></h3>
-                <p>לוגו ותמונות של העסק נכנסים לכאן. הדף משתמש רק בהן. התיקייה ריקה? יוצא עיצוב בלי תמונות.</p>
+                <p>לוגו, תמונות וסרטונים של העסק נכנסים לכאן, גם כאלה שעשיתם עם קובי בקולבו. סרטון כאן הופך לסרטון של ראש הדף. יש תמונה שלכם? הצלם משתמש בה כבסיס לתמונות שלכם בדף. בלי תמונות ובלי קולבו יוצא עיצוב עם גרפיקה.</p>
               </div>
             </div>
             <div class="lp-sep"></div>
@@ -1440,7 +1803,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
               <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
               <div>
                 <h3>ההודעה הראשונה <code>START.txt</code></h3>
-                <p>מה ששולחים ל-Claude, עם סוגריים למלא: העסק, הלקוחות, הפעולה, וואטסאפ, צבעים ומה חייב להופיע.</p>
+                <p>משפט אחד ששולחים ל-Claude. משם הוא מראיין אתכם בשני סבבים קצרים, עם דוגמה לתשובה ליד כל שאלה, וכותב מהתשובות בריף. למטה בקובץ גם ההוראות לקולבו: חיבור ל-Claude, או הדרך הקלה עם קובי.</p>
               </div>
             </div>
           </div>
@@ -1461,7 +1824,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
       </div>
     </div>
 
-    <div data-block data-agent="חבילה" data-log="בקשת שינוי להעתקה + עדכון ב-Netlify" data-code='<button class="copy" type="button" data-copy="lp-change">' data-sk="btn">
+    <div data-block data-agent="חבילה" data-log="בקשת שינוי להעתקה + עדכון באוויר" data-code='<button class="copy" type="button" data-copy="lp-change">' data-sk="btn">
       <div class="fill lp-pk">
         <div class="prompt">
           <div class="prompt-h"><b>CHANGE REQUEST</b><button class="copy" type="button" data-copy="lp-change">העתקה</button></div>
@@ -1472,9 +1835,9 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
           <div class="lp-drag" aria-hidden="true">
             <span class="folder on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>site</span>
             <svg class="lp-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M14 7l5 5-5 5"/></svg>
-            <span class="lp-zone">Deploys</span>
+            <span class="lp-zone">git push</span>
           </div>
-          <p><b>אחרי כל שינוי</b> גוררים שוב את כל התיקייה <code>site</code> לאתר שלכם ב-Netlify, בלשונית Deploys. לא לדף ה-drop, שם נפתח אתר חדש.</p>
+          <p><b>הדף כבר באוויר?</b> כותבים "תעדכן את הדף באוויר". Claude מעלה את הגרסה החדשה לאותו קישור, ותוך דקה-שתיים רואים אותה.</p>
         </div>
       </div>
     </div>
@@ -1484,11 +1847,11 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 <!-- ================= 3 · אם משהו נתקע ================= -->
 <section class="sec" id="stuck" data-section>
   <div class="wrap">
-    <div class="sec-head" data-block data-agent="חבילה" data-log="כותרת · אם משהו נתקע" data-code='<section class="sec" id="stuck" data-section>' data-sk="title">
+    <div class="sec-head" data-block data-agent="חבילה" data-log="כותרת · תקלות ושאלות על תמונות" data-code='<section class="sec" id="stuck" data-section>' data-sk="title">
       <div class="fill">
         <span class="eyebrow">Troubleshooting</span>
         <h2>אם משהו <span class="grad-text">נתקע</span></h2>
-        <p class="lead">חמש תקלות שקורות, ומה כותבים כדי לצאת מהן.</p>
+        <p class="lead">חמש תקלות שקורות ומה כותבים כדי לצאת מהן, ושתי שאלות על תמונות.</p>
       </div>
     </div>
 
@@ -1533,12 +1896,41 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
         </details>
       </div>
 
-      <div data-block data-agent="חבילה" data-log="תקלה 5 · הדף נמחק מ-Netlify" data-code='<span class="lp-qn">05</span>' data-sk="line">
+      <div data-block data-agent="חבילה" data-log="תקלה 5 · הקישור עוד לא עובד" data-code='<span class="lp-qn">05</span>' data-sk="line">
         <details class="fill">
-          <summary><span class="lp-q"><span class="lp-qn">05</span>הדף נעלם מ-Netlify</span></summary>
+          <summary><span class="lp-q"><span class="lp-qn">05</span>הקישור לא עובד מיד</span></summary>
           <div>
-            <p>דף שלא שויך לחשבון נמחק תוך שעה. מיד אחרי ההעלאה נרשמים ל-Netlify בחינם ולוחצים <b>Claim</b>.</p>
-            <p>כבר נמחק? גוררים שוב את <code>site</code> ל-<a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a>, והפעם עושים Claim.</p>
+            <p>בהעלאה הראשונה GitHub בונה את הדף דקה-שתיים, ועד אז הקישור מראה 404. גם אחרי עדכון לוקח דקה-שתיים, ולפעמים צריך לרענן את הדפדפן.</p>
+            <p>עברו כמה דקות ועדיין לא עובד? <span class="lp-say">תבדוק למה הקישור ב-GitHub Pages לא עובד</span></p>
+          </div>
+        </details>
+      </div>
+      <div data-block data-agent="חבילה" data-log="שאלה 6 · צריך לשלם על קולבו?" data-code='<span class="lp-qn">06</span>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">06</span>צריך לשלם על קולבו?</span></summary>
+          <div>
+            <p>קולבו הוא סטודיו של תמונות ווידאו, ושם נוצרים התמונות והסרטון שזז מאחורי הכותרת. יצירה עולה קרדיטים, וסרטון יותר מתמונה. Claude מראה הערכה ושואל לפני כל יצירה, והסרטון לא חובה. נרשמים דרך <a href="https://app.kolbo.ai?via=orellevi" target="_blank" rel="noopener">הקישור הזה</a>, ובקנייה הראשונה של מנוי חודשי יש שני קודים: <code>ORELLEVI50</code> נותן 50% הנחה על החודש הראשון, <code>ORELLEVI30</code> נותן 30% הנחה ל-3 חודשים.</p>
+            <p>בלי קולבו החבילה עובדת, והדף נבנה בלי תמונות שנוצרו, עם גרפיקה מעוצבת. אבל התמונות והסרטון הם מה שעושה את ההבדל.</p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="שאלה 7 · תמונה שלי בתיקייה images" data-code='<span class="lp-qn">07</span>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">07</span>אפשר לשים תמונה שלי?</span></summary>
+          <div>
+            <p>כן. שמים אותה בתיקייה <code>images</code> לפני ששולחים את ההודעה. הצלם משתמש בה כרפרנס לתמונות שלכם בדף.</p>
+            <p>בלי תמונה שלכם הוא לא ממציא אתכם, רק את המקום, המוצר והאווירה.</p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="שאלה 8 · בלי חיבורים ← קובי" data-code='<span class="lp-qn">08</span>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">08</span>לא רוצה להתעסק עם חיבורים</span></summary>
+          <div>
+            <p>אין צורך. יש דרך קלה: <b>קובי, הסוכן של קולבו.</b> נרשמים דרך <a href="https://app.kolbo.ai?via=orellevi" target="_blank" rel="noopener">הקישור הזה</a>, פותחים את קולבו בדפדפן ומבקשים מקובי במילים פשוטות, למשל: <span class="lp-say lp-kobi">תמונה לראש הדף של סטודיו פילאטיס בתל אביב, אור בוקר רך, ווידאו קצר שלה שזזה לאט</span></p>
+            <p>מורידים את הקבצים, שמים בתיקייה <code>images</code> שבחבילה, והסוכנים משתמשים בהם לבד. סרטון בתיקייה הופך לסרטון של ראש הדף. כשנפתח האתר של קולבו – אשרו עוגיות, וכשמשלמים הזינו את הקוד.</p>
           </div>
         </details>
       </div>
@@ -1549,21 +1941,32 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 <!-- ================= 4 · סוף ================= -->
 <section class="sec" id="end" data-section>
   <div class="wrap">
-    <div data-block data-agent="חבילה" data-log="סוף הדף · הורדה שוב ואינסטגרם" data-code='<a class="btn btn-primary btn-dl" href="landing-agents.zip"' data-sk="btn">
+    <div data-block data-agent="חבילה" data-log="סוף הדף · הורדה ואינסטגרם" data-code='<a class="btn btn-primary btn-dl" href="landing-agents.zip"' data-sk="btn">
       <div class="fill end lp-end">
-        <div class="lp-team"><span class="chip" style="--c:var(--ag1)">המנהל</span><span class="chip" style="--c:var(--ag2)">קופירייטר</span><span class="chip" style="--c:var(--ag3)">מעצב</span><span class="chip" style="--c:var(--ag4)">בודק</span></div>
+        <div class="lp-team"><span class="chip" style="--c:var(--ag1)">המנהל</span><span class="chip" style="--c:var(--ag2)">קופירייטר</span><span class="chip" style="--c:var(--ag3)">מעצב</span><span class="chip" style="--c:var(--ag5)">צלם</span><span class="chip" style="--c:var(--ag4)">בודק</span></div>
         <h2>הצוות שלכם <span class="grad-text">כבר בתוך הזיפ</span></h2>
-        <p class="lead">מורידים, פותחים בלשונית Code ושולחים את ההודעה שבקובץ <code>START.txt</code>. הקופירייטר והמעצב עובדים במקביל, והבודק עובר על כל כפתור לפני שהדף מגיע אליכם.</p>
+        <p class="lead">מורידים, פותחים בלשונית Code, שולחים משפט אחד מתוך <code>START.txt</code> ועונים על השאלות של Claude. הקופירייטר והמעצב עובדים במקביל, הצלם מייצר את התמונות והסרטון, והבודק עובר על כל כפתור לפני שהדף מגיע אליכם.</p>
         <div class="ctas">
           <a class="btn btn-primary btn-dl" href="landing-agents.zip" download>
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
-            <span class="lp-dl"><span>להוריד את החבילה שוב</span><span class="meta">landing-agents.zip</span></span>
+            <span class="lp-dl"><span>להוריד את החבילה</span><span class="meta">landing-agents.zip</span></span>
           </a>
           <a class="btn btn-ghost" href="https://www.instagram.com/leviorel/" target="_blank" rel="noopener">
             <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
             @leviorel באינסטגרם
           </a>
         </div>
+      </div>
+    </div>
+
+    <div data-block data-agent="חבילה" data-log="רצועת קולבו · קישור ושני קודים" data-code='<div class="lp-kolbo"><span class="lp-code">' data-sk="line">
+      <div class="fill lp-kolbo">
+        <div class="lp-kt"><b>קולבו: סטודיו של תמונות ווידאו לדף</b><span>סרטון קצר שזז מאחורי הכותרת, תמונות וקליפים. עשרות מודלים בחשבון אחד. מחברים ל-Claude, או מבקשים מקובי, הסוכן של קולבו.</span><span>קוד לרכישה ראשונה, רק במנוי חודשי.</span><span class="lp-kn">כשנפתח האתר של קולבו – אשרו עוגיות, וכשמשלמים הזינו את הקוד</span></div>
+        <div class="lp-kc">
+          <span class="lp-code"><b id="lp-c50">ORELLEVI50</b><small>50% על החודש הראשון</small><button class="copy" type="button" data-copy="lp-c50">העתקה</button></span>
+          <span class="lp-code"><b id="lp-c30">ORELLEVI30</b><small>30% ל-3 חודשים</small><button class="copy" type="button" data-copy="lp-c30">העתקה</button></span>
+        </div>
+        <a class="btn btn-ghost" href="https://app.kolbo.ai?via=orellevi" target="_blank" rel="noopener">לקולבו<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
       </div>
     </div>
   </div>
@@ -1574,7 +1977,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
   <div class="me"><img src="media/avatar.jpg" alt="">אוראל לוי · ‎@leviorel</div>
   <p>המדריך הזה נבנה מול העיניים על ידי סוכני Claude שעבדו במקביל · 12 דקות של בנייה אמיתית.</p>
 </footer>
-<script>window.AW={agents:[["פתיחה","#a16cff"],["שלבים","#2bd7d6"],["חבילה","#f43f9e"]],title:"יומן הבנייה של הדף הזה",total:"3 סוכנים בנו את הדף הזה במקביל, וסוכן רביעי בנה את ההדגמה · 12 דקות של בנייה אמיתית"};</script>
+<script>window.AW={agents:[["פתיחה","#a16cff"],["שלבים","#2bd7d6"],["חבילה","#f43f9e"]],title:"יומן הבנייה של הדף הזה",total:"3 סוכנים בנו את הדף הזה במקביל, סוכן רביעי בנה את ההדגמה וסוכן חמישי הוסיף את קולבו · 12 דקות של בנייה אמיתית"};</script>
 <script>/* =====================================================================
    aw.js — build-replay engine for the agents guides
    Config (set before this file): window.AW = {
