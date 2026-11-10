@@ -1,0 +1,2042 @@
+<!doctype html>
+<html lang="he" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>סוכנים בונים דף נחיתה · אוראל לוי</title><meta name="description" content="מדריך חינמי: 3 סוכני Claude בונים לכם דף נחיתה במקביל">
+<meta property="og:title" content="סוכנים בונים דף נחיתה"><meta property="og:description" content="מדריך חינמי: 3 סוכני Claude בונים לכם דף נחיתה במקביל"><meta property="og:image" content="media/avatar.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet"><style>/* =====================================================================
+   Agents guides — design system (dark cinematic, leviorel guide brand)
+   Single deliberate dark theme. Every colour is a token below.
+   ===================================================================== */
+:root{
+  color-scheme:dark;
+  --bg:#0c0d10; --bg2:#101114; --surface:#141619; --surface2:#1b1d21; --surface3:#24272c;
+  --ink:#f5f5f5; --ink2:#d3d6da; --muted:#b7bbc0; --line:#26282c; --line2:#3b3d40; --paper:#f2eee6; --on-paper:#111418;
+  --v1:#7a16e0; --v2:#a16cff; --cy:#2bd7d6; --pink:#f43f9e; --ok:#2fd18a; --amber:#fbbf24;
+  --grad:linear-gradient(97deg,#7a16e0,#008786);
+  --grad-text:linear-gradient(97deg,#a16cff,#2bd7d6);
+  --on-grad:#ffffff;
+  /* one colour per agent (cursor, lane, chip, file-tree tag) */
+  --ag1:#a16cff; --ag2:#2bd7d6; --ag3:#f43f9e; --ag4:#2fd18a; --ag5:#fbbf24;
+  --display:"Rubik","Segoe UI",Arial,sans-serif;
+  --body:"Rubik","Segoe UI",Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,Consolas,monospace;
+  --r-sm:10px; --r:16px; --r-lg:24px; --r-xl:32px;
+  --gut:max(16px,env(safe-area-inset-left,0px));
+  --gutr:max(16px,env(safe-area-inset-right,0px));
+  --wrap:1180px;
+  --shadow:0 24px 60px -24px rgba(0,0,0,.75),0 2px 0 rgba(255,255,255,.03) inset;
+  --glow-v:0 0 0 1px rgba(161,108,255,.35),0 18px 50px -12px rgba(122,22,224,.5);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:clip}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:90}
+img{max-width:100%;display:block}
+a{color:inherit}
+::selection{background:rgba(168,85,247,.45);color:#fff}
+
+/* ---------- atmosphere ---------- */
+.atmo{position:fixed;inset:0;z-index:-1;pointer-events:none;overflow:hidden}
+.atmo::before{content:"";position:absolute;width:90vmax;height:90vmax;top:-45vmax;inset-inline-end:-30vmax;background:radial-gradient(closest-side,rgba(122,22,224,.22),transparent 70%)}
+.atmo::after{content:"";position:absolute;width:70vmax;height:70vmax;bottom:-40vmax;inset-inline-start:-25vmax;background:radial-gradient(closest-side,rgba(0,135,134,.16),transparent 70%)}
+.grid-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 20%,#000 30%,transparent 80%)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-left:var(--gut);padding-right:var(--gutr)}
+.sec{padding-block:clamp(72px,10vw,140px);position:relative}
+.sec-head{display:grid;gap:14px;margin-bottom:clamp(32px,5vw,56px);max-width:760px}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font:600 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--cy);direction:ltr;justify-self:start}
+[dir="rtl"] .eyebrow{justify-self:start}
+.eyebrow::before{content:"";width:22px;height:1px;background:currentColor}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:clamp(34px,5.2vw,64px);line-height:1.04;font-weight:800}
+h3{font-size:clamp(22px,2.4vw,28px);line-height:1.2;font-weight:700}
+.lead{font-size:clamp(18px,1.6vw,21px);color:var(--ink2);max-width:62ch;margin:0}
+.grad-text{background:var(--grad-text);-webkit-background-clip:text;background-clip:text;color:transparent}
+.muted{color:var(--muted)}
+code,.code{font-family:var(--mono);font-size:.86em;background:rgba(255,255,255,.06);border:1px solid var(--line);border-radius:7px;padding:.08em .45em;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+
+/* ---------- brand bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:80;background:rgba(7,7,13,.72);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:62px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:700}
+.brand img{width:34px;height:34px;border-radius:50%;border:2px solid var(--v2)}
+.brand small{display:block;font:500 12px/1 var(--body);color:var(--muted);margin-top:3px}
+.bar-progress{position:absolute;inset:auto 0 -1px 0;height:2px;background:var(--grad);transform-origin:right;transform:scaleX(var(--p,0))}
+
+/* ---------- buttons ---------- */
+.btn{--h:56px;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:var(--h);padding:0 26px;border-radius:999px;font:700 17px/1 var(--body);text-decoration:none;border:0;cursor:pointer;transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s,background .2s;white-space:nowrap}
+.btn:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+.btn-primary{background:var(--paper);color:var(--on-paper);box-shadow:0 18px 50px -18px rgba(242,238,230,.35)}
+.btn-primary:hover{transform:translateY(-2px);background:#fff;box-shadow:0 22px 60px -14px rgba(161,108,255,.55)}
+.btn-ghost{background:rgba(255,255,255,.04);color:var(--ink);box-shadow:0 0 0 1px var(--line2) inset}
+.btn-ghost:hover{background:rgba(255,255,255,.08);transform:translateY(-2px)}
+.btn .ic{width:20px;height:20px;flex:none}
+.btn-dl{--h:64px;font-size:18px;padding:0 30px}
+.btn-dl .meta{font:500 12px/1 var(--mono);opacity:.75;direction:ltr}
+.ctas{display:flex;flex-wrap:wrap;gap:12px}
+
+/* ---------- chips & pills ---------- */
+.pill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:999px;background:rgba(255,255,255,.05);box-shadow:0 0 0 1px var(--line2) inset;font-size:14px;font-weight:600;color:var(--ink2)}
+.pill .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px var(--ok)}
+.chip{--c:var(--ag1);display:inline-flex;align-items:center;gap:7px;padding:5px 11px 5px 9px;border-radius:999px;font:600 13px/1 var(--body);color:var(--ink);background:color-mix(in srgb,var(--c) 16%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 45%,transparent) inset;white-space:nowrap}
+.chip::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c)}
+
+/* ---------- cards ---------- */
+.card{background:linear-gradient(180deg,var(--surface),var(--bg2));border-radius:var(--r-lg);box-shadow:0 0 0 1px var(--line) inset,var(--shadow);padding:clamp(20px,3vw,32px);position:relative;min-width:0}
+.card-glow{position:relative}
+.card-glow::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;opacity:.8}
+
+/* ---------- mock window (drawn UI) ---------- */
+.win{background:#0d0d18;border-radius:18px;box-shadow:0 0 0 1px var(--line2) inset,0 40px 80px -30px rgba(0,0,0,.9),0 0 80px -30px rgba(124,58,237,.45);overflow:hidden;min-width:0;direction:ltr;text-align:left}
+.win-top{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px;background:linear-gradient(180deg,#191929,#13131f);border-bottom:1px solid var(--line)}
+.win-top i{width:11px;height:11px;border-radius:50%;background:#3a3a55;display:block}
+.win-top i:nth-child(1){background:#ff5f57}.win-top i:nth-child(2){background:#febc2e}.win-top i:nth-child(3){background:#28c840}
+.win-title{flex:1;text-align:center;font:500 12.5px/1 var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-inline-end:44px}
+.win-body{padding:16px;font-size:14px;line-height:1.5}
+.win [dir="rtl"],.win .he{direction:rtl;text-align:right;font-family:var(--body)}
+/* app tabs (Chat / Cowork / Code) */
+.tabs{display:inline-flex;gap:4px;padding:4px;border-radius:12px;background:#15152a;box-shadow:0 0 0 1px var(--line) inset}
+.tabs span{padding:7px 14px;border-radius:9px;font:600 13px/1 var(--body);color:var(--muted)}
+.tabs span.on{background:var(--surface3);color:#fff;box-shadow:0 0 0 1px var(--line2) inset}
+/* folder row / picker */
+.folder{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:#121222;box-shadow:0 0 0 1px var(--line) inset;font:500 13.5px/1.2 var(--mono);color:var(--ink2)}
+.folder svg{width:18px;height:18px;flex:none;color:var(--amber)}
+.folder.on{box-shadow:0 0 0 1.5px var(--v2) inset,0 0 24px -6px var(--v2);color:#fff}
+/* model menu */
+.menu{border-radius:14px;background:#14142a;box-shadow:0 0 0 1px var(--line2) inset,0 24px 50px -20px #000;padding:6px;min-width:0}
+.menu .opt{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border-radius:10px;font:600 14px/1.2 var(--body);color:var(--ink2)}
+.menu .opt small{display:block;font:500 12px/1.3 var(--body);color:var(--muted);margin-top:3px}
+.menu .opt.on{background:rgba(168,85,247,.16);color:#fff;box-shadow:0 0 0 1px rgba(168,85,247,.45) inset}
+.menu .opt .check{color:var(--v2);font-weight:800}
+/* chat input */
+.input{border-radius:16px;background:#121222;box-shadow:0 0 0 1px var(--line2) inset;padding:12px 14px 10px;display:grid;gap:10px}
+.input .txt{min-height:44px;color:var(--ink);white-space:pre-wrap;font-family:var(--body);direction:rtl;text-align:right}
+.input .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.input .send{width:32px;height:32px;border-radius:10px;background:var(--grad);display:grid;place-items:center;color:#fff}
+.input .model{font:600 12px/1 var(--body);color:var(--muted);padding:6px 10px;border-radius:8px;box-shadow:0 0 0 1px var(--line) inset}
+/* terminal / log lines */
+.term{font:500 13px/1.75 var(--mono);color:var(--ink2);white-space:pre-wrap;word-break:break-word}
+.term .p{color:var(--v2)}.term .ok{color:var(--ok)}.term .c{color:var(--cy)}.term .dim{color:var(--muted)}
+
+/* ---------- mission control (agents running in parallel) ---------- */
+.mc{display:grid;gap:10px}
+.lane{--c:var(--ag1);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#11111f;box-shadow:0 0 0 1px var(--line) inset}
+.lane .av{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 22%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent) inset;color:var(--c);font:800 15px/1 var(--display)}
+.lane .who{font:700 14px/1.2 var(--body);color:#fff;direction:rtl;text-align:right}
+.lane .what{font:500 12.5px/1.3 var(--mono);color:var(--muted);direction:ltr;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lane .st{font:600 12px/1 var(--mono);color:var(--c)}
+.lane .track{grid-column:1/-1;height:4px;border-radius:4px;background:rgba(255,255,255,.06);overflow:hidden}
+.lane .track b{display:block;height:100%;width:var(--w,0%);background:var(--c);box-shadow:0 0 12px var(--c);border-radius:inherit;transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.lane.done .st{color:var(--ok)}
+
+/* ---------- prompt card (copy) ---------- */
+.prompt{position:relative;border-radius:var(--r-lg);background:linear-gradient(180deg,#141428,#0e0e1c);padding:0;overflow:hidden}
+.prompt::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;background:var(--grad);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.prompt-h{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.prompt-h b{font:600 13px/1 var(--mono);letter-spacing:.06em;color:var(--cy)}
+.prompt pre{margin:0;padding:18px 18px 20px;white-space:pre-wrap;font:500 16px/1.75 var(--body);color:var(--ink);direction:rtl;text-align:right}
+.prompt pre .ph{color:var(--amber);background:rgba(251,191,36,.10);border-radius:6px;padding:0 4px}
+.copy{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:999px;border:0;background:#fff;color:#0b0b14;font:700 14px/1 var(--body);cursor:pointer;transition:transform .15s}
+.copy:hover{transform:scale(1.04)}
+.copy.is-done{background:var(--ok);color:#04130b}
+
+/* ---------- file tree ---------- */
+.tree{font:500 14.5px/1 var(--mono);direction:ltr;text-align:left;display:grid;gap:2px}
+.tree .n{--c:var(--muted);display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;white-space:nowrap;min-width:0}
+.tree .n:hover{background:rgba(255,255,255,.04)}
+.tree .n .ic{width:18px;height:18px;flex:none;color:var(--c)}
+.tree .n .nm{overflow:hidden;text-overflow:ellipsis}
+.tree .n .tag{margin-left:auto;font:600 12px/1 var(--body);padding:4px 9px;border-radius:999px;color:#fff;background:color-mix(in srgb,var(--c) 22%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 50%,transparent) inset;direction:rtl}
+.tree .d1{padding-left:30px}.tree .d2{padding-left:52px}.tree .d3{padding-left:74px}
+
+/* ---------- steps timeline ---------- */
+.steps{list-style:none;margin:0;padding:0;display:grid;gap:clamp(28px,4vw,48px);position:relative}
+.steps::before{content:"";position:absolute;top:10px;bottom:10px;inset-inline-start:27px;width:2px;background:linear-gradient(var(--v2),var(--cy) 60%,transparent)}
+.step{display:grid;grid-template-columns:56px minmax(0,1fr);gap:clamp(16px,2.5vw,28px);align-items:start}
+.step-n{width:56px;height:56px;border-radius:18px;display:grid;place-items:center;font:900 24px/1 var(--display);color:#fff;background:var(--grad);box-shadow:var(--glow-v);position:relative;z-index:1}
+.step-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(18px,3vw,36px);align-items:center}
+.step-body.solo{grid-template-columns:minmax(0,1fr)}
+.step-txt{display:grid;gap:12px;min-width:0}
+.step-txt p{margin:0;color:var(--ink2)}
+.step-txt ul{margin:0;padding-inline-start:20px;color:var(--ink2);display:grid;gap:6px}
+.note{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:14px;background:rgba(34,211,238,.07);box-shadow:0 0 0 1px rgba(34,211,238,.25) inset;color:var(--ink2);font-size:15.5px;line-height:1.55}
+.note b{color:#fff}
+.note.warn{background:rgba(251,191,36,.07);box-shadow:0 0 0 1px rgba(251,191,36,.28) inset}
+
+/* ---------- stats strip ---------- */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-radius:var(--r-lg);box-shadow:0 0 0 1px var(--line) inset;background:rgba(255,255,255,.02);overflow:hidden}
+.stat{padding:22px 20px;display:grid;gap:6px;border-inline-start:1px solid var(--line)}
+.stat:first-child{border-inline-start:0}
+.stat b{font:900 clamp(32px,4vw,48px)/1 var(--display)}
+.stat span{color:var(--muted);font-size:15px}
+
+/* ---------- accordion ---------- */
+.faq{display:grid;gap:10px}
+.faq details{border-radius:var(--r);background:var(--surface);box-shadow:0 0 0 1px var(--line) inset;overflow:hidden}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 20px;font:700 17px/1.35 var(--body)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:400 26px/1 var(--display);color:var(--v2);transition:transform .25s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details>div{padding:0 20px 18px;color:var(--ink2)}
+
+/* ---------- end band & footer ---------- */
+.end{border-radius:var(--r-xl);padding:clamp(32px,6vw,72px);background:radial-gradient(120% 140% at 100% 0%,rgba(124,58,237,.35),transparent 55%),radial-gradient(100% 120% at 0% 100%,rgba(8,145,178,.28),transparent 55%),var(--surface);box-shadow:0 0 0 1px var(--line2) inset;display:grid;gap:18px;justify-items:start}
+.end h2{max-width:16ch}
+.foot{padding-block:40px 120px;color:var(--muted);font-size:15px;text-align:center;display:grid;gap:10px;justify-items:center}
+.foot .me{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:700}
+.foot .me img{width:30px;height:30px;border-radius:50%}
+.wa{display:inline-flex;width:22px;height:22px}
+
+/* ---------- reveal on scroll ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .step-body{grid-template-columns:minmax(0,1fr)}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat:nth-child(3){border-inline-start:0}
+  .stat:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:560px){
+  body{font-size:17px}
+  .steps::before{inset-inline-start:19px}
+  .step{grid-template-columns:40px minmax(0,1fr);gap:14px}
+  .step-n{width:40px;height:40px;border-radius:13px;font-size:18px}
+  .btn{width:100%}
+  .win-body{padding:12px}
+}
+@media (prefers-reduced-motion:reduce){*{scroll-behavior:auto}.rv{opacity:1;transform:none;transition:none}}
+
+/* =====================================================================
+   aw.css — build-replay engine for the agents guides (dark theme)
+   Load after base.css. Everything here is inert until aw.js adds
+   .is-live to #aw (never added without JS or with reduced motion).
+   ===================================================================== */
+#aw{--aw-sk:rgba(255,255,255,.10);--aw-sk2:rgba(255,255,255,.055);--aw-rec:#ff4d5e}
+
+/* no-JS safety for base.css .rv (aw.js adds .aw-rv to <html>) */
+html:not(.aw-rv) .rv{opacity:1;transform:none}
+
+/* ---------- build states ---------- */
+#aw.is-live{position:relative}
+#aw.is-live [data-block]{position:relative}
+#aw.is-live [data-block]:not([data-state="done"]) > .fill{visibility:hidden}
+/* CSS fail-safe: if a page sets .is-live early but aw.js never runs, show everything after 2.5 s */
+#aw.is-live:not(.aw-run) [data-block] > .fill{animation:awSafe 0s linear 2.5s forwards}
+@keyframes awSafe{to{visibility:visible}}
+#aw.is-live [data-state="mark"]{outline:1px dashed color-mix(in srgb,var(--aw-c,var(--v2)) 55%,transparent);outline-offset:3px;border-radius:6px}
+#aw.is-live [data-state="rough"]{outline:1.5px solid var(--aw-c,var(--v2));outline-offset:3px;border-radius:6px;box-shadow:0 0 30px -10px var(--aw-c,var(--v2))}
+#aw.is-live [data-state="rough"]::before{content:"";position:absolute;inset:12px;pointer-events:none;z-index:2;border-radius:6px;
+  background:
+    linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 top 0/44% 14px no-repeat,
+    linear-gradient(var(--aw-sk2),var(--aw-sk2)) right 0 top 28px/88% 9px no-repeat,
+    linear-gradient(var(--aw-sk2),var(--aw-sk2)) right 0 top 45px/72% 9px no-repeat,
+    linear-gradient(var(--aw-sk2),var(--aw-sk2)) right 0 top 62px/80% 9px no-repeat,
+    linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 bottom 0/32% 10px no-repeat;
+  animation:awSk .6s ease-in-out infinite alternate}
+#aw.is-live [data-sk="title"][data-state="rough"]::before{inset:4px 0;
+  background:
+    linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 top 4%/74% 25% no-repeat,
+    linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 top 38%/92% 25% no-repeat,
+    linear-gradient(var(--aw-sk2),var(--aw-sk2)) right 0 top 72%/56% 24% no-repeat}
+#aw.is-live [data-sk="media"][data-state="rough"]::before{inset:0;
+  background:
+    linear-gradient(to top left,transparent calc(50% - 1px),var(--aw-sk) calc(50% - 1px),var(--aw-sk) calc(50% + 1px),transparent calc(50% + 1px)),
+    linear-gradient(to top right,transparent calc(50% - 1px),var(--aw-sk) calc(50% - 1px),var(--aw-sk) calc(50% + 1px),transparent calc(50% + 1px)),
+    linear-gradient(180deg,var(--surface2),var(--surface))}
+#aw.is-live [data-sk="line"][data-state="rough"]::before{inset:0;background:linear-gradient(var(--aw-sk),var(--aw-sk)) center/100% 64% no-repeat}
+#aw.is-live [data-sk="btn"][data-state="rough"]::before{inset:0;
+  background:linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 center/min(46%,190px) 100% no-repeat,linear-gradient(var(--aw-sk2),var(--aw-sk2)) right min(49%,202px) center/min(42%,180px) 100% no-repeat;border-radius:999px}
+#aw.is-live [data-sk="stat"][data-state="rough"]::before{inset:14px;
+  background:linear-gradient(var(--aw-sk),var(--aw-sk)) right 0 top 0/48% 62% no-repeat,linear-gradient(var(--aw-sk2),var(--aw-sk2)) right 0 bottom 0/70% 12px no-repeat}
+@keyframes awSk{from{opacity:.45}to{opacity:1}}
+/* code tag */
+#aw.is-live [data-state="rough"]::after{content:attr(data-code);position:absolute;bottom:calc(100% + 8px);inset-inline-start:-2px;z-index:6;pointer-events:none;
+  max-width:min(92vw,520px);overflow:hidden;text-overflow:ellipsis;
+  font:500 11px/1 var(--mono);direction:ltr;unicode-bidi:isolate;white-space:nowrap;
+  padding:5px 8px;border-radius:6px;background:var(--aw-c,var(--v2));color:var(--aw-ci,#fff);box-shadow:0 8px 22px rgba(0,0,0,.55)}
+#aw.is-live [data-tip="below"][data-state="rough"]::after{bottom:auto;top:calc(100% + 8px)}
+#aw.is-live [data-tip="in"][data-state="rough"]::after{bottom:auto;top:8px;inset-inline-start:8px}
+/* reveal */
+#aw.is-live [data-state="done"] > .fill{animation:awIn .55s cubic-bezier(.2,.7,.2,1)}
+#aw.is-live [data-state="done"][data-instant] > .fill{animation:none}
+@keyframes awIn{0%{opacity:0;filter:brightness(2.2) saturate(0)}30%{opacity:1}100%{opacity:1;filter:none}}
+/* live typing */
+.aw-type{position:absolute;inset:0;pointer-events:none;display:block;z-index:3}
+.aw-type .aw-g{visibility:hidden}
+.aw-caret{display:inline-block;width:0;height:.8em;vertical-align:-.04em;position:relative}
+.aw-caret::after{content:"";position:absolute;top:0;bottom:0;right:-3px;width:4px;border-radius:2px;background:var(--c);box-shadow:0 0 12px var(--c);animation:awBlink .8s steps(1) infinite}
+@keyframes awBlink{55%{opacity:0}}
+
+/* ---------- cursors & marquee ---------- */
+.aw-layer{position:absolute;left:0;top:0;width:0;height:0;z-index:50;pointer-events:none}
+.aw-cur{position:absolute;left:0;top:0;will-change:transform;opacity:0;transition:opacity .45s ease}
+.aw-cur.is-on{opacity:1}
+.aw-cur.is-rest{opacity:0;transition:opacity 1.1s ease .8s}
+.aw-cur svg{display:block;width:20px;height:22px;overflow:visible;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.aw-cur path{fill:var(--c);stroke:#fff;stroke-width:1.3;stroke-linejoin:round}
+.aw-tag{position:absolute;left:14px;top:20px;font:700 11.5px/1 var(--body);letter-spacing:.01em;padding:5px 8px;background:var(--c);color:var(--ci);white-space:nowrap;direction:rtl;unicode-bidi:isolate;border-radius:2px 8px 8px 8px;box-shadow:0 0 0 1px rgba(255,255,255,.18) inset,0 6px 18px rgba(0,0,0,.55)}
+.aw-cur.is-flip .aw-tag{left:auto;right:4px;border-radius:8px 2px 8px 8px}
+.aw-mq{position:absolute;left:0;top:0;width:0;height:0;border:1.5px dashed var(--c);border-radius:4px;background:color-mix(in srgb,var(--c) 10%,transparent);pointer-events:none;z-index:40}
+.aw-mq b{position:absolute;left:-1px;top:calc(100% + 5px);font:600 10.5px/1 var(--mono);padding:3px 6px;border-radius:4px;background:var(--c);color:var(--ci);direction:ltr;white-space:nowrap}
+
+/* ---------- replay log (glass) ---------- */
+.aw-log{position:fixed;z-index:70;left:max(14px,env(safe-area-inset-left,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));width:min(380px,calc(100vw - 28px));
+  background:color-mix(in srgb,var(--surface) 80%,transparent);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  border:1px solid var(--line2);border-radius:14px;box-shadow:0 20px 50px -18px rgba(0,0,0,.85);color:var(--ink);direction:rtl;font:500 12px/1.3 var(--body);overflow:hidden}
+.aw-log-h{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 10px;border-bottom:1px solid var(--line)}
+.aw-rec{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--aw-rec);direction:ltr;flex:none}
+.aw-rec::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:awBlink 1.4s steps(1) infinite}
+.aw-log.is-fin .aw-rec{color:var(--ok)}
+.aw-log.is-fin .aw-rec::before{animation:none}
+.aw-ttl{font-weight:700;color:var(--ink);font-size:12.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.aw-clock{font:500 11px/1 var(--mono);color:var(--muted);direction:ltr;flex:none}
+.aw-btns{margin-inline-start:auto;display:flex;gap:6px;flex:none}
+.aw-btn{font:700 12px/1 var(--body);color:var(--ink);background:rgba(255,255,255,.05);border:0;box-shadow:0 0 0 1px var(--line2) inset;padding:0 11px;height:30px;min-width:44px;border-radius:999px;cursor:pointer;transition:background .2s}
+.aw-btn:hover{background:rgba(255,255,255,.11)}
+.aw-btn:disabled{opacity:.35;cursor:default}
+.aw-btn:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.aw-log ol{list-style:none;margin:0;padding:6px 10px 8px;height:calc(5 * 20px + 14px);overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end}
+.aw-log li{display:flex;gap:8px;align-items:baseline;white-space:nowrap;line-height:20px;min-width:0;flex:none}
+.aw-log time{font:500 10.5px/1 var(--mono);color:var(--muted);direction:ltr;flex:none}
+.aw-log li b{font:700 11.5px/1 var(--body);direction:rtl;unicode-bidi:isolate;flex:none}
+.aw-log li span{color:var(--ink2);overflow:hidden;text-overflow:ellipsis;min-width:0}
+.aw-log li.is-sys{white-space:normal;line-height:1.35;padding-block:2px}
+.aw-log li.is-sys span{color:var(--ink);font-weight:700;white-space:normal}
+@media (max-width:600px){
+  .aw-log{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;bottom:max(10px,env(safe-area-inset-bottom,0px));border-radius:12px}
+  .aw-log-h{padding:5px 6px 5px 9px;border-bottom:0}
+  .aw-btn{height:28px;padding:0 10px}
+  .aw-log ol{height:22px;padding:0 10px 4px}
+  .aw-log li.is-sys{white-space:nowrap}
+  .aw-log li.is-sys span{white-space:nowrap}
+  .aw-log.is-fin ol{display:none}
+  .aw-cur svg{width:17px;height:19px}
+  .aw-tag{font-size:10.5px;left:12px;top:17px;padding:4px 6px}
+  #aw.is-live [data-state="rough"]::after{font-size:10px}
+}
+@media (prefers-reduced-motion:reduce){.aw-rec::before{animation:none}}
+@media print{.aw-log,.aw-layer{display:none}}
+/* lane status text is written in Hebrew by aw.js: keep it in the body face */
+#aw .lane[data-lane] .st{font-family:var(--body);font-weight:700;letter-spacing:0}
+/* bigger invisible hit area for the small log buttons */
+.aw-btn{position:relative}
+.aw-btn::after{content:"";position:absolute;inset:-9px -3px}
+
+.bar-logo{height:26px;width:auto;opacity:.92}@media(max-width:560px){.bar-logo{display:none}}</style></head><body>
+<div class="atmo" aria-hidden="true"><div class="grid-bg"></div></div>
+<header class="bar"><div class="wrap">
+  <a class="brand" href="https://orellevi.co.il" target="_blank" rel="noopener"><img src="media/avatar.jpg" alt="אוראל לוי"><span>leviorel<small>AI Content Creator</small></span></a>
+  <img class="bar-logo" src="media/logo-lockup.png" alt="Orel Levi" width="150" height="30">
+</div><div class="bar-progress"></div></header>
+<main id="aw" dir="rtl" lang="he">
+<style>
+/* ===== landing · פתיחה (hero + team + stats) — every selector prefixed .lh- ===== */
+.lh-hero{position:relative;padding-block:clamp(40px,7vw,100px) clamp(64px,9vw,120px);overflow:clip}
+.lh-hero::before{content:"";position:absolute;inset:-10% -20% auto auto;width:min(900px,120vw);height:min(900px,120vw);background:radial-gradient(closest-side,color-mix(in srgb,var(--v1) 30%,transparent),transparent 72%);pointer-events:none;z-index:-1}
+.lh-hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(36px,5vw,76px);align-items:center}
+.lh-copy{display:grid;gap:clamp(20px,2.6vw,30px);justify-items:start;min-width:0}
+.lh-kick{background:linear-gradient(90deg,color-mix(in srgb,var(--v2) 14%,transparent),color-mix(in srgb,var(--cy) 8%,transparent));box-shadow:0 0 0 1px color-mix(in srgb,var(--v2) 40%,transparent) inset,0 10px 30px -12px color-mix(in srgb,var(--v1) 70%,transparent);color:var(--ink)}
+.lh-kick .lh-sep{width:1px;height:12px;background:var(--line2)}
+.lh-kick .lh-mono{font:600 12px/1 var(--mono);color:var(--cy);direction:ltr}
+.lh-h1{font:900 clamp(46px,7.2vw,104px)/.98 var(--display);letter-spacing:-.03em;color:var(--ink)}
+.lh-h1 .grad-text{display:inline-block;padding-bottom:.08em;filter:drop-shadow(0 10px 40px color-mix(in srgb,var(--v2) 45%,transparent))}
+.lh-sub{font-size:clamp(18px,1.7vw,22px);line-height:1.6;max-width:36ch;color:var(--ink2)}
+.lh-sub b{color:var(--ink);font-weight:700}
+.lh-cta{display:grid;gap:16px;justify-items:start}
+.lh-req{display:flex;flex-wrap:wrap;gap:8px 16px;margin:0;padding:0;list-style:none;font-size:14.5px;color:var(--muted)}
+.lh-req li{display:flex;align-items:center;gap:7px}
+.lh-req li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--ok);box-shadow:0 0 8px var(--ok)}
+
+/* stage: window + depth plates + floating file chips */
+.lh-stage{position:relative;padding:26px 0 18px;isolation:isolate;min-width:0}
+.lh-stage::before{content:"";position:absolute;inset:6% -10% -4%;z-index:-2;background:radial-gradient(50% 50% at 40% 45%,color-mix(in srgb,var(--v1) 42%,transparent),transparent 70%),radial-gradient(40% 40% at 70% 80%,color-mix(in srgb,var(--cy) 22%,transparent),transparent 70%);pointer-events:none}
+.lh-plate{position:absolute;z-index:-1;border-radius:20px;background:linear-gradient(180deg,var(--surface2),var(--bg2));box-shadow:0 0 0 1px var(--line) inset}
+.lh-plate.p1{inset:44px 22px 0}
+.lh-plate.p2{inset:62px 44px -16px;opacity:.55}
+.lh-win{position:relative;box-shadow:0 0 0 1px var(--line2) inset,0 1px 0 color-mix(in srgb,var(--ink) 10%,transparent) inset,0 50px 100px -40px #000,0 0 120px -40px var(--v1)}
+.lh-win::before{content:"";position:absolute;inset:0 0 auto;height:1px;background:var(--grad);opacity:.9;z-index:1}
+.lh-wb{display:grid;gap:12px}
+.lh-wbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px}
+.lh-wbar .folder{padding:8px 11px;font-size:12.5px}
+.lh-msg{justify-self:end;max-width:92%;padding:10px 14px;border-radius:14px 14px 14px 4px;background:var(--surface2);box-shadow:0 0 0 1px var(--line2) inset;display:grid;gap:4px;font-size:14.5px;color:var(--ink)}
+.lh-msg small{font-size:12.5px;color:var(--muted)}
+.lh-say{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink2)}
+.lh-say .lh-spark{color:var(--amber);font-size:16px;line-height:1;animation:lhSpin 3s linear infinite;display:inline-block}
+.lh-mc .lane{background:linear-gradient(90deg,var(--bg2),color-mix(in srgb,var(--c) 6%,var(--bg2)))}
+.lh-mc .lane .what{text-align:right}
+.lh-mc .lh-ln{display:grid;gap:4px;min-width:0}
+.lh-mc .lh-ln .who{display:flex;align-items:center;gap:8px}
+.lh-mc .lh-ln .who em{font:600 10.5px/1 var(--body);font-style:normal;padding:3px 7px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 14%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 40%,transparent) inset}
+.lh-mc .lane .st{font-family:var(--body);font-size:12.5px;white-space:nowrap}
+.lh-pair{position:relative;display:grid;gap:8px;padding:20px 8px 8px;border-radius:18px;background:linear-gradient(160deg,color-mix(in srgb,var(--ag1) 9%,transparent),color-mix(in srgb,var(--ag2) 6%,transparent));box-shadow:0 0 0 1px color-mix(in srgb,var(--ag1) 38%,transparent) inset,0 0 40px -18px var(--ag1)}
+.lh-pair-l{position:absolute;top:-10px;inset-inline-start:14px;display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--grad);color:var(--on-grad);font:700 11.5px/1 var(--body);box-shadow:var(--glow-v)}
+.lh-pair .lane .track b{background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 45%,var(--ink)),var(--c));background-size:200% 100%;animation:lhShim 1.6s linear infinite}
+.lh-term{white-space:normal;display:grid;gap:1px;padding:12px 14px;border-radius:12px;background:var(--bg);box-shadow:0 0 0 1px var(--line) inset;font-size:12.5px}
+.lh-term .lh-f{display:flex;justify-content:space-between;gap:12px;min-width:0}
+.lh-term .lh-f span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lh-wfoot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.lh-model{font:600 12px/1 var(--body);color:var(--ink2);padding:7px 10px;border-radius:8px;box-shadow:0 0 0 1px var(--line2) inset;background:var(--surface)}
+.lh-live{display:inline-flex;align-items:center;gap:8px;font:600 12.5px/1 var(--body);color:var(--ink2);direction:rtl}
+.lh-live i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:lhPulse 1.4s ease-in-out infinite}
+.lh-float{position:absolute;z-index:3;box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 50%,transparent) inset,0 14px 30px -10px #000;background:color-mix(in srgb,var(--c) 22%,var(--bg2));font-family:var(--mono);direction:ltr;animation:lhFloat 5s ease-in-out infinite}
+.lh-float.f1{top:6px;inset-inline-start:8%}
+.lh-float.f2{bottom:0;inset-inline-end:6%;animation-delay:-2.5s}
+@keyframes lhShim{to{background-position:-200% 0}}
+@keyframes lhSpin{to{transform:rotate(360deg)}}
+@keyframes lhPulse{50%{opacity:.35}}
+@keyframes lhFloat{50%{transform:translateY(-8px)}}
+
+/* team section */
+.lh-team{position:relative}
+.lh-flow{display:flex;flex-wrap:wrap;align-items:center;gap:12px 10px;margin-top:10px}
+.lh-flow .lh-grp{position:relative;display:inline-flex;gap:8px;padding:16px 10px 10px;border-radius:16px;box-shadow:0 0 0 1px color-mix(in srgb,var(--v2) 40%,transparent) inset;background:color-mix(in srgb,var(--v2) 7%,transparent)}
+.lh-flow .lh-grp-l{position:absolute;top:-9px;inset-inline-start:12px;padding:3px 9px;border-radius:999px;background:var(--grad);color:var(--on-grad);font:700 11px/1.2 var(--body)}
+.lh-flow .lh-arr{color:var(--muted);font:700 18px/1 var(--display)}
+.lh-flow code{font-size:13px}
+.lh-cards{--g:clamp(14px,2vw,24px);display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--g)}
+.lh-cards > [data-block] > .fill{height:100%}
+.lh-card{--c:var(--ag1);display:flex;flex-direction:column;gap:16px;background:radial-gradient(110% 70% at 100% 0%,color-mix(in srgb,var(--c) 16%,transparent),transparent 62%),linear-gradient(180deg,var(--surface),var(--bg2));box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 30%,var(--line)) inset,var(--shadow);transition:transform .3s cubic-bezier(.2,.7,.2,1),box-shadow .3s}
+.lh-card:hover{transform:translateY(-4px);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 60%,transparent) inset,0 30px 70px -30px color-mix(in srgb,var(--c) 55%,#000)}
+.lh-card-top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px}
+.lh-av{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font:900 24px/1 var(--display);color:var(--c);background:color-mix(in srgb,var(--c) 18%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent) inset,0 0 30px -8px var(--c)}
+.lh-card h3{font-size:clamp(24px,2.4vw,30px)}
+.lh-card .lh-file{display:inline-block;margin-top:6px;font-size:12px;color:var(--muted)}
+.lh-card p{margin:0;color:var(--ink2);font-size:16.5px;line-height:1.65}
+.lh-card p b{color:var(--ink)}
+.lh-out{margin-top:auto;border-radius:14px;background:var(--bg);box-shadow:0 0 0 1px var(--line) inset;overflow:hidden;direction:ltr;text-align:left}
+.lh-out-h{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font:600 12px/1 var(--mono);color:var(--muted)}
+.lh-out-h b{color:var(--c);font-weight:600}
+.lh-out-b{padding:12px;font:500 12.5px/1.75 var(--mono);color:var(--ink2)}
+.lh-out-b > div{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lh-out-b bdi{font-family:var(--body);color:var(--ink)}
+.lh-out-b .k{color:var(--c)}.lh-out-b .d{color:var(--muted)}.lh-out-b .ok{color:var(--ok)}
+.lh-sw{display:flex;gap:10px;margin-bottom:8px}
+.lh-sw span{display:grid;gap:5px;justify-items:center;font-size:10.5px;color:var(--muted)}
+.lh-sw i{width:34px;height:34px;border-radius:10px;box-shadow:0 0 0 1px var(--line2) inset}
+.lh-wire{display:grid;gap:6px;padding:10px;border-radius:10px;background:var(--bg2);box-shadow:0 0 0 1px var(--line) inset}
+.lh-wire .h{display:grid;gap:5px;justify-items:end;padding:12px 10px;border-radius:7px;background:linear-gradient(120deg,color-mix(in srgb,var(--c) 35%,var(--bg2)),var(--surface2))}
+.lh-wire .h i{display:block;height:7px;border-radius:4px;background:var(--ink);opacity:.85}
+.lh-wire .h i+i{opacity:.4;height:5px}
+.lh-wire .h b{display:block;width:54px;height:14px;border-radius:999px;background:var(--ink);margin-top:3px}
+.lh-wire .r{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+.lh-wire .r i{height:22px;border-radius:5px;background:var(--surface2);box-shadow:0 0 0 1px var(--line) inset}
+.lh-wire .wa{display:flex;align-items:center;justify-content:center;width:100%;height:20px;border-radius:999px;background:var(--ok);color:var(--bg);font:700 10.5px/1 var(--body)}
+.lh-link{position:absolute;z-index:2;top:50%;inset-inline-end:calc(var(--g) / -2 - 22px);width:44px;height:44px;margin-top:-22px;border-radius:50%;display:grid;place-items:center;background:var(--grad);color:var(--on-grad);font:800 18px/1 var(--display);box-shadow:var(--glow-v),0 0 0 6px var(--bg)}
+
+/* stats */
+.lh-stats{margin-top:clamp(28px,4vw,48px)}
+.lh-stats > [data-block] > .fill{height:100%}
+.lh-stats > [data-block] + [data-block] > .stat{border-inline-start:1px solid var(--line)}
+.lh-stats .stat{padding:clamp(20px,2.6vw,30px) clamp(16px,2vw,24px)}
+.lh-stats .stat b{font-size:clamp(44px,5vw,64px);letter-spacing:-.02em}
+.lh-stats .stat span{color:var(--ink2)}
+
+@media (max-width:900px){
+  .lh-hero-grid{grid-template-columns:minmax(0,1fr)}
+  .lh-cards{grid-template-columns:minmax(0,1fr)}
+  .lh-link{top:auto;bottom:calc(var(--g) / -2 - 22px);margin-top:0;inset-inline-end:calc(50% - 22px)}
+  .lh-stats > [data-block]:nth-child(odd) > .stat{border-inline-start:0}
+  .lh-stats > [data-block]:nth-child(n+3) > .stat{border-top:1px solid var(--line)}
+}
+@media (max-width:560px){
+  .lh-plate.p1{inset:44px 12px 0}
+  .lh-plate.p2{display:none}
+  .lh-float.f2{display:none}
+  .lh-msg{max-width:100%}
+  .lh-card-top{grid-template-columns:auto minmax(0,1fr)}
+  .lh-card-top .chip{grid-column:1/-1;justify-self:start}
+}
+@media (prefers-reduced-motion:reduce){
+  .lh-float,.lh-say .lh-spark,.lh-live i,.lh-pair .lane .track b{animation:none}
+  .lh-card:hover{transform:none}
+}
+</style>
+
+<!-- ================= HERO ================= -->
+<section class="lh-hero" id="top" data-section>
+  <div class="wrap lh-hero-grid">
+    <div class="lh-copy">
+      <div data-block data-agent="פתיחה" data-log="פיל פתיחה · חבילה ל-Claude Code" data-code='<span class="pill lh-kick"><span class="dot">' data-sk="line">
+        <span class="fill pill lh-kick"><span class="dot"></span>חבילת סוכנים<span class="lh-sep"></span><span class="lh-mono">Claude Code</span></span>
+      </div>
+
+      <h1 class="lh-h1" data-block data-agent="פתיחה" data-log="הקליד את הכותרת הראשית" data-code='<h1 class="lh-h1"><span class="grad-text">' data-type data-sk="title"><span class="fill">4 סוכנים בונים לכם <span class="grad-text">דף נחיתה</span></span></h1>
+
+      <div data-block data-agent="פתיחה" data-log="שורת משנה · 6 שאלות וקובץ אחד" data-code='<p class="lead lh-sub">' data-sk="line">
+        <p class="fill lead lh-sub">אתם עונים על 6 שאלות על העסק. <b>קופירייטר ומעצב עובדים באותו זמן</b>, Claude מרכיב את הדף, ובודק עובר על כל כפתור. יוצא קובץ אחד שעולה לאוויר בגרירה.</p>
+      </div>
+
+      <div data-block data-agent="פתיחה" data-log="2 כפתורים · למדריך ולחבילה" data-code='<a class="btn btn-primary" href="#steps">' data-sk="btn">
+        <div class="fill lh-cta">
+          <div class="ctas">
+            <a class="btn btn-primary" href="#steps">למדריך<svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M6 13l6 6 6-6"/></svg></a>
+            <a class="btn btn-ghost" href="#inside">מה בחבילה</a>
+          </div>
+          <ul class="lh-req">
+            <li>Mac או Windows</li>
+            <li>מנוי Claude בתשלום, Pro או Max</li>
+            <li>בלי לכתוב קוד</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div data-block data-agent="פתיחה" data-log="חלון בקרה · 4 מסלולי סוכנים" data-code='<div class="mc lh-mc" dir="rtl">' data-sk="media">
+      <div class="fill lh-stage">
+        <span class="lh-plate p2" aria-hidden="true"></span>
+        <span class="lh-plate p1" aria-hidden="true"></span>
+        <span class="chip lh-float f1" style="--c:var(--ag1)" aria-hidden="true">copy.md</span>
+        <span class="chip lh-float f2" style="--c:var(--ag2)" aria-hidden="true">design.md</span>
+
+        <div class="win lh-win" role="img" aria-label="חלון Claude Code: הקופירייטר והמעצב כותבים במקביל, Claude מחכה לבנות את הדף והבודק בתור">
+          <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents — Claude Code</span></div>
+          <div class="win-body lh-wb">
+            <div class="lh-wbar">
+              <div class="tabs"><span>Chat</span><span>Cowork</span><span class="on">Code</span></div>
+              <span class="folder on"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2h7A2.5 2.5 0 0 1 21 8.5v9a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>landing-agents</span>
+            </div>
+
+            <div class="lh-msg he" dir="rtl">תבנה לי דף נחיתה עם הסוכנים.<small>העסק שלי: … · למי זה מיועד: … · מספר וואטסאפ: …</small></div>
+            <div class="lh-say he" dir="rtl"><span class="lh-spark" aria-hidden="true">✳</span>שולח את הקופירייטר והמעצב באותה הודעה</div>
+
+            <div class="mc lh-mc" dir="rtl">
+              <div class="lh-pair">
+                <span class="lh-pair-l">⇄ במקביל</span>
+                <div class="lane" data-lane="1" style="--c:var(--ag1)">
+                  <span class="av">ק</span>
+                  <div class="lh-ln"><span class="who">קופירייטר <em>copywriter</em></span><span class="what">brief.md → copy.md</span></div>
+                  <span class="st">כותב…</span>
+                  <span class="track"><b style="--w:64%"></b></span>
+                </div>
+                <div class="lane" data-lane="2" style="--c:var(--ag2)">
+                  <span class="av">מ</span>
+                  <div class="lh-ln"><span class="who">מעצב <em>designer</em></span><span class="what">brief.md → design.md</span></div>
+                  <span class="st">כותב…</span>
+                  <span class="track"><b style="--w:48%"></b></span>
+                </div>
+              </div>
+              <div class="lane" data-lane="3" style="--c:var(--ag3)">
+                <span class="av">C</span>
+                <div class="lh-ln"><span class="who">Claude · מנהל</span><span class="what">copy.md + design.md → site/index.html</span></div>
+                <span class="st">מחכה להם</span>
+                <span class="track"><b style="--w:0%"></b></span>
+              </div>
+              <div class="lane" data-lane="4" style="--c:var(--ag4)">
+                <span class="av">ב</span>
+                <div class="lh-ln"><span class="who">בודק <em>checker</em></span><span class="what">site/index.html → BLOCKERS?</span></div>
+                <span class="st">בתור</span>
+                <span class="track"><b style="--w:0%"></b></span>
+              </div>
+            </div>
+
+            <div class="term lh-term">
+              <span class="lh-f"><span class="dim">~/landing-agents</span><span class="dim">files</span></span>
+              <span class="lh-f" data-file="brief.md"><span><span class="ok">+</span> brief.md</span><span class="ok">done</span></span>
+              <span class="lh-f" data-file="copy.md"><span><span class="c">~</span> copy.md</span><span class="c">writing</span></span>
+              <span class="lh-f" data-file="design.md"><span><span class="c">~</span> design.md</span><span class="c">writing</span></span>
+              <span class="lh-f" data-file="site/index.html"><span><span class="dim">·</span> site/index.html</span><span class="dim">waiting</span></span>
+            </div>
+
+            <div class="lh-wfoot">
+              <span class="lh-live"><i></i>2 סוכנים רצים עכשיו</span>
+              <span class="lh-model">Claude Fable 5.2 <span aria-hidden="true">⌄</span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= WHAT YOU GET ================= -->
+<section class="sec lh-team" id="team" data-section>
+  <div class="wrap">
+    <div data-block data-agent="פתיחה" data-log="כותרת הסקשן ותרשים הסדר" data-code='<section class="sec" id="team">' data-sk="title">
+      <div class="fill sec-head">
+        <span class="eyebrow">The team · landing-agents</span>
+        <h2>ארבעה תפקידים, <span class="grad-text">שניים בו זמנית</span></h2>
+        <p class="lead">בחבילה יש שלושה סוכנים, ו-Claude מנהל אותם. כל אחד עושה דבר אחד וכותב קובץ משלו. הקופירייטר והמעצב יוצאים לדרך באותו רגע, אז אף אחד לא מחכה לשני.</p>
+        <div class="lh-flow" aria-label="סדר העבודה">
+          <span class="lh-grp"><span class="lh-grp-l">באותו רגע</span><span class="chip" style="--c:var(--ag1)">קופירייטר</span><span class="chip" style="--c:var(--ag2)">מעצב</span></span>
+          <span class="lh-arr" aria-hidden="true">←</span>
+          <span class="chip" style="--c:var(--ag3)">Claude בונה</span>
+          <span class="lh-arr" aria-hidden="true">←</span>
+          <span class="chip" style="--c:var(--ag4)">בודק</span>
+          <span class="lh-arr" aria-hidden="true">←</span>
+          <span class="chip" style="--c:var(--ag3)">Claude מתקן</span>
+          <span class="lh-arr" aria-hidden="true">←</span>
+          <code>site/index.html</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="lh-cards">
+      <div data-block data-agent="פתיחה" data-log="כרטיס הקופירייטר · copy.md" data-code='<article class="card lh-card" style="--c:var(--ag1)">'>
+        <article class="fill card lh-card" style="--c:var(--ag1)">
+          <div class="lh-card-top">
+            <span class="lh-av">ק</span>
+            <div><h3>קופירייטר</h3><code class="lh-file">copywriter.md</code></div>
+            <span class="chip" style="--c:var(--ag1)">במקביל</span>
+          </div>
+          <p>קורא את הבריף וכותב את כל המילים של הדף: כותרת, הבעיה, הפתרון, 3 יתרונות, שאלות נפוצות וכפתור. <b>מחיר או המלצה שלא נתתם לא ייכנסו לדף.</b></p>
+          <div class="lh-out">
+            <div class="lh-out-h"><span>writes</span><b>copy.md</b></div>
+            <div class="lh-out-b"><div class="k">## hero</div><div>headline: <span class="d">max 8 words</span></div><div>button: <bdi>שלחו הודעה</bdi></div><div><span class="k">## benefits</span> <span class="d">× 3</span></div><div><span class="k">## faq</span> <span class="d">3-5 questions</span></div></div>
+          </div>
+          <span class="lh-link" aria-hidden="true">⇄</span>
+        </article>
+      </div>
+
+      <div data-block data-agent="פתיחה" data-log="כרטיס המעצב · צבעים וגופן" data-code='.lh-sw i{width:34px;height:34px;border-radius:10px}'>
+        <article class="fill card lh-card" style="--c:var(--ag2)">
+          <div class="lh-card-top">
+            <span class="lh-av">מ</span>
+            <div><h3>מעצב</h3><code class="lh-file">designer.md</code></div>
+            <span class="chip" style="--c:var(--ag2)">במקביל</span>
+          </div>
+          <p>בוחר צבעים, גופן עברי, גדלים ומרווחים לפי העסק שלכם. מאפייה לא תיראה כמו משרד עורכי דין. <b>הוא גם בודק שהטקסט קריא על הרקע ועל הכפתורים.</b></p>
+          <div class="lh-out">
+            <div class="lh-out-h"><span>writes</span><b>design.md</b></div>
+            <div class="lh-out-b">
+              <div class="lh-sw"><span><i style="background:var(--bg2)"></i>--bg</span><span><i style="background:var(--surface3)"></i>--surface</span><span><i style="background:var(--ag2)"></i>--accent</span><span><i style="background:var(--ink)"></i>--text</span></div>
+              <div><span class="k">## fonts</span> <span class="d">Hebrew Google Font</span></div><div><span class="k">## colors</span> <span class="ok">WCAG AA ✓</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div data-block data-agent="פתיחה" data-log="כרטיס Claude המנהל · site/index.html" data-code='.lh-wire{display:grid;gap:6px;padding:10px}'>
+        <article class="fill card lh-card" style="--c:var(--ag3)">
+          <div class="lh-card-top">
+            <span class="lh-av">C</span>
+            <div><h3>Claude · המנהל</h3><code class="lh-file">skills/landing-page</code></div>
+            <span class="chip" style="--c:var(--ag3)">אחריהם</span>
+          </div>
+          <p>הופך את התשובות שלכם לבריף, שולח את הקופירייטר והמעצב לעבודה באותה הודעה, ואז בונה מהטקסט והעיצוב <b>קובץ אחד</b>. כל כפתור מוביל לוואטסאפ, לטלפון או לטופס.</p>
+          <div class="lh-out">
+            <div class="lh-out-h"><span>builds</span><b>site/index.html</b></div>
+            <div class="lh-out-b">
+              <div class="lh-wire" aria-hidden="true">
+                <span class="h"><i style="width:70%"></i><i style="width:50%"></i><b></b></span>
+                <span class="r"><i></i><i></i><i></i></span>
+                <span class="wa">WhatsApp</span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div data-block data-agent="פתיחה" data-log="כרטיס הבודק · דוח חסמים" data-code='<span class="ok">✓</span> BLOCKERS: none'>
+        <article class="fill card lh-card" style="--c:var(--ag4)">
+          <div class="lh-card-top">
+            <span class="lh-av">ב</span>
+            <div><h3>בודק</h3><code class="lh-file">checker.md</code></div>
+            <span class="chip" style="--c:var(--ag4)">בסוף</span>
+          </div>
+          <p>עובר על הדף המוכן: קישורי וואטסאפ, תצוגה בנייד, גודל הכפתורים, ימין לשמאל, וכל מספר או הבטחה שלא מופיעים בבריף. <b>Claude מתקן ומריץ אותו שוב עד שאין חסמים.</b></p>
+          <div class="lh-out">
+            <div class="lh-out-h"><span>checks</span><b>site/index.html</b></div>
+            <div class="lh-out-b"><div><span class="ok">✓</span> lang="he" dir="rtl"</div><div><span class="ok">✓</span> wa.me/972… <span class="d">no 0, no dashes</span></div><div><span class="ok">✓</span> 375px <span class="d">· buttons ≥ 48px</span></div><div><span class="ok">✓</span> facts <span class="d">only from brief.md</span></div><div class="ok"><b>BLOCKERS: none</b></div></div>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="stats lh-stats">
+      <div data-block data-agent="פתיחה" data-log="מספר: 3 סוכנים בחבילה" data-code='<b class="grad-text">3</b>' data-sk="stat">
+        <div class="fill stat"><b class="grad-text">3</b><span>סוכנים בחבילה, ו-Claude שמנהל</span></div>
+      </div>
+      <div data-block data-agent="פתיחה" data-log="מספר: 2 עובדים במקביל" data-code='<b class="grad-text">2</b>' data-sk="stat">
+        <div class="fill stat"><b class="grad-text">2</b><span>עובדים במקביל</span></div>
+      </div>
+      <div data-block data-agent="פתיחה" data-log="מספר: קובץ HTML אחד" data-code='<b class="grad-text">1</b>' data-sk="stat">
+        <div class="fill stat"><b class="grad-text">1</b><span>קובץ HTML שעולה לאוויר</span></div>
+      </div>
+      <div data-block data-agent="פתיחה" data-log="מספר: 0 שורות קוד" data-code='<b class="grad-text">0</b>' data-sk="stat">
+        <div class="fill stat"><b class="grad-text">0</b><span>שורות קוד שאתם כותבים</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+/* ===== landing · steps (agent שלבים) — every selector is .ls-* scoped ===== */
+.ls-sec .ls-needs{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.ls-sec .ls-needs .pill{font-size:13.5px}
+.ls-sec .ls-steps .step-body{align-items:start}
+.ls-sec .ls-steps .step-txt{padding-top:6px}
+.ls-sec .ls-steps .step-txt h3{font-size:clamp(24px,2.6vw,32px)}
+.ls-sec .ls-k{justify-self:start;direction:ltr;font:600 12px/1 var(--mono);letter-spacing:.14em;color:var(--cy);display:inline-flex;gap:8px;align-items:center}
+.ls-sec .ls-k b{color:var(--muted);font-weight:500}
+.ls-sec .ls-link{color:var(--cy);font-weight:700;text-decoration:underline;text-decoration-color:color-mix(in srgb,var(--cy) 40%,transparent);text-underline-offset:4px;direction:ltr;unicode-bidi:isolate}
+.ls-sec .ls-acts{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ls-sec .ls-acts .btn-ghost{--h:48px;font-size:15px;padding:0 18px}
+.ls-sec .ls-acts .btn-ghost .ic{width:16px;height:16px}
+.ls-sec .ls-dl-wrap{display:grid;gap:8px;justify-items:start}
+.ls-sec .ls-dl-wrap .btn-dl{gap:14px}
+.ls-sec .ls-dl-wrap .btn-dl .ic{width:24px;height:24px}
+.ls-sec .ls-dl-wrap .btn-dl span{display:grid;gap:6px;text-align:right}
+.ls-sec .ls-mini{list-style:none;margin:0;padding:0;display:grid;gap:8px;counter-reset:lsm}
+.ls-sec .ls-mini li{counter-increment:lsm;display:flex;gap:12px;align-items:baseline;color:var(--ink2)}
+.ls-sec .ls-mini li::before{content:counter(lsm);flex:none;width:24px;height:24px;border-radius:8px;display:grid;place-items:center;font:800 13px/1 var(--display);color:var(--cy);background:rgba(34,211,238,.10);box-shadow:0 0 0 1px rgba(34,211,238,.35) inset;transform:translateY(-2px)}
+.ls-sec .ls-time{justify-self:start;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:rgba(47,209,138,.10);box-shadow:0 0 0 1px rgba(47,209,138,.35) inset;color:var(--ink);font-weight:700;font-size:15px}
+.ls-sec .ls-time svg{width:16px;height:16px;color:var(--ok)}
+.ls-sec .ls-final .step-n{background:linear-gradient(135deg,var(--ok),var(--cy));box-shadow:0 0 0 1px rgba(47,209,138,.4),0 18px 50px -12px rgba(47,209,138,.5)}
+.ls-sec .ls-steps .prompt pre{font-size:15.5px}
+
+/* figure around every mock */
+.ls-fig{margin:0;display:grid;gap:12px;position:relative;isolation:isolate;min-width:0}
+.ls-fig::before{content:"";position:absolute;inset:10% 8% 0;background:radial-gradient(closest-side,rgba(124,58,237,.38),transparent);filter:blur(28px);z-index:-1;pointer-events:none}
+.ls-fig.ls-cy::before{background:radial-gradient(closest-side,rgba(8,145,178,.34),transparent)}
+.ls-fig figcaption{display:flex;gap:9px;align-items:center;font-size:14px;color:var(--muted);line-height:1.4}
+.ls-fig figcaption::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--cy);box-shadow:0 0 10px var(--cy)}
+.ls-fig .win{position:relative}
+.ls-fig .win-body{position:relative}
+
+/* shared mock atoms */
+.ls-url{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:6px;height:24px;margin:0 30px 0 10px;padding:0 10px;border-radius:7px;background:rgba(255,255,255,.05);box-shadow:0 0 0 1px var(--line) inset;font:500 12px/1 var(--mono);color:var(--ink2);white-space:nowrap;overflow:hidden}
+.ls-url svg{width:11px;height:11px;color:var(--ok);flex:none}
+.ls-star{display:block;color:color-mix(in srgb,var(--amber) 42%,var(--pink))}
+.ls-sk{display:block;height:8px;border-radius:5px;background:rgba(255,255,255,.07)}
+.ls-cur{position:absolute;width:22px;height:24px;z-index:5;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,0,0,.65))}
+.ls-cur path{fill:var(--ink);stroke:var(--bg);stroke-width:1.3;stroke-linejoin:round}
+.ls-ping{position:absolute;width:36px;height:36px;margin:-18px 0 0 -18px;border-radius:50%;box-shadow:0 0 0 2px var(--v2);z-index:4;pointer-events:none;animation:lsPing 1.9s ease-out infinite}
+.ls-ping.ls-pc{box-shadow:0 0 0 2px var(--cy)}
+.ls-tip{position:absolute;z-index:6;padding:7px 11px;border-radius:10px;background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset,0 12px 26px -10px #000;font:700 12.5px/1.2 var(--body);color:#fff;white-space:nowrap;direction:rtl}
+.ls-up::after,.ls-down::after{content:"";position:absolute;width:8px;height:8px;background:var(--surface3);transform:rotate(45deg);box-shadow:1px 1px 0 var(--line2)}
+.ls-tip.ls-down::after{bottom:-4px;left:18px}
+.ls-tip.ls-up::after{top:-4px;left:18px;box-shadow:-1px -1px 0 var(--line2)}
+.ls-tip em{font-style:normal;color:var(--cy)}
+
+/* 1 · download page */
+.win-body.ls-b1{padding:0;background:radial-gradient(90% 70% at 50% 0%,rgba(168,85,247,.16),transparent 70%)}
+.ls-snav{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--line)}
+.ls-snav .ls-brand{display:flex;align-items:center;gap:7px;font:700 14px/1 var(--display);color:#fff;margin-right:auto}
+.ls-snav .ls-brand .ls-star{width:18px;height:18px}
+.ls-dlhero{display:grid;justify-items:center;gap:8px;padding:26px 16px 22px;text-align:center;position:relative}
+.ls-dlhero .ls-star{width:52px;height:52px;filter:drop-shadow(0 0 22px color-mix(in srgb,var(--amber) 50%,transparent))}
+.ls-dlh{font:800 clamp(22px,3vw,28px)/1.1 var(--display);color:#fff;letter-spacing:-.02em}
+.ls-dls{font-size:13px;color:var(--muted)}
+.ls-osrow{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-top:8px}
+.ls-os{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px;border-radius:10px;font:700 13px/1 var(--body);color:var(--ink);background:rgba(255,255,255,.05);box-shadow:0 0 0 1px var(--line2) inset;white-space:nowrap}
+.ls-os svg{width:14px;height:14px}
+.ls-os.on{background:var(--ink);color:var(--bg);box-shadow:0 10px 30px -10px rgba(246,242,236,.45)}
+.ls-dlfile{display:flex;align-items:center;gap:12px;margin:0 16px 16px;padding:10px 12px;border-radius:12px;background:var(--surface);box-shadow:0 0 0 1px var(--line) inset}
+.ls-dlfile .ls-fic{width:30px;height:36px;flex:none;border-radius:6px;background:linear-gradient(160deg,var(--surface3),var(--surface2));box-shadow:0 0 0 1px var(--line2) inset;display:grid;place-items:center}
+.ls-dlfile .ls-fic .ls-star{width:16px;height:16px}
+.ls-dlfile div{flex:1;min-width:0;display:grid;gap:6px}
+.ls-dlfile b{font:600 12.5px/1 var(--mono);color:var(--ink)}
+.ls-prog{display:block;height:5px;border-radius:5px;background:rgba(255,255,255,.07);overflow:hidden}
+.ls-prog i{display:block;height:100%;width:72%;border-radius:inherit;background:var(--grad);animation:lsProg 3.6s cubic-bezier(.4,0,.2,1) infinite}
+.ls-dlfile small{font:600 11px/1 var(--mono);color:var(--muted)}
+
+/* 2 · finder */
+.ls-finder{display:grid;grid-template-columns:128px minmax(0,1fr);min-height:236px;font:500 12.5px/1.2 var(--body)}
+.ls-side{display:grid;align-content:start;gap:2px;padding:12px 8px;background:rgba(255,255,255,.025);border-right:1px solid var(--line)}
+.ls-side small{font:700 10.5px/1 var(--body);color:var(--muted);padding:8px 8px 4px;letter-spacing:.02em}
+.ls-side span{display:flex;align-items:center;gap:7px;padding:6px 8px;border-radius:7px;color:var(--ink2);white-space:nowrap}
+.ls-side span svg{width:13px;height:13px;color:var(--cy);flex:none}
+.ls-side span.on{background:rgba(255,255,255,.07);color:#fff}
+.ls-fmain{display:grid;grid-template-rows:minmax(0,1fr) auto;min-width:0;position:relative}
+.ls-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));min-width:0}
+.ls-col{display:grid;align-content:start;gap:2px;padding:10px 6px;min-width:0}
+.ls-col+.ls-col{border-left:1px solid var(--line)}
+.ls-row{display:flex;align-items:center;gap:8px;padding:7px 8px;border-radius:7px;color:var(--ink2);min-width:0;font:500 12.5px/1.2 var(--mono)}
+.ls-row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-row svg{width:17px;height:17px;flex:none}
+.ls-row .chev{width:10px;height:10px;color:var(--muted)}
+.ls-row.sel{background:color-mix(in srgb,var(--v1) 70%,transparent);color:#fff}
+.ls-row.sel .chev{color:#fff}
+.ls-row.drop{box-shadow:0 0 0 1.5px var(--cy) inset,0 0 22px -6px var(--cy);background:rgba(34,211,238,.10);color:#fff}
+.ls-fold{color:color-mix(in srgb,var(--cy) 65%,var(--ink))}
+.ls-zip{color:var(--muted)}
+.ls-txt{color:var(--ink2)}
+.ls-drag{position:absolute;right:6%;top:84px;display:flex;align-items:center;gap:8px;padding:6px 10px 6px 6px;border-radius:10px;background:rgba(25,25,48,.92);box-shadow:0 0 0 1px var(--line2) inset,0 16px 30px -10px #000;font:600 12px/1 var(--mono);color:#fff;transform:rotate(-4deg);z-index:4;animation:lsDrag 3.2s ease-in-out infinite}
+.ls-drag .ls-thumb{width:26px;height:26px;border-radius:6px;background:radial-gradient(circle at 30% 30%,var(--amber),var(--pink) 60%,var(--v1));box-shadow:0 0 0 1.5px rgba(255,255,255,.7) inset}
+.ls-drag em{position:absolute;top:-8px;right:-8px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font:800 11px/20px var(--body);text-align:center;font-style:normal}
+.ls-drag .ls-cur{right:-14px;bottom:-16px}
+.ls-path{display:flex;align-items:center;gap:6px;padding:7px 12px;border-top:1px solid var(--line);font:500 11px/1 var(--mono);color:var(--muted);white-space:nowrap;overflow:hidden}
+.ls-path b{color:var(--ink2);font-weight:600}
+
+/* 3 · Claude app with tabs */
+.ls-apptop{justify-content:flex-start}
+.ls-apptop .tabs{margin:0 auto;transform:translateX(-22px);padding:3px}
+.ls-apptop .tabs span{padding:6px 12px;font-size:12.5px;position:relative}
+.ls-apptop .tabs span.on{background:var(--grad);box-shadow:var(--glow-v)}
+.ls-app{display:grid;grid-template-columns:44px minmax(0,1fr);min-height:262px}
+.ls-rail{display:grid;align-content:start;justify-items:center;gap:12px;padding:14px 0;border-right:1px solid var(--line);background:rgba(255,255,255,.02)}
+.ls-rail i{display:block;width:22px;height:22px;border-radius:7px;background:rgba(255,255,255,.06)}
+.ls-rail i:first-child{background:var(--surface3);box-shadow:0 0 0 1px var(--line2) inset}
+.ls-amain{display:grid;align-content:end;gap:10px;padding:14px;position:relative;min-width:0}
+.ls-greet{display:flex;align-items:center;gap:10px;justify-content:center;padding:6px 0 4px;font:700 15px/1.2 var(--display);color:var(--ink2)}
+.ls-greet .ls-star{width:22px;height:22px}
+.ls-pick{width:min(100%,250px);display:grid;gap:4px;padding:6px}
+.ls-pick small{font:600 10.5px/1 var(--body);color:var(--muted);padding:6px 8px 4px;letter-spacing:.04em;text-transform:uppercase}
+.ls-pick .folder{padding:9px 10px;font-size:12.5px;position:relative}
+.ls-pick .folder .ok{margin-left:auto;color:var(--v2);font-weight:800}
+.ls-pick .folder.ls-dim{background:transparent;box-shadow:none;color:var(--muted)}
+.ls-pick .folder.ls-dim svg{color:var(--muted)}
+.ls-browse{padding:9px 10px;border-top:1px solid var(--line);margin-top:2px;font:600 12.5px/1 var(--body);color:var(--ink2)}
+.ls-chipf{display:inline-flex;align-items:center;gap:6px;height:28px;padding:0 10px;border-radius:8px;font:600 12px/1 var(--mono);color:var(--ink2);box-shadow:0 0 0 1px var(--line) inset;white-space:nowrap;min-width:0;overflow:hidden}
+.ls-chipf svg{width:13px;height:13px;color:var(--amber);flex:none}
+.ls-chipf.on{color:#fff;box-shadow:0 0 0 1.5px var(--v2) inset;background:rgba(168,85,247,.12)}
+.ls-rowl{display:flex;gap:6px;align-items:center;min-width:0}
+.ls-fig .input .model{white-space:nowrap;flex:none}
+.ls-in .txt{min-height:30px}
+.ls-fig .send>svg{width:15px;height:15px}
+.ls-menu .opt{position:relative}
+
+/* 4 · model menu */
+.win-body.ls-b4{display:grid;gap:12px;padding:18px 16px 16px;min-height:262px;align-content:end;background:radial-gradient(80% 60% at 70% 30%,rgba(168,85,247,.12),transparent 70%)}
+.ls-menu{width:min(100%,270px);margin-left:auto;position:relative}
+.ls-menu .ls-mh{display:block;font:600 10.5px/1 var(--body);color:var(--muted);padding:8px 12px 6px;letter-spacing:.04em;text-transform:uppercase}
+.ls-menu .opt{font-size:13.5px}
+.ls-menu .opt .check{font-size:15px}
+.ls-alt{font:700 11.5px/1 var(--body);padding:4px 8px;border-radius:999px;color:var(--amber);background:rgba(251,191,36,.12);box-shadow:0 0 0 1px rgba(251,191,36,.35) inset}
+.ls-menu .ls-more{display:flex;justify-content:space-between;padding:9px 12px;margin-top:2px;border-top:1px solid var(--line);font:600 12.5px/1 var(--body);color:var(--muted)}
+.input .model.ls-model-on{color:#fff;box-shadow:0 0 0 1.5px var(--v2) inset;background:rgba(168,85,247,.14)}
+
+/* 5 · input with the START prompt */
+.win-body.ls-b5{display:grid;gap:12px;padding:16px;min-height:262px;align-content:end}
+.ls-ctx{display:flex;align-items:center;gap:8px;justify-content:center;font:500 11.5px/1 var(--mono);color:var(--muted)}
+.ls-ctx i{width:4px;height:4px;border-radius:50%;background:var(--line2)}
+.ls-in5 .txt{font-size:13px;line-height:1.7;min-height:0}
+.ls-in5 .txt>span{display:block}
+.ls-fl{color:var(--cy)}
+.ls-phm{color:var(--amber);background:rgba(251,191,36,.10);border-radius:5px;padding:0 3px}
+.ls-caret{display:inline-block;width:2px;height:1.1em;vertical-align:-3px;margin-right:2px;background:var(--cy);animation:lsBlink 1s steps(1) infinite}
+.ls-in5 .send{position:relative}
+
+/* 6 · agents in parallel */
+.win-body.ls-b6{display:grid;gap:12px;padding:14px}
+.ls-run{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 12px/1.2 var(--mono);color:var(--ink2)}
+.ls-run .ls-live{display:inline-flex;align-items:center;gap:8px}
+.ls-run .ls-live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok);animation:lsBlink 1.4s ease-in-out infinite}
+.ls-run small{color:var(--muted);font-weight:500}
+.ls-b6 .lane{padding:10px 12px;gap:6px 10px}
+.ls-b6 .lane .av{width:30px;height:30px;font-size:13px}
+.ls-b6 .lane .who small{display:block;font:500 11.5px/1.2 var(--body);color:var(--muted);margin-top:2px}
+.ls-b6 .lane .track b{position:relative;overflow:hidden}
+.ls-b6 .lane .track b::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:translateX(-100%);animation:lsShim 1.6s ease-in-out infinite}
+.ls-b6 .lane.ls-wait{opacity:.62}
+.ls-b6 .lane.ls-wait .st{color:var(--muted)}
+.ls-files{display:grid;gap:2px;padding:8px;border-radius:12px;background:rgba(255,255,255,.025);box-shadow:0 0 0 1px var(--line) inset}
+.ls-files small{font:600 10.5px/1 var(--body);color:var(--muted);padding:4px 6px 6px;letter-spacing:.04em;text-transform:uppercase}
+.ls-f{display:flex;align-items:center;gap:8px;padding:6px;border-radius:7px;font:500 12px/1.2 var(--mono);color:var(--ink2)}
+.ls-f svg{width:14px;height:14px;flex:none}
+.ls-f .s{margin-left:auto;font:600 11px/1 var(--mono)}
+.ls-f.ok .s{color:var(--ok)}
+.ls-f.wr .s{color:var(--cy)}
+.ls-f.wr{background:rgba(34,211,238,.06)}
+.ls-f.soon{color:var(--muted);box-shadow:0 0 0 1px var(--line2) inset;background:repeating-linear-gradient(-45deg,transparent 0 6px,rgba(255,255,255,.025) 6px 12px)}
+.ls-f.soon .s{color:var(--muted)}
+
+/* 7 · netlify drop */
+.win-body.ls-b7{display:grid;gap:12px;padding:16px}
+.ls-drop{position:relative;display:grid;justify-items:center;gap:8px;padding:26px 14px 30px;border-radius:14px;border:2px dashed var(--cy);background:radial-gradient(70% 90% at 50% 50%,rgba(34,211,238,.14),rgba(34,211,238,.03));text-align:center}
+.ls-drop .ls-up{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;color:var(--cy);background:rgba(34,211,238,.12);box-shadow:0 0 0 1px rgba(34,211,238,.4) inset}
+.ls-drop .ls-up svg{width:20px;height:20px}
+.ls-drop b{font:700 14px/1.3 var(--display);color:#fff}
+.ls-drop span{font-size:12px;color:var(--muted)}
+.ls-dragf{position:absolute;left:12%;bottom:-6px;display:grid;justify-items:center;gap:4px;transform:rotate(-7deg);animation:lsDrag 3.2s ease-in-out infinite;z-index:3}
+.ls-dragf svg.ls-bigf{width:46px;height:38px;filter:drop-shadow(0 12px 18px rgba(0,0,0,.6))}
+.ls-dragf em{font:700 11.5px/1 var(--mono);font-style:normal;color:#fff;background:var(--v1);padding:3px 7px;border-radius:6px}
+.ls-dragf .ls-cur{left:34px;top:20px}
+.ls-livebar{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:10px;padding:10px 10px 10px 12px;border-radius:12px;background:var(--surface);box-shadow:0 0 0 1px rgba(47,209,138,.35) inset,0 0 30px -12px var(--ok)}
+.ls-livebar .ls-lk{display:flex;align-items:center;gap:8px;min-width:0;font:600 12px/1 var(--mono);color:var(--ink)}
+.ls-livebar .ls-lk::before{content:"";flex:none;width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 10px var(--ok)}
+.ls-livebar .ls-lk span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ls-claim{display:inline-flex;align-items:center;height:30px;padding:0 14px;border-radius:999px;background:var(--amber);color:var(--bg);font:800 12.5px/1 var(--body);position:relative}
+.ls-warnline{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(251,191,36,.08);box-shadow:0 0 0 1px rgba(251,191,36,.28) inset;font:600 12.5px/1.35 var(--body);color:var(--ink2)}
+.ls-warnline b{color:var(--amber)}
+
+.ls-fig svg.ls-cur{width:22px;height:24px}
+@keyframes lsPing{0%{transform:scale(.45);opacity:1}100%{transform:scale(1.7);opacity:0}}
+@keyframes lsProg{0%{width:8%}70%,100%{width:92%}}
+@keyframes lsDrag{0%,100%{translate:0 0}50%{translate:-6px -5px}}
+@keyframes lsBlink{50%{opacity:0}}
+@keyframes lsShim{to{transform:translateX(100%)}}
+
+@media (max-width:560px){
+  .ls-finder{grid-template-columns:minmax(0,1fr)}
+  .ls-side{display:none}
+  .ls-app{grid-template-columns:minmax(0,1fr)}
+  .ls-rail{display:none}
+  .ls-apptop .tabs{transform:none;margin-left:6px}
+  .ls-apptop .tabs span{padding:6px 9px;font-size:12px}
+  .ls-url{margin-right:6px}
+  .ls-tip{font-size:11.5px;padding:6px 9px}
+  .ls-hm{display:none}
+  .ls-sec .ls-dl-wrap{justify-items:stretch}
+  .ls-sec .ls-acts .btn-ghost{width:auto}
+  .ls-row{gap:6px;padding:7px 6px;font-size:11.5px}
+  .ls-row svg{width:15px;height:15px}
+}
+@media (prefers-reduced-motion:reduce){
+  .ls-ping,.ls-prog i,.ls-drag,.ls-dragf,.ls-caret,.ls-run .ls-live::before,.ls-b6 .lane .track b::after{animation:none}
+}
+</style>
+
+<section class="sec ls-sec" id="steps" data-section>
+  <div class="wrap">
+
+    <div class="sec-head" data-block data-agent="שלבים" data-log="כותרת הסקשן · 7 שלבים ומה צריך" data-code='&lt;section class="sec ls-sec" id="steps"&gt;' data-sk="title">
+      <div class="fill" style="display:grid;gap:14px">
+        <span class="eyebrow">STEP BY STEP · 7</span>
+        <h2>שבעה צעדים, <span class="grad-text">ודף באוויר.</span></h2>
+        <p class="lead">מההתקנה ועד קישור שאפשר לשלוח ללקוחות. ליד כל צעד מצויר בדיוק מה תראו על המסך באותו רגע.</p>
+        <div class="ls-needs">
+          <span class="pill"><span class="dot"></span>מחשב Mac או Windows</span>
+          <span class="pill"><span class="dot"></span>מנוי Claude בתשלום: Pro או Max</span>
+          <span class="pill"><span class="dot" style="background:var(--muted);box-shadow:none"></span>לוגו ותמונות, אם יש</span>
+        </div>
+      </div>
+    </div>
+
+    <ol class="steps ls-steps">
+
+      <!-- ============ 1 · install ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 1 · התקנת אפליקציית Claude" data-code='&lt;ol class="steps ls-steps"&gt;' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">1</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">01 <b>INSTALL</b></span>
+              <h3>מתקינים את Claude</h3>
+              <p>נכנסים ל-<a class="ls-link" href="https://claude.ai/download" target="_blank" rel="noopener">claude.ai/download</a>, מורידים את האפליקציה למחשב, מתקינים ומתחברים עם החשבון שלכם.</p>
+              <div class="note"><span aria-hidden="true">●</span><span>צריך מנוי בתשלום, <b>Pro או Max</b>. Claude Code כבר כלול בו, לא קונים שום דבר נוסף.</span></div>
+              <div class="ls-acts">
+                <a class="btn btn-ghost" href="https://claude.ai/download" target="_blank" rel="noopener">לעמוד ההורדה
+                  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              </div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="ציירתי את עמוד ההורדה של Claude" data-code='.ls-os.on{background:var(--ink);color:var(--bg)}' data-sk="media">
+              <figure class="fill ls-fig">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i>
+                    <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>claude.ai/download</span>
+                  </div>
+                  <div class="win-body ls-b1">
+                    <div class="ls-snav">
+                      <span class="ls-brand"><svg class="ls-star" viewBox="0 0 48 48" fill="currentColor"><g><rect x="22" y="2" width="4" height="20" rx="2"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(30 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(60 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(90 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(120 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(150 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(180 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(210 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(240 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(270 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(300 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(330 24 24)"/></g></svg>Claude</span>
+                      <span class="ls-sk" style="width:42px"></span><span class="ls-sk" style="width:34px"></span>
+                    </div>
+                    <div class="ls-dlhero">
+                      <svg class="ls-star" viewBox="0 0 48 48" fill="currentColor"><g><rect x="22" y="2" width="4" height="20" rx="2"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(30 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(60 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(90 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(120 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(150 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(180 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(210 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(240 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(270 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(300 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(330 24 24)"/></g></svg>
+                      <b class="ls-dlh">Download Claude</b>
+                      <span class="ls-dls">Desktop app · macOS and Windows</span>
+                      <div class="ls-osrow">
+                        <span class="ls-os on" style="position:relative"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.6 2.1-3.8 2.2-3.9-1.2-1.8-3.1-2-3.7-2-1.6-.2-3.1.9-3.9.9-.8 0-2-.9-3.4-.9-1.7 0-3.3 1-4.2 2.6-1.8 3.1-.5 7.7 1.3 10.2.8 1.2 1.8 2.6 3.1 2.6 1.3-.1 1.7-.8 3.3-.8 1.5 0 2 .8 3.3.8 1.4 0 2.3-1.3 3.1-2.5.9-1.4 1.3-2.8 1.4-2.8-.1 0-2.5-1-2.5-4.2ZM13.9 4.9c.7-.9 1.2-2.1 1.1-3.3-1 0-2.3.7-3 1.6-.7.8-1.3 2-1.1 3.2 1.1.1 2.3-.6 3-1.5Z"/></svg>Download for macOS
+                          <span class="ls-ping" style="left:72%;top:50%"></span>
+                          <svg class="ls-cur" style="left:70%;top:52%" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg>
+                        </span>
+                        <span class="ls-os"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5 10.5 4.4v7.1H3Zm8.5-1.2L21 3v8.5h-9.5ZM3 12.5h7.5v7.1L3 18.5Zm8.5 0H21V21l-9.5-1.3Z"/></svg>Windows</span>
+                      </div>
+                    </div>
+                    <div class="ls-dlfile">
+                      <span class="ls-fic"><svg class="ls-star" viewBox="0 0 48 48" fill="currentColor"><g><rect x="22" y="2" width="4" height="20" rx="2"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(45 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(90 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(135 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(180 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(225 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(270 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(315 24 24)"/></g></svg></span>
+                      <div><b>Claude.dmg</b><span class="ls-prog"><i></i></span></div>
+                      <small>↓</small>
+                    </div>
+                  </div>
+                </div>
+                <figcaption>עמוד ההורדה. Mac או Windows, לפי המחשב שלכם.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 2 · download package ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 2 · כפתור הורדת החבילה" data-code='&lt;a class="btn btn-primary btn-dl" href="landing-agents.zip"&gt;' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">2</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">02 <b>DOWNLOAD</b></span>
+              <h3>מורידים את החבילה</h3>
+              <p>בחבילה כבר יושבים הסקיל ושלושת הסוכנים. לוחצים לחיצה כפולה על הקובץ, ונפתחת תיקייה בשם <code>landing-agents</code>.</p>
+              <div class="ls-dl-wrap">
+                <a class="btn btn-primary btn-dl" href="landing-agents.zip" download>
+                  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+                  <span>הורדת החבילה<span class="meta">landing-agents.zip</span></span>
+                </a>
+              </div>
+              <div class="note"><span aria-hidden="true">●</span><span>יש לוגו או תמונות של העסק? <b>שימו אותם בתיקייה <code>images</code></b> שבתוך החבילה. הדף ישתמש רק בתמונות שלכם.</span></div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="חלון Finder עם landing-agents ו-images" data-code='.ls-row.drop{box-shadow:0 0 0 1.5px var(--cy) inset,…}' data-sk="media">
+              <figure class="fill ls-fig ls-cy">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents</span></div>
+                  <div class="ls-finder">
+                    <div class="ls-side">
+                      <small>Favorites</small>
+                      <span class="on"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.8v6m0 0-2.4-2.4M8 10.8l2.4-2.4"/></svg>Downloads</span>
+                      <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="3" width="12" height="8" rx="1.5"/><path d="M5.5 14h5"/></svg>Desktop</span>
+                      <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 2h5l3 3v9H4Z"/></svg>Documents</span>
+                      <small>iCloud</small>
+                      <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4.5 12.5a3 3 0 0 1-.4-6 4 4 0 0 1 7.7 1A2.5 2.5 0 0 1 11.5 12.5Z"/></svg>iCloud Drive</span>
+                    </div>
+                    <div class="ls-fmain">
+                      <div class="ls-cols">
+                        <div class="ls-col">
+                          <span class="ls-row"><svg class="ls-zip" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 2h7l4 4v12H5Z"/><path d="M9 2v2h2V2M9 4v2h2V4M9 6v2h2V6" stroke-width="1.2"/><rect x="8.6" y="9.4" width="2.8" height="3.2" rx=".6"/></svg><span class="nm">landing-agents.zip</span></span>
+                          <span class="ls-row sel"><svg class="ls-fold" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg><span class="nm">landing-agents</span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3.5 2 3 3-3 3"/></svg></span>
+                        </div>
+                        <div class="ls-col">
+                          <span class="ls-row drop"><svg class="ls-fold" viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg><span class="nm">images</span><svg class="chev" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m3.5 2 3 3-3 3"/></svg></span>
+                          <span class="ls-row"><svg class="ls-txt" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5 2h7l4 4v12H5Z"/><path d="M8 9h5M8 12h5M8 15h3"/></svg><span class="nm">START.txt</span></span>
+                        </div>
+                      </div>
+                      <span class="ls-drag"><span class="ls-thumb"></span>logo.png<em>2</em>
+                        <svg class="ls-cur" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span>
+                      <span class="ls-tip he" style="left:10px;bottom:17%">לוגו ותמונות → <em>images</em></span>
+                      <div class="ls-path">Downloads › <b>landing-agents</b> › images</div>
+                    </div>
+                  </div>
+                </div>
+                <figcaption>אחרי לחיצה כפולה: תיקייה חדשה, ובתוכה images.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 3 · open folder in Code ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 3 · לשונית Code ובחירת תיקייה" data-code='&lt;span class="tabs"&gt;…&lt;span class="on"&gt;Code' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">3</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">03 <b>OPEN</b></span>
+              <h3>פותחים את התיקייה בלשונית Code</h3>
+              <p>באפליקציה עוברים ללשונית <b>Code</b> שבראש החלון, לוחצים על בחירת תיקייה ובוחרים את <code>landing-agents</code>.</p>
+              <div class="note"><span aria-hidden="true">●</span><span>בוחרים את <b>landing-agents עצמה</b>, לא תיקייה שמעליה. מהרגע שהיא פתוחה, Claude מכיר לבד את הסקיל ואת שלושת הסוכנים. אין מה להתקין.</span></div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="אפליקציית Claude · Code ותיקייה" data-code='.ls-apptop .tabs span.on{background:var(--grad)}' data-sk="media">
+              <figure class="fill ls-fig">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top ls-apptop"><i></i><i></i><i></i>
+                    <span class="tabs"><span>Chat</span><span>Cowork</span><span class="on">Code<b class="ls-ping" style="left:50%;top:50%"></b></span></span>
+                  </div>
+                  <div class="ls-app">
+                    <div class="ls-rail"><i></i><i></i><i></i><i></i></div>
+                    <div class="ls-amain">
+                      <div class="ls-greet"><svg class="ls-star" viewBox="0 0 48 48" fill="currentColor"><g><rect x="22" y="2" width="4" height="20" rx="2"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(30 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(60 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(90 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(120 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(150 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(180 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(210 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(240 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(270 24 24)"/><rect x="22" y="2" width="4" height="20" rx="2" transform="rotate(300 24 24)"/><rect x="22" y="2" width="4" height="16" rx="2" transform="rotate(330 24 24)"/></g></svg>Claude Code</div>
+                      <div class="menu ls-pick">
+                        <small>Choose folder</small>
+                        <span class="folder on"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>landing-agents<span class="ok">✓</span>
+                          <svg class="ls-cur" style="right:34px;top:16px" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span>
+                        <span class="folder ls-dim"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>Downloads</span>
+                        <span class="ls-browse">Browse…</span>
+                      </div>
+                      <div class="input ls-in">
+                        <div class="txt"><span class="ls-sk" style="width:46%;margin-right:0"></span></div>
+                        <div class="row">
+                          <span class="ls-chipf on"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>landing-agents ▾</span>
+                          <span class="send"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m0 0L4 7m4-4 4 4"/></svg></span>
+                        </div>
+                      </div>
+                      <span class="ls-tip ls-hm he" style="right:14px;top:10px">לשונית <em>Code</em> למעלה</span>
+                    </div>
+                  </div>
+                </div>
+                <figcaption>Chat, Cowork, Code. עובדים בלשונית Code, עם התיקייה שבחרתם.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 4 · model ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 4 · בחירת מודל Fable 5.2" data-code='&lt;div class="opt on"&gt;Claude Fable 5.2' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">4</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">04 <b>MODEL</b></span>
+              <h3>בוחרים מודל: Claude Fable 5.2</h3>
+              <p>ליד תיבת הכתיבה יש כפתור של מודל. לוחצים עליו ובוחרים <b>Claude Fable 5.2</b>.</p>
+              <div class="note warn"><span aria-hidden="true">●</span><span>לא מופיע אצלכם, או שהגעתם למגבלת השימוש שלו? בחרו <b>Claude Opus 5.5</b>. החבילה נבדקה עליו.</span></div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="תפריט מודל · Fable 5.2 מסומן" data-code='.ls-alt{…color:var(--amber);…}' data-sk="media">
+              <figure class="fill ls-fig">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents · Code</span></div>
+                  <div class="win-body ls-b4">
+                    <div class="menu ls-menu">
+                      <span class="ls-mh">Model</span>
+                      <div class="opt on"><span>Claude Fable 5.2</span><span class="check">✓</span>
+                        <svg class="ls-cur" style="right:44px;top:20px" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></div>
+                      <div class="opt"><span>Claude Opus 5.5</span><span class="ls-alt he">חלופה</span></div>
+                      <div class="ls-more"><span>More models</span><span>›</span></div>
+                    </div>
+                    <div class="input ls-in">
+                      <div class="txt"><span class="ls-sk" style="width:52%"></span></div>
+                      <div class="row">
+                        <span class="ls-rowl"><span class="ls-chipf"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>landing-agents</span></span>
+                        <span class="ls-rowl"><span class="model ls-model-on">Fable 5.2 ▾</span><span class="send"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m0 0L4 7m4-4 4 4"/></svg></span></span>
+                      </div>
+                    </div>
+                    <span class="ls-tip ls-hm he" style="left:16px;top:22px">ברירת המחדל: <em>Fable 5.2</em></span>
+                  </div>
+                </div>
+                <figcaption>הכפתור ליד תיבת הכתיבה פותח את רשימת המודלים.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 5 · START prompt ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 5 · הודעת START עם העתקה" data-code='&lt;button class="copy" type="button" data-copy="ls-start"&gt;' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">5</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">05 <b>PROMPT</b></span>
+              <h3>מדביקים, ממלאים, שולחים</h3>
+              <p>מעתיקים את ההודעה, ממלאים את מה שבסוגריים הצהובים, ושולחים.</p>
+              <div class="prompt">
+                <div class="prompt-h"><b>START.txt</b><button class="copy" type="button" data-copy="ls-start">העתקה</button></div>
+<pre id="ls-start">תבנה לי דף נחיתה עם הסוכנים.
+
+העסק שלי: <span class="ph">[מה העסק ומה מוכרים]</span>
+למי זה מיועד: <span class="ph">[מי הלקוחות]</span>
+מה הגולש צריך לעשות: <span class="ph">[וואטסאפ / טלפון / טופס]</span>
+מספר וואטסאפ: <span class="ph">[05X-XXXXXXX]</span>
+צבעים או לוגו: <span class="ph">[אם יש, אחרת "תבחרו אתם"]</span>
+חייב להופיע: <span class="ph">[מחיר / כתובת / שעות / המלצות אמיתיות]</span></pre>
+              </div>
+              <div class="note"><span aria-hidden="true">●</span><span>Claude מבקש אישור ליצור קבצים? <b>מאשרים.</b> ככה הוא כותב את הדף אצלכם במחשב.</span></div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="תיבת הכתיבה עם ההודעה ממולאת" data-code='.ls-caret{…animation:lsBlink 1s steps(1) infinite}' data-sk="media">
+              <figure class="fill ls-fig">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents · Code</span></div>
+                  <div class="win-body ls-b5">
+                    <div class="ls-ctx"><span>landing-agents</span><i></i><span>Claude Fable 5.2</span></div>
+                    <div class="input ls-in5">
+                      <div class="txt"><span>תבנה לי דף נחיתה עם הסוכנים.</span><span>העסק שלי: <b class="ls-fl">מאפייה ביתית, חלות ועוגות לשישי</b></span><span>למי זה מיועד: <b class="ls-fl">משפחות בשכונה</b></span><span>מה הגולש צריך לעשות: <b class="ls-fl">וואטסאפ</b><i class="ls-caret"></i></span><span>מספר וואטסאפ: <span class="ls-phm">[05X-XXXXXXX]</span></span><span>צבעים או לוגו: <span class="ls-phm">[אם יש…]</span></span><span>חייב להופיע: <span class="ls-phm">[מחיר / כתובת…]</span></span></div>
+                      <div class="row">
+                        <span class="ls-rowl"><span class="ls-chipf"><svg viewBox="0 0 20 20" fill="currentColor"><path d="M2 5.5A1.5 1.5 0 0 1 3.5 4h4l1.6 1.6h7.4A1.5 1.5 0 0 1 18 7.1v8.4a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 2 15.5Z"/></svg>landing-agents</span></span>
+                        <span class="ls-rowl"><span class="model">Fable 5.2 ▾</span><span class="send"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13V3m0 0L4 7m4-4 4 4"/></svg><span class="ls-ping ls-pc" style="left:50%;top:50%"></span><svg class="ls-cur" style="left:16px;top:16px" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg></span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <figcaption>דוגמה למילוי. התכלת הוא מה שכתבתם, הצהוב עוד מחכה.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 6 · agents in parallel ============ -->
+      <li data-block data-agent="שלבים" data-log="שלב 6 · הסוכנים עובדים במקביל" data-code='&lt;div class="lane" style="--c:var(--ag1)"&gt;' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">6</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">06 <b>AGENTS</b></span>
+              <h3>רואים את הסוכנים עובדים</h3>
+              <p>הקופירייטר והמעצב יוצאים לדרך <b>באותו רגע</b>: אחד כותב את הטקסטים, השני בוחר צבעים וגופנים. כשהם מסיימים, Claude מרכיב את הדף, הבודק עובר על כל כפתור, ו-Claude מתקן את מה שהבודק מצא.</p>
+              <span class="ls-time"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8" cy="8" r="6.2"/><path d="M8 4.6V8l2.4 1.6"/></svg>כל זה לוקח כמה דקות</span>
+              <p>בסוף מחכה לכם הקובץ <code>site/index.html</code>. לחיצה כפולה, והוא נפתח בדפדפן.</p>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="4 מסלולי סוכנים וקבצים שנוצרים" data-code='.ls-f.soon{color:var(--muted)}' data-sk="media">
+              <figure class="fill ls-fig ls-cy">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents · Claude Code</span></div>
+                  <div class="win-body ls-b6">
+                    <div class="ls-run"><span class="ls-live">2 agents running in parallel</span><small>landing-page</small></div>
+                    <div class="mc">
+                      <div class="lane" style="--c:var(--ag1)"><span class="av">ק</span><span class="who">קופירייטר<small>במקביל · כותב טקסטים</small></span><span class="st">writing…</span><span class="track"><b style="--w:64%"></b></span></div>
+                      <div class="lane" style="--c:var(--ag2)"><span class="av">מ</span><span class="who">מעצב<small>במקביל · צבעים וגופנים</small></span><span class="st">writing…</span><span class="track"><b style="--w:78%"></b></span></div>
+                      <div class="lane ls-wait" style="--c:var(--ag4)"><span class="av">C</span><span class="who">Claude<small>אחריהם · מרכיב את הדף</small></span><span class="st">waiting</span><span class="track"><b style="--w:0%"></b></span></div>
+                      <div class="lane ls-wait" style="--c:var(--ag3)"><span class="av">ב</span><span class="who">בודק<small>בסוף · קישורים, נייד, עובדות</small></span><span class="st">queued</span><span class="track"><b style="--w:0%"></b></span></div>
+                    </div>
+                    <div class="ls-files">
+                      <small>Files</small>
+                      <span class="ls-f ok"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>brief.md<span class="s">✓ saved</span></span>
+                      <span class="ls-f wr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>copy.md<span class="s">● writing</span></span>
+                      <span class="ls-f wr"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>design.md<span class="s">● writing</span></span>
+                      <span class="ls-f soon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 2"><path d="M4 1.5h5.5L13 5v9.5H4Z"/></svg>site/index.html<span class="s">next</span></span>
+                    </div>
+                  </div>
+                </div>
+                <figcaption>שניים במקביל, אחר כך הרכבה, ובסוף בדיקה.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <!-- ============ 7 · go live ============ -->
+      <li class="ls-final" data-block data-agent="שלבים" data-log="שלב 7 · העלאה ל-Netlify Drop" data-code='.ls-final .step-n{background:linear-gradient(135deg,…)}' data-sk="line">
+        <div class="fill step">
+          <span class="step-n" aria-hidden="true">7</span>
+          <div class="step-body">
+            <div class="step-txt">
+              <span class="ls-k">07 <b>GO LIVE</b></span>
+              <h3>מעלים לאוויר</h3>
+              <ol class="ls-mini">
+                <li><span>נכנסים ל-<a class="ls-link" href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a></span></li>
+                <li><span>גוררים לשם את <b>כל התיקייה</b> <code>site</code></span></li>
+                <li><span>תוך שניות מקבלים קישור לדף</span></li>
+              </ol>
+              <div class="note warn"><span aria-hidden="true">●</span><span><b>חשוב:</b> נרשמים ל-Netlify בחינם ולוחצים <b>Claim</b>. דף שלא שויך לחשבון נמחק תוך שעה.</span></div>
+              <div class="ls-acts">
+                <a class="btn btn-ghost" href="https://app.netlify.com/drop" target="_blank" rel="noopener">ל-Netlify Drop
+                  <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a>
+              </div>
+            </div>
+
+            <div class="ls-mock" data-block data-agent="שלבים" data-log="אזור הגרירה של Netlify וקישור חי" data-code='.ls-drop{…border:2px dashed var(--cy);…}' data-sk="media">
+              <figure class="fill ls-fig ls-cy">
+                <div class="win" aria-hidden="true">
+                  <div class="win-top"><i></i><i></i><i></i>
+                    <span class="ls-url"><svg viewBox="0 0 16 16" fill="currentColor"><path d="M4 7V5a4 4 0 1 1 8 0v2h1v8H3V7h1Zm2 0h4V5a2 2 0 1 0-4 0v2Z"/></svg>app.netlify.com/drop</span>
+                  </div>
+                  <div class="win-body ls-b7">
+                    <div class="ls-drop">
+                      <span class="ls-up"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4m0 0-5 5m5-5 5 5M4 18v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/></svg></span>
+                      <b>Drag and drop your site output folder here</b>
+                      <span>or browse to upload</span>
+                      <span class="ls-dragf">
+                        <svg class="ls-bigf" viewBox="0 0 46 38" fill="none"><path d="M2 6a4 4 0 0 1 4-4h11l4 4h19a4 4 0 0 1 4 4v22a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" fill="var(--amber)"/><path d="M2 12h42v20a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4Z" fill="color-mix(in srgb,var(--amber) 80%,var(--ink))"/></svg>
+                        <em>site</em>
+                        <svg class="ls-cur" viewBox="0 0 22 24"><path d="M2 2v17l4.6-4.4 3 6.8 2.8-1.2-3-6.6H16Z"/></svg>
+                      </span>
+                    </div>
+                    <div class="ls-livebar">
+                      <span class="ls-lk"><span>your-site.netlify.app</span></span>
+                      <span class="ls-claim">Claim<span class="ls-ping" style="left:50%;top:50%;box-shadow:0 0 0 2px var(--amber)"></span></span>
+                    </div>
+                    <div class="ls-warnline he"><b>!</b>בלי Claim, הדף נמחק תוך שעה</div>
+                  </div>
+                </div>
+                <figcaption>גוררים את site, ותוך שניות יש קישור חי.</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </li>
+
+    </ol>
+  </div>
+</section>
+<style>
+/* ---- חבילה · landing: inside the package / changes / troubleshooting / end ---- */
+.lp-inside{display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);gap:clamp(20px,3vw,40px);align-items:start}
+.lp-stick{position:sticky;top:86px;min-width:0}
+.lp-explorer{display:grid;gap:14px;min-width:0}
+.lp-fx{display:grid;grid-template-columns:136px minmax(0,1fr)}
+.lp-side{padding:14px 10px;border-right:1px solid var(--line);background:color-mix(in srgb,var(--surface) 70%,transparent);display:grid;align-content:start;gap:2px;font:500 12.5px/1 var(--body)}
+.lp-side small{font:600 10.5px/1 var(--mono);letter-spacing:.1em;color:var(--muted);padding:6px 8px 10px}
+.lp-side span{display:flex;align-items:center;gap:8px;padding:8px;border-radius:8px;color:var(--ink2)}
+.lp-side span.on{background:var(--surface3);color:var(--ink)}
+.lp-side svg{width:14px;height:14px;flex:none;color:var(--cy)}
+.lp-main{min-width:0;display:grid}
+.lp-bar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid var(--line);font:500 12.5px/1 var(--mono);color:var(--muted)}
+.lp-nav{display:flex;gap:4px;color:var(--line2);font-size:15px}
+.lp-crumb{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lp-crumb b{color:var(--ink);font-weight:600}
+.lp-kbd{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.lp-kbd kbd{font:600 11px/1 var(--mono);padding:4px 6px;border-radius:6px;background:var(--surface2);box-shadow:0 0 0 1px var(--line2) inset,0 2px 0 var(--line);color:var(--ink)}
+.lp-kbd em{font-style:normal;color:var(--ok);margin-left:4px}
+.tree.lp-tree{padding:10px 8px}
+.tree.lp-tree .d4{padding-left:96px}
+.lp-tree .lp-car{width:10px;flex:none;color:var(--muted);font-size:11px;text-align:center}
+.lp-tree .lp-hid .nm{color:var(--muted)}
+.lp-tree .lp-hid .ic{opacity:.5}
+.lp-tree .lp-hid .tag{color:var(--muted);background:transparent;box-shadow:0 0 0 1px var(--line2) inset}
+.lp-tree .lp-sel{background:color-mix(in srgb,var(--ag1) 12%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--ag1) 35%,transparent) inset}
+.lp-status{display:flex;justify-content:space-between;gap:10px;padding:9px 14px;border-top:1px solid var(--line);font:500 11.5px/1 var(--mono);color:var(--muted)}
+.lp-roster{display:grid;gap:14px;min-width:0}
+.lp-card{display:grid;gap:16px}
+.lp-ch{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.lp-ch b{font:700 13px/1 var(--mono);letter-spacing:.12em;color:var(--muted)}
+.lp-r{--c:var(--ag1);display:grid;grid-template-columns:44px minmax(0,1fr);gap:14px;align-items:start}
+.lp-av{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 50%,transparent) inset,0 0 26px -8px var(--c);color:var(--c)}
+.lp-av svg{width:22px;height:22px}
+.lp-r h3{font-size:20px;display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
+.lp-r h3 code{font-size:12.5px;color:var(--c)}
+.lp-r p{margin:6px 0 0;color:var(--ink2);font-size:16px;line-height:1.55}
+.lp-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.lp-out{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:9px;font:600 12.5px/1 var(--body);color:var(--muted);background:color-mix(in srgb,var(--c) 9%,transparent);box-shadow:0 0 0 1px var(--line2) inset}
+.lp-out code{background:none;border:0;padding:0;color:var(--ink)}
+.lp-sep{height:1px;background:var(--line)}
+.lp-flow{list-style:none;margin:12px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px;counter-reset:f}
+.lp-flow li{counter-increment:f;display:inline-flex;align-items:center;gap:7px;padding:7px 12px;border-radius:999px;font:600 13px/1 var(--body);background:var(--surface2);box-shadow:0 0 0 1px var(--line) inset;color:var(--ink2)}
+.lp-flow li::before{content:counter(f);font:700 11px/1 var(--mono);color:var(--ag1)}
+.lp-flow li.lp-par{color:var(--ink);box-shadow:0 0 0 1px color-mix(in srgb,var(--ag2) 55%,transparent) inset;background:color-mix(in srgb,var(--ag2) 10%,transparent)}
+.lp-change{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,56px);align-items:center}
+.lp-change .sec-head{margin-bottom:0}
+.lp-pk{display:grid;gap:14px;min-width:0}
+.lp-ideas{display:flex;flex-wrap:wrap;gap:8px;padding:0 18px 18px}
+.lp-ideas span{padding:7px 12px;border-radius:999px;font:600 13.5px/1.2 var(--body);color:var(--ink2);background:rgba(255,255,255,.04);box-shadow:0 0 0 1px var(--line2) inset}
+.lp-redeploy{display:grid;grid-template-columns:auto minmax(0,1fr);gap:14px;align-items:center;padding:14px 16px;border-radius:var(--r);background:var(--surface);box-shadow:0 0 0 1px var(--line) inset}
+.lp-drag{display:flex;align-items:center;gap:8px;direction:ltr}
+.lp-drag .folder{padding:8px 10px}
+.lp-drag svg.lp-arr{width:22px;height:22px;color:var(--cy);flex:none}
+.lp-zone{display:grid;place-items:center;height:38px;padding:0 12px;border-radius:10px;border:1.5px dashed color-mix(in srgb,var(--cy) 60%,transparent);font:600 12px/1 var(--mono);color:var(--cy);white-space:nowrap}
+.lp-redeploy p{margin:0;color:var(--ink2);font-size:15.5px;line-height:1.55}
+.lp-redeploy p b{color:var(--ink)}
+.lp-faq summary{min-height:64px}
+.lp-q{display:flex;align-items:center;gap:14px;min-width:0}
+.lp-qn{flex:none;width:34px;height:34px;border-radius:10px;display:grid;place-items:center;font:700 12.5px/1 var(--mono);color:var(--cy);background:color-mix(in srgb,var(--cy) 10%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--cy) 35%,transparent) inset}
+.lp-faq details[open]{box-shadow:0 0 0 1px color-mix(in srgb,var(--ag1) 45%,transparent) inset,var(--shadow)}
+.lp-faq details>div{padding-inline-start:68px}
+.lp-faq details>div p{margin:0 0 10px}
+.lp-faq details>div p:last-child{margin:0}
+.lp-say{display:block;padding:10px 14px;border-radius:12px;background:var(--bg2);box-shadow:0 0 0 1px var(--line2) inset;color:var(--ink);font-weight:600}
+.lp-say::before{content:"כותבים ל-Claude";display:block;font:600 11.5px/1 var(--mono);color:var(--muted);margin-bottom:6px}
+.lp-num{display:inline-flex;flex-wrap:wrap;align-items:center;gap:8px;direction:ltr}
+.lp-num s{color:var(--muted);font-family:var(--mono);font-size:14px}
+.lp-num code{color:var(--ok)}
+.lp-end{position:relative;overflow:hidden}
+.lp-end::after{content:"";position:absolute;width:420px;height:420px;inset-inline-start:-140px;top:-180px;border-radius:50%;box-shadow:0 0 0 1px color-mix(in srgb,var(--ag1) 22%,transparent),0 0 0 60px color-mix(in srgb,var(--ag1) 3%,transparent),0 0 0 61px color-mix(in srgb,var(--ag2) 10%,transparent);pointer-events:none}
+.lp-end>*{position:relative;z-index:1}
+.lp-end h2{font-size:clamp(38px,6vw,76px)}
+.lp-team{display:flex;flex-wrap:wrap;gap:8px}
+.lp-end .btn-dl{height:auto;padding-block:10px}
+.lp-dl{display:grid;gap:5px;text-align:start}
+@media (max-width:900px){
+  .lp-inside,.lp-change{grid-template-columns:minmax(0,1fr)}
+  .lp-stick{position:static}
+}
+@media (max-width:560px){
+  .lp-fx{grid-template-columns:minmax(0,1fr)}
+  .lp-side,.lp-kbd-l{display:none}
+  .tree.lp-tree{font-size:13px}
+  .tree.lp-tree .n{gap:8px;padding:9px 6px}
+  .tree.lp-tree .d1{padding-left:20px}.tree.lp-tree .d2{padding-left:34px}.tree.lp-tree .d3{padding-left:48px}.tree.lp-tree .d4{padding-left:62px}
+  .lp-r{grid-template-columns:38px minmax(0,1fr);gap:12px}
+  .lp-av{width:38px;height:38px;border-radius:11px}
+  .lp-redeploy{grid-template-columns:minmax(0,1fr)}
+  .lp-faq details>div{padding-inline-start:20px}
+  .lp-q{gap:12px}
+}
+</style>
+
+<!-- ================= 1 · מה יש בחבילה ================= -->
+<section class="sec" id="inside" data-section>
+  <div class="wrap">
+    <div class="sec-head" data-block data-agent="חבילה" data-log="כותרת הסקשן · מה יש בחבילה" data-code='<section class="sec" id="inside" data-section>' data-sk="title">
+      <div class="fill">
+        <span class="eyebrow">Inside · landing-agents</span>
+        <h2>מה יש <span class="grad-text">בחבילה</span></h2>
+        <p class="lead">תיקייה אחת. בתוכה מנהל, שלושה סוכנים ומקום לחומרים שלכם. ככה היא נראית כשפותחים אותה במחשב.</p>
+      </div>
+    </div>
+
+    <div class="lp-inside">
+      <div class="lp-stick" data-block data-agent="חבילה" data-log="חלון Finder עם עץ קבצים ותגיות צבע" data-code='<div class="tree lp-tree">' data-sk="media">
+        <div class="fill lp-explorer">
+          <div class="win">
+            <div class="win-top"><i></i><i></i><i></i><span class="win-title">landing-agents</span></div>
+            <div class="lp-fx">
+              <div class="lp-side" aria-hidden="true">
+                <small>FAVORITES</small>
+                <span class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>Downloads</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/></svg>Desktop</span>
+                <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/></svg>Documents</span>
+              </div>
+              <div class="lp-main">
+                <div class="lp-bar">
+                  <span class="lp-nav" aria-hidden="true">‹ ›</span>
+                  <span class="lp-crumb">Downloads › <b>landing-agents</b></span>
+                  <span class="lp-kbd"><kbd>⌘</kbd><kbd>⇧</kbd><kbd>.</kbd><em class="lp-kbd-l">hidden: on</em></span>
+                </div>
+                <div class="tree lp-tree" role="list" aria-label="הקבצים שבחבילה">
+                  <div class="n" role="listitem" style="--c:var(--amber)"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">landing-agents</span><span class="tag">החבילה</span></div>
+                  <div class="n d1 lp-hid" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">.claude</span><span class="tag">מוסתרת</span></div>
+                  <div class="n d2" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">skills</span></div>
+                  <div class="n d3" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">landing-page</span></div>
+                  <div class="n d4 lp-sel" role="listitem" style="--c:var(--ag1)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">SKILL.md</span><span class="tag">המנהל</span></div>
+                  <div class="n d2" role="listitem"><span class="lp-car">▾</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">agents</span></div>
+                  <div class="n d3" role="listitem" style="--c:var(--ag2)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">copywriter.md</span><span class="tag">קופירייטר</span></div>
+                  <div class="n d3" role="listitem" style="--c:var(--ag3)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">designer.md</span><span class="tag">מעצב</span></div>
+                  <div class="n d3" role="listitem" style="--c:var(--ag4)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/></svg><span class="nm">checker.md</span><span class="tag">בודק</span></div>
+                  <div class="n d1" role="listitem" style="--c:var(--ag5)"><span class="lp-car">▸</span><svg class="ic" viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg><span class="nm">images</span><span class="tag">התמונות שלכם</span></div>
+                  <div class="n d1" role="listitem" style="--c:var(--ink)"><span class="lp-car"></span><svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4"/><path d="M9 12h6M9 15.5h4"/></svg><span class="nm">START.txt</span><span class="tag">ההודעה</span></div>
+                </div>
+                <div class="lp-status"><span>3 items</span><span>.claude shown</span></div>
+              </div>
+            </div>
+          </div>
+          <p class="note"><svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" style="flex:none;color:var(--cy);margin-top:2px"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><span><b>לא רואים את <code>.claude</code>?</b> היא מוסתרת, וזה תקין. Claude רואה אותה. רוצים לראות בעצמכם: ב-Mac לוחצים <code>⌘ ⇧ .</code> בתוך Finder, ב-Windows <code>View › Show › Hidden items</code>.</span></p>
+        </div>
+      </div>
+
+      <div class="lp-roster">
+        <div data-block data-agent="חבילה" data-log="כרטיס המנהל · 5 שלבי SKILL.md" data-code='.lp-flow li::before{content:counter(f)' data-sk="line">
+          <div class="fill card card-glow lp-card">
+            <div class="lp-ch"><b>THE LEAD</b><span class="chip" style="--c:var(--ag1)">Claude</span></div>
+            <div class="lp-r" style="--c:var(--ag1)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M18.5 15l.7 2 2 .7-2 .7-.7 2-.7-2-2-.7 2-.7z"/></svg></span>
+              <div>
+                <h3>המנהל <code>SKILL.md</code></h3>
+                <p>סדר העבודה של Claude. הוא לא כותב את הדף לבד: אם חסר מידע שואל אתכם עד 6 שאלות, מחלק את העבודה לסוכנים, מרכיב קובץ אחד ומעביר לבדיקה.</p>
+                <ol class="lp-flow"><li>בריף</li><li class="lp-par">שניים במקביל</li><li>בנייה</li><li>בדיקה</li><li>מסירה</li></ol>
+                <div class="lp-meta"><span class="lp-out">כותב <code>brief.md</code></span><span class="lp-out">בונה <code>site/index.html</code></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-block data-agent="חבילה" data-log="כרטיס הצוות · 3 סוכנים ומה כל אחד כותב" data-code='.lp-av{width:44px;height:44px;border-radius:13px;' data-sk="line">
+          <div class="fill card lp-card">
+            <div class="lp-ch"><b>THE TEAM</b><span class="pill"><span class="dot"></span>קופירייטר ומעצב באותו רגע</span></div>
+            <div class="lp-r" style="--c:var(--ag2)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20l4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10z"/><path d="M13.5 7.5l3 3"/></svg></span>
+              <div>
+                <h3>קופירייטר <code>copywriter.md</code></h3>
+                <p>כותב את כל המילים: כותרת עד 8 מילים, 3 יתרונות, 3–5 שאלות נפוצות וכפתור. לא ממציא מחירים, מספרים או המלצות.</p>
+                <div class="lp-meta"><span class="lp-out">כותב <code>copy.md</code></span></div>
+              </div>
+            </div>
+            <div class="lp-sep"></div>
+            <div class="lp-r" style="--c:var(--ag3)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-1 2-2s-1-1.6-1-2.6 1-1.4 2-1.4h2a4 4 0 0 0 4-4C21 6.5 17 3 12 3z"/><circle cx="7.5" cy="11" r="1.2" fill="currentColor"/><circle cx="10.5" cy="7" r="1.2" fill="currentColor"/><circle cx="15.5" cy="7.5" r="1.2" fill="currentColor"/></svg></span>
+              <div>
+                <h3>מעצב <code>designer.md</code></h3>
+                <p>בוחר צבעים מהעולם של העסק, גופן עברי, גדלים וקצב בין הסקשנים. בודק ניגודיות קריאה, ומשתמש רק בתמונות שלכם.</p>
+                <div class="lp-meta"><span class="lp-out">כותב <code>design.md</code></span></div>
+              </div>
+            </div>
+            <div class="lp-sep"></div>
+            <div class="lp-r" style="--c:var(--ag4)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg></span>
+              <div>
+                <h3>בודק <code>checker.md</code></h3>
+                <p>עובר על הדף מול הבריף: קישור וואטסאפ, תצוגה בנייד, כפתורים גדולים מספיק ועובדות שלא הופיעו בבריף. לא נוגע בקבצים, רק מדווח. Claude מתקן ומריץ אותו שוב.</p>
+                <div class="lp-meta"><span class="lp-out">אחרי הבנייה</span><span class="lp-out">מחזיר <code>BLOCKERS</code></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div data-block data-agent="חבילה" data-log="כרטיס images ו-START.txt" data-code='<span class="nm">START.txt</span>' data-sk="line">
+          <div class="fill card lp-card">
+            <div class="lp-ch"><b>FROM YOU</b></div>
+            <div class="lp-r" style="--c:var(--ag5)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><circle cx="9" cy="9.5" r="1.8"/><path d="M4 18l5-5 4 4 3-3 4 4"/></svg></span>
+              <div>
+                <h3>התמונות שלכם <code>images/</code></h3>
+                <p>לוגו ותמונות של העסק נכנסים לכאן. הדף משתמש רק בהן. התיקייה ריקה? יוצא עיצוב בלי תמונות.</p>
+              </div>
+            </div>
+            <div class="lp-sep"></div>
+            <div class="lp-r" style="--c:var(--ink)">
+              <span class="lp-av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/><path d="M8 9h8M8 12h5"/></svg></span>
+              <div>
+                <h3>ההודעה הראשונה <code>START.txt</code></h3>
+                <p>מה ששולחים ל-Claude, עם סוגריים למלא: העסק, הלקוחות, הפעולה, וואטסאפ, צבעים ומה חייב להופיע.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2 · שינויים אחרי שהדף מוכן ================= -->
+<section class="sec" id="changes" data-section>
+  <div class="wrap lp-change">
+    <div class="sec-head" data-block data-agent="חבילה" data-log="כותרת · שינויים אחרי שהדף מוכן" data-code='<section class="sec" id="changes" data-section>' data-sk="title">
+      <div class="fill">
+        <span class="eyebrow">After · changes</span>
+        <h2>רוצים לשנות? <span class="grad-text">פשוט כותבים</span></h2>
+        <p class="lead">באותו צ'אט, במילים שלכם. Claude מעדכן את <code>site/index.html</code> ואתם רואים את התוצאה מיד בדפדפן.</p>
+      </div>
+    </div>
+
+    <div data-block data-agent="חבילה" data-log="בקשת שינוי להעתקה + עדכון ב-Netlify" data-code='<button class="copy" type="button" data-copy="lp-change">' data-sk="btn">
+      <div class="fill lp-pk">
+        <div class="prompt">
+          <div class="prompt-h"><b>CHANGE REQUEST</b><button class="copy" type="button" data-copy="lp-change">העתקה</button></div>
+          <pre id="lp-change">תשנה את הצבע הראשי לכחול כהה, ותוסיף שאלה נפוצה על משלוחים</pre>
+          <div class="lp-ideas" aria-label="עוד דוגמאות לבקשות"><span>תקצר את הכותרת</span><span>תוסיף את שעות הפתיחה</span><span>תחליף את התמונה הראשית</span></div>
+        </div>
+        <div class="lp-redeploy">
+          <div class="lp-drag" aria-hidden="true">
+            <span class="folder on"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h4l2 2.2h7A2.5 2.5 0 0 1 21 8.7v8.8a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 17.5z"/></svg>site</span>
+            <svg class="lp-arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h15"/><path d="M14 7l5 5-5 5"/></svg>
+            <span class="lp-zone">Deploys</span>
+          </div>
+          <p><b>אחרי כל שינוי</b> גוררים שוב את כל התיקייה <code>site</code> לאתר שלכם ב-Netlify, בלשונית Deploys. לא לדף ה-drop, שם נפתח אתר חדש.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 3 · אם משהו נתקע ================= -->
+<section class="sec" id="stuck" data-section>
+  <div class="wrap">
+    <div class="sec-head" data-block data-agent="חבילה" data-log="כותרת · אם משהו נתקע" data-code='<section class="sec" id="stuck" data-section>' data-sk="title">
+      <div class="fill">
+        <span class="eyebrow">Troubleshooting</span>
+        <h2>אם משהו <span class="grad-text">נתקע</span></h2>
+        <p class="lead">חמש תקלות שקורות, ומה כותבים כדי לצאת מהן.</p>
+      </div>
+    </div>
+
+    <div class="faq lp-faq">
+      <div data-block data-agent="חבילה" data-log="תקלה 1 · Claude לא מכיר את הסקיל" data-code='<span class="lp-qn">01</span>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">01</span>Claude לא מכיר את הסקיל</span></summary>
+          <div>
+            <p>בדקו שפתחתם בלשונית Code בדיוק את התיקייה <code>landing-agents</code>. לא תיקייה שמעליה, ולא את <code>.claude</code> שבתוכה.</p>
+            <p><span class="lp-say">תשתמש בסקיל landing-page</span></p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="תקלה 2 · הסוכנים לא רצים במקביל" data-code='<span class="lp-say">' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">02</span>הסוכנים לא רצים במקביל</span></summary>
+          <div>
+            <p>הקופירייטר והמעצב אמורים לצאת לדרך באותו רגע. אם Claude מריץ אותם אחד אחרי השני:</p>
+            <p><span class="lp-say">תריץ את הקופירייטר והמעצב במקביל, באותה הודעה</span></p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="תקלה 3 · מגבלת שימוש ← Opus 5.5" data-code='.lp-qn{flex:none;width:34px;height:34px;' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">03</span>הגעתי למגבלת שימוש</span></summary>
+          <div>
+            <p>בבחירת המודל ליד תיבת הכתיבה עוברים ל-<b>Claude Opus 5.5</b> וממשיכים באותו צ'אט, מאותה נקודה. החבילה נבדקה עליו. אפשר גם לחכות שהמגבלה תתאפס.</p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="תקלה 4 · קישור וואטסאפ בפורמט 972" data-code='<span class="lp-num"><s>050-123-4567</s>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">04</span>הכפתור של וואטסאפ לא עובד</span></summary>
+          <div>
+            <p>המספר בקישור צריך להתחיל ב-972, בלי 0 בהתחלה ובלי מקפים או רווחים:</p>
+            <p><span class="lp-num"><s>050-123-4567</s><span aria-hidden="true">→</span><code>972501234567</code></span></p>
+            <p><span class="lp-say">תבדוק את הקישור לוואטסאפ</span></p>
+          </div>
+        </details>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="תקלה 5 · הדף נמחק מ-Netlify" data-code='<span class="lp-qn">05</span>' data-sk="line">
+        <details class="fill">
+          <summary><span class="lp-q"><span class="lp-qn">05</span>הדף נעלם מ-Netlify</span></summary>
+          <div>
+            <p>דף שלא שויך לחשבון נמחק תוך שעה. מיד אחרי ההעלאה נרשמים ל-Netlify בחינם ולוחצים <b>Claim</b>.</p>
+            <p>כבר נמחק? גוררים שוב את <code>site</code> ל-<a href="https://app.netlify.com/drop" target="_blank" rel="noopener">app.netlify.com/drop</a>, והפעם עושים Claim.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 4 · סוף ================= -->
+<section class="sec" id="end" data-section>
+  <div class="wrap">
+    <div data-block data-agent="חבילה" data-log="סוף הדף · הורדה שוב ואינסטגרם" data-code='<a class="btn btn-primary btn-dl" href="landing-agents.zip"' data-sk="btn">
+      <div class="fill end lp-end">
+        <div class="lp-team"><span class="chip" style="--c:var(--ag1)">המנהל</span><span class="chip" style="--c:var(--ag2)">קופירייטר</span><span class="chip" style="--c:var(--ag3)">מעצב</span><span class="chip" style="--c:var(--ag4)">בודק</span></div>
+        <h2>הצוות שלכם <span class="grad-text">כבר בתוך הזיפ</span></h2>
+        <p class="lead">מורידים, פותחים בלשונית Code ושולחים את ההודעה שבקובץ <code>START.txt</code>. הקופירייטר והמעצב עובדים במקביל, והבודק עובר על כל כפתור לפני שהדף מגיע אליכם.</p>
+        <div class="ctas">
+          <a class="btn btn-primary btn-dl" href="landing-agents.zip" download>
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11"/><path d="M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>
+            <span class="lp-dl"><span>להוריד את החבילה שוב</span><span class="meta">landing-agents.zip</span></span>
+          </a>
+          <a class="btn btn-ghost" href="https://www.instagram.com/leviorel/" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            @leviorel באינסטגרם
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer class="foot wrap">
+  <div class="me"><img src="media/avatar.jpg" alt="">אוראל לוי · ‎@leviorel</div>
+  <p>המדריך הזה נבנה מול העיניים על ידי סוכני Claude שעבדו במקביל · 12 דקות של בנייה אמיתית.</p>
+</footer>
+<script>window.AW={agents:[["פתיחה","#a16cff"],["שלבים","#2bd7d6"],["חבילה","#f43f9e"]],title:"יומן הבנייה של הדף הזה",total:"3 סוכנים בנו את הדף הזה במקביל, וסוכן רביעי בנה את ההדגמה · 12 דקות של בנייה אמיתית"};</script>
+<script>/* =====================================================================
+   aw.js — build-replay engine for the agents guides
+   Config (set before this file): window.AW = {
+     agents:[["פתיחה","#a855f7"],["שלבים","#22d3ee"],["חבילה","#f43f9e"]],
+     title:"יומן הבנייה של הדף הזה", total:"<optional summary line>" }
+   Markup: #aw > [data-section] … [data-block data-agent data-log data-code data-sk (data-type) (data-tip)] > .fill
+   Every agent has its own queue and its own cursor; all queues run at the same time.
+   ===================================================================== */
+(function(){
+'use strict';
+var DOC=document,ROOT=DOC.documentElement;
+try{ROOT.classList.add('aw-rv');}catch(e){}
+
+/* ---------------------------------------------------------------
+   Page helpers that work with or without the build replay
+   --------------------------------------------------------------- */
+function initCopy(){
+  DOC.addEventListener('click',function(e){
+    var btn=e.target&&e.target.closest?e.target.closest('.copy[data-copy]'):null;
+    if(!btn)return;
+    var src=DOC.getElementById(btn.getAttribute('data-copy'));if(!src)return;
+    var text=src.textContent.replace(/^\s+|\s+$/g,'');
+    function ok(){
+      if(!btn._lbl)btn._lbl=btn.innerHTML;
+      btn.textContent='הועתק ✓';btn.classList.add('is-done');
+      clearTimeout(btn._t);
+      btn._t=setTimeout(function(){btn.innerHTML=btn._lbl;btn.classList.remove('is-done');},1600);
+    }
+    function fallback(){
+      var done=false;
+      try{
+        var ta=DOC.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+        ta.style.cssText='position:fixed;top:0;left:0;width:1px;height:1px;opacity:0';
+        DOC.body.appendChild(ta);ta.select();ta.setSelectionRange(0,text.length);
+        done=DOC.execCommand('copy');DOC.body.removeChild(ta);
+      }catch(err){}
+      if(done){ok();return;}
+      try{var rg=DOC.createRange();rg.selectNodeContents(src);var sel=getSelection();sel.removeAllRanges();sel.addRange(rg);}catch(err){}
+    }
+    try{
+      if(navigator.clipboard&&window.isSecureContext!==false)navigator.clipboard.writeText(text).then(ok,fallback);
+      else fallback();
+    }catch(err){fallback();}
+  });
+}
+function initProgress(){
+  var bars=DOC.querySelectorAll('.bar-progress');if(!bars.length)return;
+  var tick=false;
+  function upd(){
+    tick=false;
+    var max=ROOT.scrollHeight-innerHeight,p=max>0?Math.min(1,Math.max(0,(window.scrollY||ROOT.scrollTop)/max)):0;
+    for(var i=0;i<bars.length;i++)bars[i].style.setProperty('--p',p.toFixed(4));
+  }
+  addEventListener('scroll',function(){if(!tick){tick=true;requestAnimationFrame(upd);}},{passive:true});
+  addEventListener('resize',upd);upd();
+}
+function initReveal(){
+  var els=DOC.querySelectorAll('.rv');if(!els.length)return;
+  if(!('IntersectionObserver' in window)){for(var i=0;i<els.length;i++)els[i].classList.add('in');return;}
+  var io=new IntersectionObserver(function(en){
+    en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target);}});
+  },{threshold:0.12,rootMargin:'0px 0px -8% 0px'});
+  for(var j=0;j<els.length;j++)io.observe(els[j]);
+}
+function safe(f){try{f();}catch(e){if(window.console)console.error(e);}}
+safe(initCopy);
+function domReady(f){if(DOC.readyState==='loading')DOC.addEventListener('DOMContentLoaded',f);else f();}
+domReady(function(){safe(initProgress);safe(function(){
+  try{initReveal();}catch(e){var r=DOC.querySelectorAll('.rv');for(var i=0;i<r.length;i++)r[i].classList.add('in');throw e;}
+});});
+
+/* ---------------------------------------------------------------
+   Build replay
+   --------------------------------------------------------------- */
+var aw=DOC.getElementById('aw');
+if(!aw&&DOC.readyState!=='loading')return;
+var reduce=false;
+try{reduce=!!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);}catch(e){}
+if(reduce||!('IntersectionObserver' in window)||!window.requestAnimationFrame||!window.Promise)return;
+
+var CFG=window.AW||{};
+var AGENTS=(CFG.agents&&CFG.agents.length)?CFG.agents:[['פתיחה','#a855f7'],['שלבים','#22d3ee'],['חבילה','#f43f9e']];
+var PHONE=false;try{PHONE=matchMedia('(max-width: 600px)').matches;}catch(e){}
+var CANCEL={cancel:true};
+var RUN=0;
+var BUDGET=2600,TMIN=300,TMAX=950;  /* ms per section for one agent / per block */
+
+var layer=null,logEl=null,list=null,clockEl=null,skipBtn=null,rebuildBtn=null;
+var CL=[],C={},S=[],ALL=[],HERO=null,lanes=[],io=null;
+var T0=0,running=false,finalT=0,rewinding=false,dead=false;
+
+function now(){return performance.now();}
+function clamp(v,a,b){return v<a?a:v>b?b:v;}
+function eio(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;}
+function eo(t){return 1-Math.pow(1-t,3);}
+function wait(ms){return new Promise(function(r){setTimeout(r,ms);});}
+function raf(){return new Promise(function(r){var d=0;function f(){if(!d){d=1;r();}}requestAnimationFrame(f);setTimeout(f,60);});}
+function chk(run){if(run!==RUN)throw CANCEL;}
+function lum(hex){var n=parseInt(hex.slice(1),16);function c(v){v/=255;return v<=.03928?v/12.92:Math.pow((v+.055)/1.055,2.4);}return .2126*c(n>>16&255)+.7152*c(n>>8&255)+.0722*c(n&255);}
+function inkFor(hex){try{var L=lum(hex);return (1.05/(L+.05))>=((L+.05)/0.05)?'#ffffff':'#07070d';}catch(e){return '#ffffff';}}
+function AR(){return aw.getBoundingClientRect();}
+function pr(el){var r=el.getBoundingClientRect(),a=AR();return {x:r.left-a.left,y:r.top-a.top,w:r.width,h:r.height};}
+
+/* ---------- fail-safe: content must never stay hidden ---------- */
+function failsafe(err){
+  if(dead)return;dead=true;RUN++;
+  if(err&&err!==CANCEL&&window.console)console.error('[aw] build replay stopped, showing the page as is',err);
+  try{if(io)io.disconnect();}catch(e){}
+  try{aw.classList.remove('is-live');}catch(e){}
+  try{[].forEach.call(aw.querySelectorAll('.aw-type,.aw-mq,.aw-layer'),function(n){n.remove();});}catch(e){}
+  try{ALL.forEach(function(b){b.setAttribute('data-state','done');b.setAttribute('data-instant','');});}catch(e){}
+  try{lanes.forEach(function(l){setLane(l,1,'✓ סיים');});}catch(e){}
+  try{if(logEl)logEl.remove();}catch(e){}
+}
+function guard(f){return function(){if(dead)return;try{return f.apply(this,arguments);}catch(e){failsafe(e);}};}
+window.addEventListener('error',function(e){
+  /* only our own errors */
+  if(e&&e.filename&&/aw\.js/.test(e.filename))failsafe(e.error||e.message);
+});
+
+/* ---------- block states ---------- */
+function setState(b,st){if(st)b.setAttribute('data-state',st);else b.removeAttribute('data-state');}
+function countUp(el,instant){
+  var raw=el.getAttribute('data-count'),n=parseFloat(raw);if(isNaN(n))return;
+  if(instant){el.textContent=raw;return;}
+  var t0=now(),d=900;el.textContent='0';
+  (function st(t1){var t=Math.min(1,(t1-t0)/d);el.textContent=t<1?String(Math.round(eo(t)*n)):raw;if(t<1)requestAnimationFrame(st);})(t0);
+}
+function done(b,instant){
+  if(b._st==='done')return;
+  var c=b._c;
+  if(b._st==='q'){var k=c.queue.indexOf(b);if(k>=0)c.queue.splice(k,1);}
+  b._st='done';
+  if(instant)b.setAttribute('data-instant','');else b.removeAttribute('data-instant');
+  setState(b,'done');
+  [].forEach.call(b.querySelectorAll('[data-count]'),function(el){countUp(el,instant);});
+  c.doneN++;
+  if(c.active===b)c.active=null;
+  checkAll();
+}
+function resetBlock(b){
+  b._st='idle';b._qAt=0;b.removeAttribute('data-instant');setState(b,null);
+}
+
+/* ---------- cursors ---------- */
+function makeCursor(a,i){
+  var el=DOC.createElement('div');el.className='aw-cur';
+  var ci=inkFor(a[1]);
+  el.style.setProperty('--c',a[1]);el.style.setProperty('--ci',ci);
+  el.innerHTML='<svg viewBox="0 0 20 22" aria-hidden="true"><path d="M2 1.5v17.2l4.6-4.1 3.1 6.7 3.2-1.4-3.1-6.6h6.3z"/></svg><span class="aw-tag"></span>';
+  el.querySelector('.aw-tag').textContent='Claude · '+a[0];
+  layer.appendChild(el);
+  return {i:i,key:a[0],name:'Claude · '+a[0],color:a[1],ci:ci,el:el,x:0,y:0,shown:false,job:null,drive:null,
+    queue:[],busy:false,batch:0,total:0,doneN:0,active:null,idleAt:0,ph:Math.random()*6,fl:null};
+}
+function showCursor(c,nearX,nearY){
+  if(!c.shown){c.x=nearX+40+Math.random()*60;c.y=nearY-70-Math.random()*40;c.shown=true;}
+  c.el.classList.remove('is-rest');c.el.classList.add('is-on');
+}
+function travel(c,tx,ty,dur,o){
+  o=o||{};
+  return new Promise(function(res){
+    if(c.job){var pj=c.job;c.job=null;pj.resolve();}
+    c.drive=null;
+    var dx=tx-c.x,dy=ty-c.y,L=Math.hypot(dx,dy)||1,side=Math.random()<.5?-1:1;
+    var job={fx:c.x,fy:c.y,tx:tx,ty:ty,t0:now(),dur:Math.max(16,dur),ease:o.ease||eio,
+      bow:o.bow===0?0:side*Math.min(70,L*.14),nx:-dy/L,ny:dx/L,step:o.step||null,resolve:res};
+    c.job=job;
+    /* if frames stall (background tab, throttling) the build still moves on */
+    setTimeout(function(){if(c.job===job){c.job=null;c.x=tx;c.y=ty;if(job.step)job.step(1);res();}},job.dur+350);
+  });
+}
+function marq(c){
+  var el=DOC.createElement('div');el.className='aw-mq';
+  el.style.setProperty('--c',c.color);el.style.setProperty('--ci',c.ci);
+  var lab=DOC.createElement('b');el.appendChild(lab);layer.appendChild(el);
+  return {el:el,set:function(r,e){
+    /* RTL: drag from the top-right corner to the bottom-left */
+    var w=r.w*e,h=r.h*e;
+    el.style.left=(r.x+r.w-w)+'px';el.style.top=r.y+'px';el.style.width=w+'px';el.style.height=h+'px';
+    lab.textContent=Math.round(w)+' × '+Math.round(h);
+  }};
+}
+
+/* ---------- log ---------- */
+function fmt(ms){ms=Math.max(0,ms);var s=ms/1000,m=Math.floor(s/60);s=s-m*60;return (m<10?'0':'')+m+':'+(s<10?'0':'')+s.toFixed(1);}
+function log(c,msg){
+  if(!list||!msg)return;
+  var li=DOC.createElement('li');if(!c)li.className='is-sys';
+  var t=DOC.createElement('time'),sp=DOC.createElement('span');
+  t.textContent=fmt(running?now()-T0:finalT);
+  li.appendChild(t);
+  if(c){var b=DOC.createElement('b');b.textContent=c.key;b.style.color=c.color;li.appendChild(b);}
+  sp.textContent=msg;li.appendChild(sp);list.appendChild(li);
+  while(list.children.length>24)list.removeChild(list.firstChild);
+}
+function buildLog(){
+  logEl=DOC.createElement('aside');
+  logEl.className='aw-log';logEl.setAttribute('aria-label',CFG.title||'יומן הבנייה');
+  logEl.innerHTML='<div class="aw-log-h"><span class="aw-rec">REPLAY</span><span class="aw-ttl"></span><span class="aw-clock">00:00.0</span>'+
+    '<div class="aw-btns"><button type="button" class="aw-btn" data-act="skip">דלג</button><button type="button" class="aw-btn" data-act="rebuild">בנה שוב</button></div></div><ol aria-live="off"></ol>';
+  logEl.querySelector('.aw-ttl').textContent=CFG.title||'יומן הבנייה של הדף הזה';
+  DOC.body.appendChild(logEl);
+  list=logEl.querySelector('ol');clockEl=logEl.querySelector('.aw-clock');
+  skipBtn=logEl.querySelector('[data-act="skip"]');rebuildBtn=logEl.querySelector('[data-act="rebuild"]');
+  skipBtn.addEventListener('click',guard(skipAll));
+  rebuildBtn.addEventListener('click',guard(function(){rebuild().catch(failsafe);}));
+}
+
+/* ---------- typing (headlines with data-type) ---------- */
+async function typeIt(c,b,run,T){
+  var fill=b.querySelector(':scope > .fill');if(!fill)return;
+  var ov=fill.cloneNode(true);ov.classList.remove('fill');ov.classList.add('aw-type');ov.setAttribute('aria-hidden','true');
+  ov.removeAttribute('id');[].forEach.call(ov.querySelectorAll('[id]'),function(n){n.removeAttribute('id');});
+  var walker=DOC.createTreeWalker(ov,NodeFilter.SHOW_TEXT),tn=[],segs=[],len=0;
+  while(walker.nextNode())tn.push(walker.currentNode);
+  tn.forEach(function(t){
+    var txt=t.nodeValue;if(!txt||/^\s*$/.test(txt))return;
+    var s=DOC.createElement('span'),g=DOC.createElement('span');g.className='aw-g';g.textContent=txt;
+    t.parentNode.replaceChild(g,t);g.parentNode.insertBefore(s,g);segs.push({s:s,g:g,txt:txt});len+=txt.length;
+  });
+  if(!len)return;
+  var caret=DOC.createElement('i');caret.className='aw-caret';caret.style.setProperty('--c',c.color);
+  b.appendChild(ov);setState(b,'typing');
+  var Tt=clamp(len*28,360,1000)*clamp(T/TMAX*1.15,.5,1),t0=now(),k=-1,frames=0;
+  try{
+    while(k<len){
+      await raf();chk(run);
+      var nk=Math.min(len,Math.floor(len*(now()-t0)/Tt));
+      if(nk===k&&nk<len)continue;k=nk;
+      var left=k,placed=false;
+      for(var i=0;i<segs.length;i++){
+        var sg=segs[i],m=Math.min(sg.txt.length,Math.max(0,left));left-=m;
+        sg.s.textContent=sg.txt.slice(0,m);sg.g.textContent=sg.txt.slice(m);
+        if(!placed&&(left<=0||i===segs.length-1)){sg.g.parentNode.insertBefore(caret,sg.g);placed=true;}
+      }
+      if((frames++)%2===0){
+        var cr=caret.getBoundingClientRect(),A=AR();
+        if(c.job){var pj=c.job;c.job=null;pj.resolve();}
+        c.drive={x:cr.left-A.left-3,y:cr.bottom-A.top+5};
+      }
+      if(k>=len)break;
+    }
+    await wait(180);chk(run);
+  }finally{c.drive=null;ov.remove();}
+}
+
+/* ---------- one block: mark → rough → (typing) → done ---------- */
+async function buildBlock(c,b,run,T){
+  b._st='work';c.active=b;
+  b.style.setProperty('--aw-c',c.color);b.style.setProperty('--aw-ci',c.ci);
+  var r=pr(b);
+  showCursor(c,r.x+r.w,r.y);
+  var sx=r.x+r.w,sy=r.y,dist=Math.hypot(sx-c.x,sy-c.y);
+  await travel(c,sx,sy,clamp(T*.24+dist*.16,140,640));chk(run);
+  r=pr(b);setState(b,'mark');
+  var mq=marq(c);mq.set(r,0);
+  try{
+    await travel(c,r.x,r.y+r.h,clamp(T*.3,120,420),{bow:0,ease:eo,step:function(e){mq.set(r,e);}});chk(run);
+  }finally{mq.el.remove();}
+  setState(b,'rough');log(c,b.getAttribute('data-log'));
+  await travel(c,r.x+r.w*(.3+Math.random()*.4),r.y+Math.min(r.h*(.35+Math.random()*.3),160),clamp(T*.42,140,520));chk(run);
+  if(b.hasAttribute('data-type')){await typeIt(c,b,run,T);chk(run);}
+  done(b);
+}
+
+/* ---------- per-agent queues, all running at the same time ---------- */
+function enqueue(b){
+  if(dead||rewinding||b._st!=='idle')return;
+  var c=b._c;b._st='q';b._qAt=now();c.queue.push(b);c.batch++;
+  if(!c.busy)runAgent(c,RUN);
+}
+async function runAgent(c,run){
+  c.busy=true;
+  try{
+    while(c.queue.length){
+      if(run!==RUN)return;
+      var b=c.queue.shift();
+      if(b._st!=='q')continue;
+      var r=b.getBoundingClientRect();
+      if(r.bottom<0){done(b,true);continue;}                       /* the reader is already past it */
+      if(!b._force&&r.top>innerHeight+80){b._st='idle';continue;}  /* scrolled away: wait until it comes back */
+      var T=clamp(BUDGET/Math.max(1,c.batch),TMIN,TMAX);
+      try{await buildBlock(c,b,run,T);}
+      catch(e){if(e===CANCEL)return;if(window.console)console.error(e);done(b,true);}
+    }
+  }finally{
+    if(run===RUN){c.busy=false;c.batch=0;c.active=null;c.idleAt=now();}
+  }
+}
+function checkAll(){
+  if(!running)return;
+  for(var i=0;i<ALL.length;i++)if(ALL[i]._st!=='done')return;
+  finish();
+}
+
+/* ---------- lanes in the hero (illustration in sync with the real queues) ---------- */
+function setLane(l,p,st){
+  if(l.bar)l.bar.style.setProperty('--w',(p*100).toFixed(1)+'%');
+  if(l.st&&l.st.textContent!==st)l.st.textContent=st;
+  l.el.classList.toggle('done',p>=1);
+}
+function updLanes(t){
+  for(var i=0;i<lanes.length;i++){
+    var l=lanes[i],c=CL[l.n-1];
+    if(!running){setLane(l,1,'✓ סיים');continue;}
+    if(c&&c.total){
+      var p=(c.doneN+(c.active?.5:0))/c.total;
+      if(p>=1)setLane(l,1,'✓ סיים');
+      else if(!c.doneN&&!c.busy)setLane(l,.05+.07*(.5+.5*Math.sin(t/700+l.n)),'כותב…');
+      else setLane(l,Math.max(.06,p),c.busy?'בונה…':'כותב…');
+    }else{
+      /* more lanes than agents: a gentle loop */
+      var ph=((t/6200)+l.n*.29)%1,q=Math.min(1,ph/.82);
+      setLane(l,q<1?Math.max(.05,eio(q)):1,q<1?(q<.35?'כותב…':'בונה…'):'✓ סיים');
+    }
+  }
+}
+
+/* ---------- one rAF loop: cursors, clock, lanes, sweep ---------- */
+function frame(t){
+  if(dead)return;
+  try{
+    var A=AR(),W=A.width;
+    for(var i=0;i<CL.length;i++){
+      var c=CL[i];
+      if(c.job){
+        var j=c.job,u=Math.min(1,(t-j.t0)/j.dur),e=j.ease(u);
+        var x=j.fx+(j.tx-j.fx)*e,y=j.fy+(j.ty-j.fy)*e;
+        if(j.bow){var s=Math.sin(Math.PI*u)*j.bow;x+=j.nx*s;y+=j.ny*s;}
+        c.x=x;c.y=y;
+        if(j.step)j.step(e);
+        if(u>=1){c.job=null;j.resolve();}
+      }else if(c.drive){
+        c.x+=(c.drive.x-c.x)*.3;c.y+=(c.drive.y-c.y)*.3;
+      }else if(c.shown){
+        c.x+=Math.cos(t*.0011+c.ph)*.18;c.y+=Math.sin(t*.0014+c.ph)*.14;
+        if(!c.busy&&c.idleAt&&t-c.idleAt>1300)c.el.classList.add('is-rest');
+      }
+      var dx=clamp(c.x,2,Math.max(2,W-22));
+      c.el.style.transform='translate3d('+dx.toFixed(1)+'px,'+c.y.toFixed(1)+'px,0)';
+      var fl=dx>W-(PHONE?120:150);if(fl!==c.fl){c.fl=fl;c.el.classList.toggle('is-flip',fl);}
+    }
+    if(running&&clockEl)clockEl.textContent=fmt(t-T0);
+  }catch(err){failsafe(err);return;}
+  requestAnimationFrame(frame);
+}
+/* blocks the reader skipped past just appear done; nothing waits forever */
+function sweep(t){
+  for(var i=0;i<ALL.length;i++){
+    var b=ALL[i];
+    if(b._st==='idle'||b._st==='q'){
+      if(b.getBoundingClientRect().bottom<0){done(b,true);continue;}
+    }
+    /* never keep the reader waiting: a visible block still queued after 2.6 s just appears */
+    if(b._st==='q'&&b._qAt&&t-b._qAt>2600&&!b._force)done(b,true);
+    else if(b._st!=='done'&&b._qAt&&t-b._qAt>9000)done(b,true);
+  }
+}
+
+/* ---------- run control ---------- */
+function onIO(entries){
+  if(dead||rewinding||!running)return;
+  entries.forEach(function(en){
+    var b=en.target;if(!en.isIntersecting||b._st!=='idle')return;
+    var r=en.boundingClientRect;
+    if(r.top<0&&r.bottom<innerHeight*.6){done(b,true);return;}  /* entering from above = already read */
+    enqueue(b);
+  });
+}
+function observeAll(){
+  if(io)io.disconnect();
+  io=new IntersectionObserver(guard(onIO),{threshold:0,rootMargin:'0px 0px -6% 0px'});
+  ALL.forEach(function(b){if(b._st!=='done')io.observe(b);});
+}
+function start(run){
+  if(run!==RUN)return;
+  list.innerHTML='';T0=now();finalT=0;running=true;
+  logEl.classList.remove('is-fin');skipBtn.disabled=false;
+  log(null,'שחזור · '+CL.length+' סוכנים במקביל · '+ALL.length+' בלוקים');
+  if(HERO)HERO.blocks.forEach(function(b){b._force=true;enqueue(b);});
+  observeAll();
+}
+function finish(){
+  if(!running)return;
+  finalT=now()-T0;running=false;
+  if(clockEl)clockEl.textContent=fmt(finalT);
+  if(CFG.total)log(null,CFG.total);
+  log(null,'הדף מוכן · שחזור '+(finalT/1000).toFixed(1)+' שנ׳');
+  logEl.classList.add('is-fin');skipBtn.disabled=true;
+  CL.forEach(function(c){c.idleAt=now()-1000;});
+  if(io)io.disconnect();
+  updLanes(now());
+}
+function cancelAll(){
+  RUN++;
+  CL.forEach(function(c){
+    if(c.job){var j=c.job;c.job=null;j.resolve();}
+    c.drive=null;c.queue=[];c.busy=false;c.batch=0;c.active=null;c.idleAt=now();
+  });
+  [].forEach.call(aw.querySelectorAll('.aw-mq,.aw-type'),function(n){n.remove();});
+  ALL.forEach(function(b){if(b._st==='q'||b._st==='work'){b._st='idle';setState(b,null);}});
+}
+function skipAll(){
+  if(!running)return;
+  cancelAll();
+  log(null,'דילוג · כל הבלוקים במקום');
+  ALL.forEach(function(b){done(b,true);});
+  finish();
+}
+async function rebuild(){
+  cancelAll();var run=RUN;
+  running=false;rewinding=true;
+  if(io)io.disconnect();
+  list.innerHTML='';log(null,'מפרקים ובונים מחדש…');
+  logEl.classList.remove('is-fin');skipBtn.disabled=true;
+  CL.forEach(function(c){c.doneN=0;c.shown=false;c.el.classList.remove('is-on','is-rest');});
+  ALL.forEach(function(b){resetBlock(b);b._force=false;});
+  try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
+  var t0=now();
+  while((window.scrollY||ROOT.scrollTop)>2&&now()-t0<1800){await wait(60);if(run!==RUN)return;}
+  if((window.scrollY||ROOT.scrollTop)>2)window.scrollTo(0,0);
+  await wait(250);if(run!==RUN)return;
+  rewinding=false;
+  start(run);
+}
+
+/* ---------- boot ---------- */
+function boot(){
+  aw.classList.add('aw','is-live','aw-run');
+  layer=DOC.createElement('div');layer.className='aw-layer';layer.setAttribute('aria-hidden','true');
+  aw.appendChild(layer);
+  AGENTS.forEach(function(a,i){var c=makeCursor(a,i);C[a[0]]=c;CL.push(c);});
+  S=[].slice.call(aw.querySelectorAll('[data-section]')).map(function(el){
+    return {el:el,blocks:[].slice.call(el.querySelectorAll('[data-block]'))};
+  });
+  HERO=S[0]||null;
+  var seen=new Set();
+  [].forEach.call(aw.querySelectorAll('[data-block]'),function(b){
+    if(seen.has(b))return;seen.add(b);
+    if(!b.querySelector(':scope > .fill')){b.setAttribute('data-state','done');return;} /* off-contract block: never hide it */
+    var c=C[b.getAttribute('data-agent')]||CL[0];
+    b._c=c;b._st='idle';c.total++;ALL.push(b);
+  });
+  if(HERO)[].forEach.call(HERO.el.querySelectorAll('.lane[data-lane]'),function(el){
+    lanes.push({el:el,n:parseInt(el.getAttribute('data-lane'),10)||0,bar:el.querySelector('.track b'),st:el.querySelector('.st')});
+  });
+  buildLog();
+  addEventListener('beforeprint',function(){if(running)skipAll();});
+  requestAnimationFrame(frame);
+  var hb=setInterval(function(){
+    if(dead){clearInterval(hb);return;}
+    try{var t=now();if(lanes.length)updLanes(t);if(running&&!rewinding)sweep(t);}catch(err){failsafe(err);}
+  },200);
+  var run=++RUN;
+  var fontsReady=(DOC.fonts&&DOC.fonts.ready)?DOC.fonts.ready:Promise.resolve();
+  Promise.race([fontsReady,wait(900)]).then(guard(function(){start(run);}),guard(function(){start(run);}));
+}
+function go(){if(go.d)return;go.d=1;try{boot();}catch(e){failsafe(e);}}
+/* loaded at the end of <body> (after #aw): start now, before the first paint; otherwise on DOMContentLoaded */
+if(aw&&(DOC.readyState!=='loading'||DOC.querySelector('#aw ~ script, #aw ~ * script')))go();
+else domReady(function(){aw=aw||DOC.getElementById('aw');if(aw)go();});
+})();
+</script>
+</body></html>
