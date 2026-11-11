@@ -286,7 +286,7 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
   background:color-mix(in srgb,var(--surface) 80%,transparent);-webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
   border:1px solid var(--line2);border-radius:14px;box-shadow:0 20px 50px -18px rgba(0,0,0,.85);color:var(--ink);direction:rtl;font:500 12px/1.3 var(--body);overflow:hidden}
 .aw-log-h{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 10px;border-bottom:1px solid var(--line)}
-.aw-rec{display:inline-flex;align-items:center;gap:6px;font:600 10px/1 var(--mono);letter-spacing:.14em;color:var(--aw-rec);direction:ltr;flex:none}
+.aw-rec{display:inline-flex;align-items:center;gap:6px;font:700 11px/1 var(--body);color:var(--aw-rec);flex:none}
 .aw-rec::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;box-shadow:0 0 8px currentColor;animation:awBlink 1.4s steps(1) infinite}
 .aw-log.is-fin .aw-rec{color:var(--ok)}
 .aw-log.is-fin .aw-rec::before{animation:none}
@@ -305,24 +305,105 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
 .aw-log li.is-sys{white-space:normal;line-height:1.35;padding-block:2px}
 .aw-log li.is-sys span{color:var(--ink);font-weight:700;white-space:normal}
 @media (max-width:600px){
-  .aw-log{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto;bottom:max(10px,env(safe-area-inset-bottom,0px));border-radius:12px}
+  /* the right side stays free for the floating WhatsApp button (56px + gap) */
+  .aw-log{left:max(12px,env(safe-area-inset-left,0px));right:calc(max(14px,env(safe-area-inset-right,0px)) + 66px);width:auto;bottom:max(14px,env(safe-area-inset-bottom,0px));border-radius:12px}
   .aw-log-h{padding:5px 6px 5px 9px;border-bottom:0}
   .aw-btn{height:28px;padding:0 10px}
   .aw-log ol{height:22px;padding:0 10px 4px}
   .aw-log li.is-sys{white-space:nowrap}
   .aw-log li.is-sys span{white-space:nowrap}
-  .aw-log.is-fin ol{display:none}
   .aw-cur svg{width:17px;height:19px}
   .aw-tag{font-size:10.5px;left:12px;top:17px;padding:4px 6px}
   #aw.is-live [data-state="rough"]::after{font-size:10px}
 }
 @media (prefers-reduced-motion:reduce){.aw-rec::before{animation:none}}
-@media print{.aw-log,.aw-layer{display:none}}
+@media print{.aw-log,.aw-layer,.aw-again{display:none}}
 /* lane status text is written in Hebrew by aw.js: keep it in the body face */
 #aw .lane[data-lane] .st{font-family:var(--body);font-weight:700;letter-spacing:0}
 /* bigger invisible hit area for the small log buttons */
 .aw-btn{position:relative}
 .aw-btn::after{content:"";position:absolute;inset:-9px -3px}
+
+/* ---------- log lifetime: only while the build runs ---------- */
+.aw-log{transition:opacity .5s ease,transform .5s ease}
+.aw-log.is-out{opacity:0;transform:translateY(10px);pointer-events:none}
+.aw-log[hidden]{display:none}
+/* room under the footer so the log never hides the last lines */
+body.aw-logon .foot{padding-bottom:calc(var(--aw-logh,160px) + 40px)}
+
+/* ---------- replay pill (after the build) ---------- */
+.aw-again{position:fixed;z-index:70;left:max(16px,env(safe-area-inset-left,0px));bottom:max(18px,env(safe-area-inset-bottom,0px));
+  display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 16px 0 14px;border:0;border-radius:999px;cursor:pointer;direction:rtl;
+  font:600 13.5px/1 var(--body);color:var(--ink);background:color-mix(in srgb,var(--surface) 78%,transparent);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  box-shadow:0 0 0 1px var(--line2) inset,0 14px 34px -14px rgba(0,0,0,.85);
+  opacity:0;transform:translateY(8px);transition:opacity .45s ease,transform .45s ease,background .2s}
+.aw-again.is-on{opacity:1;transform:none}
+.aw-again[hidden]{display:none}
+.aw-again svg{width:16px;height:16px;flex:none;color:var(--cy)}
+.aw-again:hover{background:color-mix(in srgb,var(--surface3) 88%,transparent)}
+.aw-again:focus-visible{outline:2px solid var(--cy);outline-offset:3px}
+.aw-again::after{content:"";position:absolute;inset:-4px -2px}
+@media (max-width:600px){
+  .aw-again{left:max(12px,env(safe-area-inset-left,0px));bottom:max(22px,env(safe-area-inset-bottom,0px));height:36px;padding:0 12px 0 11px;gap:6px;font-size:12px;
+    max-width:calc(100vw - 100px)}
+  .aw-again span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .aw-again svg{width:14px;height:14px}
+  .aw-again::after{inset:-6px -2px}
+}
+
+/* =====================================================================
+   cta.css — shared calls to action for both guides
+   (closing section frag/common-cta.html + floating WhatsApp button).
+   Tokens only from base.css.
+   ===================================================================== */
+
+/* ---------- closing section: three glass cards ---------- */
+.cc .cc-head{margin-bottom:clamp(28px,4vw,48px)}
+.cc-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,2vw,22px);align-items:stretch}
+.cc-grid > [data-block]{display:flex;min-width:0}
+.cc-card{--c:var(--ag1);flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;
+  padding:clamp(22px,2.6vw,32px);border-radius:var(--r-lg);position:relative;overflow:hidden;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--surface2) 72%,transparent),color-mix(in srgb,var(--bg2) 60%,transparent));
+  -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+  box-shadow:0 0 0 1px var(--line2) inset,var(--shadow)}
+.cc-card::before{content:"";position:absolute;width:260px;height:260px;top:-130px;inset-inline-start:-90px;border-radius:50%;
+  background:radial-gradient(closest-side,color-mix(in srgb,var(--c) 34%,transparent),transparent 72%);pointer-events:none}
+.cc-card > *{position:relative}
+.cc-ic{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;color:var(--c);
+  background:color-mix(in srgb,var(--c) 16%,transparent);box-shadow:0 0 0 1px color-mix(in srgb,var(--c) 48%,transparent) inset,0 0 30px -8px var(--c)}
+.cc-ic svg{width:26px;height:26px}
+.cc-card h3{font-size:clamp(28px,3vw,38px);font-weight:800;line-height:1.05}
+.cc-card p{margin:0;color:var(--ink2);font-size:17px;line-height:1.55}
+.cc-btn{width:100%;margin-top:auto}
+.cc-card > p{margin-bottom:6px}
+.cc-sub{align-self:center;display:inline-flex;align-items:center;gap:5px;min-height:44px;padding:0 6px;margin-top:-4px;
+  font:600 15px/1 var(--body);color:var(--muted);text-decoration:underline;text-decoration-color:var(--line2);text-underline-offset:5px}
+.cc-sub:hover{color:var(--ink);text-decoration-color:var(--cy)}
+.cc-sub:focus-visible{outline:2px solid var(--cy);outline-offset:2px;border-radius:6px}
+/* side by side: keep the three main buttons on one line (card 3 has the extra link under its button) */
+@media (min-width:901px){.cc-card:not(:has(.cc-sub)) .cc-btn{margin-bottom:54px}}
+@media (max-width:900px){
+  .cc-grid{grid-template-columns:minmax(0,1fr)}
+}
+
+/* ---------- floating WhatsApp button ---------- */
+.wa-fab{position:fixed;z-index:72;right:max(20px,env(safe-area-inset-right,0px));bottom:max(20px,env(safe-area-inset-bottom,0px));
+  width:60px;height:60px;border-radius:50%;display:grid;place-items:center;color:#fff;text-decoration:none;
+  background:#25d366;box-shadow:0 12px 30px -8px rgba(37,211,102,.55),0 0 0 1px rgba(255,255,255,.14) inset;
+  transition:transform .2s cubic-bezier(.2,.7,.2,1),box-shadow .2s}
+.wa-fab svg{width:32px;height:32px}
+.wa-fab:hover{transform:translateY(-2px) scale(1.04);box-shadow:0 16px 38px -8px rgba(37,211,102,.7),0 0 0 1px rgba(255,255,255,.2) inset}
+.wa-fab:focus-visible{outline:2px solid var(--paper);outline-offset:3px}
+@media (max-width:600px){
+  .wa-fab{right:max(14px,env(safe-area-inset-right,0px));bottom:max(14px,env(safe-area-inset-bottom,0px));width:56px;height:56px}
+  .wa-fab svg{width:30px;height:30px}
+}
+@media (prefers-reduced-motion:reduce){.wa-fab{transition:none}.wa-fab:hover{transform:none}}
+@media print{.wa-fab{display:none}}
+
+/* ---------- room at the very bottom for the fixed buttons ---------- */
+.foot{padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
 
 .bar-logo{height:26px;width:auto;opacity:.92}@media(max-width:560px){.bar-logo{display:none}}</style></head><body>
 <div class="atmo" aria-hidden="true"><div class="grid-bg"></div></div>
@@ -1972,11 +2053,64 @@ html:not(.aw-rv) .rv{opacity:1;transform:none}
   </div>
 </section>
 
+<!-- ================= common · רוצים עוד מזה? (shared by both guides, added by assemble.py) ================= -->
+<section class="sec cc" id="more" data-section>
+  <div class="wrap">
+    <div data-block data-agent="חבילה" data-log="כותרת הסיום · רוצים עוד מזה?" data-code='<h2>רוצים <span class="grad-text">' data-sk="title" data-type>
+      <div class="fill sec-head cc-head">
+        <span class="eyebrow">What next</span>
+        <h2>רוצים <span class="grad-text">עוד מזה?</span></h2>
+        <p class="lead">שלוש דרכים להמשיך מכאן. בוחרים מה מתאים לכם, ולוחצים.</p>
+      </div>
+    </div>
+
+    <div class="cc-grid">
+      <div data-block data-agent="חבילה" data-log="כרטיס 1 · לעקוב באינסטגרם" data-code='<a class="btn btn-primary" href="instagram.com/leviorel">' data-sk="stat">
+        <article class="fill cc-card" style="--c:var(--ag1)">
+          <span class="cc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span>
+          <h3>לעקוב</h3>
+          <p>כל שבוע כלים ומדריכים חדשים כמו זה.</p>
+          <a class="btn btn-primary cc-btn" href="https://www.instagram.com/leviorel/" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            לעקוב באינסטגרם
+          </a>
+        </article>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="כרטיס 2 · ללמוד ליצור עם AI" data-code='<a class="btn btn-primary" href="wa.me/972544606224">' data-sk="stat">
+        <article class="fill cc-card" style="--c:var(--ag2)">
+          <span class="cc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.7 2.7 3 6 3s6-1.3 6-3v-5"/></svg></span>
+          <h3>ללמוד</h3>
+          <p>ליווי אישי וסדנאות ליצירת תמונות וסרטוני AI, לבד או לצוות שלכם.</p>
+          <a class="btn btn-primary cc-btn" href="https://wa.me/972544606224?text=%D7%94%D7%99%D7%99%20%D7%90%D7%95%D7%A8%D7%90%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%95%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%9C%D7%9E%D7%95%D7%93%20%D7%9C%D7%99%D7%A6%D7%95%D7%A8%20%D7%A2%D7%9D%20AI" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></svg>
+            אני רוצה ללמוד
+          </a>
+        </article>
+      </div>
+
+      <div data-block data-agent="חבילה" data-log="כרטיס 3 · סרטון AI לעסק" data-code='<a class="cc-sub" href="https://orellevi.co.il">' data-sk="stat">
+        <article class="fill cc-card" style="--c:var(--ag3)">
+          <span class="cc-ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="14" height="14" rx="3"/><path d="M16.5 10l5-3v10l-5-3z"/></svg></span>
+          <h3>לסרטונים</h3>
+          <p>סרטוני AI ופרסומות לעסק שנראים כמו הפקה גדולה.</p>
+          <a class="btn btn-primary cc-btn" href="https://wa.me/972544606224?text=%D7%94%D7%99%D7%99%20%D7%90%D7%95%D7%A8%D7%90%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%95%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%A1%D7%A8%D7%98%D7%95%D7%9F%20AI%20%D7%9C%D7%A2%D7%A1%D7%A7" target="_blank" rel="noopener">
+            <svg class="ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></svg>
+            אני רוצה סרטון
+          </a>
+          <a class="cc-sub" href="https://orellevi.co.il" target="_blank" rel="noopener">לעבודות: <span dir="ltr">orellevi.co.il</span></a>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
 </main>
 <footer class="foot wrap">
   <div class="me"><img src="media/avatar.jpg" alt="">אוראל לוי · ‎@leviorel</div>
   <p>המדריך הזה נבנה מול העיניים על ידי סוכני Claude שעבדו במקביל · 12 דקות של בנייה אמיתית.</p>
 </footer>
+<a class="wa-fab" href="https://wa.me/972544606224?text=%D7%94%D7%99%D7%99%20%D7%90%D7%95%D7%A8%D7%90%D7%9C%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%9E%D7%94%D7%9E%D7%93%D7%A8%D7%99%D7%9A%20%D7%A9%D7%9C%20%D7%94%D7%A1%D7%95%D7%9B%D7%A0%D7%99%D7%9D%20%D7%95%D7%90%D7%A9%D7%9E%D7%97%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A2%D7%95%D7%93" target="_blank" rel="noopener" aria-label="וואטסאפ לאוראל"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.47 14.38c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.16-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.39-1.48-.88-.79-1.48-1.76-1.65-2.06-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.61-.92-2.21-.24-.58-.49-.5-.67-.51h-.57c-.2 0-.52.07-.79.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.88 1.21 3.07.15.2 2.1 3.2 5.08 4.49.71.31 1.26.49 1.7.63.71.22 1.36.19 1.87.12.57-.09 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.13-.27-.2-.57-.35M12.05 21.78h-.01a9.87 9.87 0 0 1-5.03-1.38l-.36-.21-3.74.98 1-3.65-.24-.37a9.86 9.86 0 0 1-1.51-5.26c0-5.45 4.44-9.88 9.89-9.88 2.64 0 5.12 1.03 6.99 2.9a9.83 9.83 0 0 1 2.89 6.99c0 5.45-4.44 9.88-9.88 9.88m8.41-18.3A11.82 11.82 0 0 0 12.05 0C5.5 0 .16 5.34.16 11.89c0 2.1.55 4.14 1.59 5.95L.06 24l6.3-1.65a11.88 11.88 0 0 0 5.68 1.45h.01c6.55 0 11.89-5.34 11.89-11.89a11.82 11.82 0 0 0-3.48-8.41Z"/></svg></a>
 <script>window.AW={agents:[["פתיחה","#a16cff"],["שלבים","#2bd7d6"],["חבילה","#f43f9e"]],title:"יומן הבנייה של הדף הזה",total:"3 סוכנים בנו את הדף הזה במקביל, סוכן רביעי בנה את ההדגמה וסוכן חמישי הוסיף את קולבו · 12 דקות של בנייה אמיתית"};</script>
 <script>/* =====================================================================
    aw.js — build-replay engine for the agents guides
@@ -2065,7 +2199,7 @@ var CANCEL={cancel:true};
 var RUN=0;
 var BUDGET=2600,TMIN=300,TMAX=950;  /* ms per section for one agent / per block */
 
-var layer=null,logEl=null,list=null,clockEl=null,skipBtn=null,rebuildBtn=null;
+var layer=null,logEl=null,list=null,clockEl=null,skipBtn=null,againBtn=null,hideT=0,goneT=0;
 var CL=[],C={},S=[],ALL=[],HERO=null,lanes=[],io=null;
 var T0=0,running=false,finalT=0,rewinding=false,dead=false;
 
@@ -2090,7 +2224,7 @@ function failsafe(err){
   try{[].forEach.call(aw.querySelectorAll('.aw-type,.aw-mq,.aw-layer'),function(n){n.remove();});}catch(e){}
   try{ALL.forEach(function(b){b.setAttribute('data-state','done');b.setAttribute('data-instant','');});}catch(e){}
   try{lanes.forEach(function(l){setLane(l,1,'✓ סיים');});}catch(e){}
-  try{if(logEl)logEl.remove();}catch(e){}
+  try{clearTimeout(hideT);clearTimeout(goneT);if(logEl)logEl.remove();if(againBtn)againBtn.remove();DOC.body.classList.remove('aw-logon');}catch(e){}
 }
 function guard(f){return function(){if(dead)return;try{return f.apply(this,arguments);}catch(e){failsafe(e);}};}
 window.addEventListener('error',function(e){
@@ -2177,14 +2311,43 @@ function log(c,msg){
 function buildLog(){
   logEl=DOC.createElement('aside');
   logEl.className='aw-log';logEl.setAttribute('aria-label',CFG.title||'יומן הבנייה');
-  logEl.innerHTML='<div class="aw-log-h"><span class="aw-rec">REPLAY</span><span class="aw-ttl"></span><span class="aw-clock">00:00.0</span>'+
-    '<div class="aw-btns"><button type="button" class="aw-btn" data-act="skip">דלג</button><button type="button" class="aw-btn" data-act="rebuild">בנה שוב</button></div></div><ol aria-live="off"></ol>';
+  logEl.innerHTML='<div class="aw-log-h"><span class="aw-rec">בונים</span><span class="aw-ttl"></span><span class="aw-clock">00:00.0</span>'+
+    '<div class="aw-btns"><button type="button" class="aw-btn" data-act="skip">דלג</button></div></div><ol aria-live="off"></ol>';
   logEl.querySelector('.aw-ttl').textContent=CFG.title||'יומן הבנייה של הדף הזה';
   DOC.body.appendChild(logEl);
   list=logEl.querySelector('ol');clockEl=logEl.querySelector('.aw-clock');
-  skipBtn=logEl.querySelector('[data-act="skip"]');rebuildBtn=logEl.querySelector('[data-act="rebuild"]');
+  skipBtn=logEl.querySelector('[data-act="skip"]');
   skipBtn.addEventListener('click',guard(skipAll));
-  rebuildBtn.addEventListener('click',guard(function(){rebuild().catch(failsafe);}));
+  /* after the build: a small pill that replays it */
+  againBtn=DOC.createElement('button');againBtn.type='button';againBtn.className='aw-again';againBtn.hidden=true;
+  againBtn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/></svg><span>לראות שוב איך הדף נבנה</span>';
+  DOC.body.appendChild(againBtn);
+  againBtn.addEventListener('click',guard(function(){rebuild().catch(failsafe);}));
+  showLog();
+}
+/* the log lives only while the build runs; the footer gets room for it */
+function padForLog(){
+  if(!logEl||logEl.hidden)return;
+  try{DOC.body.style.setProperty('--aw-logh',Math.ceil(logEl.getBoundingClientRect().height)+'px');}catch(e){}
+}
+function showLog(){
+  clearTimeout(hideT);clearTimeout(goneT);
+  logEl.hidden=false;logEl.classList.remove('is-out','is-fin');
+  againBtn.hidden=true;againBtn.classList.remove('is-on');
+  DOC.body.classList.add('aw-logon');padForLog();
+}
+function hideLog(){
+  clearTimeout(hideT);clearTimeout(goneT);
+  hideT=setTimeout(guard(function(){
+    if(running)return;
+    logEl.classList.add('is-out');
+    goneT=setTimeout(guard(function(){
+      if(running)return;
+      logEl.hidden=true;DOC.body.classList.remove('aw-logon');
+      againBtn.hidden=false;
+      requestAnimationFrame(function(){againBtn.classList.add('is-on');});
+    }),520);
+  }),1500);
 }
 
 /* ---------- typing (headlines with data-type) ---------- */
@@ -2356,8 +2519,8 @@ function observeAll(){
 function start(run){
   if(run!==RUN)return;
   list.innerHTML='';T0=now();finalT=0;running=true;
-  logEl.classList.remove('is-fin');skipBtn.disabled=false;
-  log(null,'שחזור · '+CL.length+' סוכנים במקביל · '+ALL.length+' בלוקים');
+  showLog();skipBtn.disabled=false;
+  log(null,'הסוכנים מתחילים לבנות את הדף');
   if(HERO)HERO.blocks.forEach(function(b){b._force=true;enqueue(b);});
   observeAll();
 }
@@ -2365,9 +2528,9 @@ function finish(){
   if(!running)return;
   finalT=now()-T0;running=false;
   if(clockEl)clockEl.textContent=fmt(finalT);
-  if(CFG.total)log(null,CFG.total);
-  log(null,'הדף מוכן · שחזור '+(finalT/1000).toFixed(1)+' שנ׳');
+  log(null,'הדף מוכן');
   logEl.classList.add('is-fin');skipBtn.disabled=true;
+  hideLog();
   CL.forEach(function(c){c.idleAt=now()-1000;});
   if(io)io.disconnect();
   updLanes(now());
@@ -2384,7 +2547,6 @@ function cancelAll(){
 function skipAll(){
   if(!running)return;
   cancelAll();
-  log(null,'דילוג · כל הבלוקים במקום');
   ALL.forEach(function(b){done(b,true);});
   finish();
 }
@@ -2392,8 +2554,8 @@ async function rebuild(){
   cancelAll();var run=RUN;
   running=false;rewinding=true;
   if(io)io.disconnect();
-  list.innerHTML='';log(null,'מפרקים ובונים מחדש…');
-  logEl.classList.remove('is-fin');skipBtn.disabled=true;
+  list.innerHTML='';
+  showLog();skipBtn.disabled=true;
   CL.forEach(function(c){c.doneN=0;c.shown=false;c.el.classList.remove('is-on','is-rest');});
   ALL.forEach(function(b){resetBlock(b);b._force=false;});
   try{window.scrollTo({top:0,behavior:'smooth'});}catch(e){window.scrollTo(0,0);}
@@ -2426,6 +2588,7 @@ function boot(){
     lanes.push({el:el,n:parseInt(el.getAttribute('data-lane'),10)||0,bar:el.querySelector('.track b'),st:el.querySelector('.st')});
   });
   buildLog();
+  addEventListener('resize',function(){padForLog();});
   addEventListener('beforeprint',function(){if(running)skipAll();});
   requestAnimationFrame(frame);
   var hb=setInterval(function(){
